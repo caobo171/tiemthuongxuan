@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBunchTables extends Migration
+class CreateExportBill extends Migration
 {
     /**
      * Run the migrations.
@@ -19,8 +19,8 @@ class CreateBunchTables extends Migration
             $table->timestamps();
             $table->integer('cost');
             $table->char('status', 100);
-            $table->integer('user_id');
-
+            $table->integer('customer_id');
+            $table->string('data');
             $table->index('status');
         });
     }

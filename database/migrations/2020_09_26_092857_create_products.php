@@ -17,11 +17,12 @@ class CreateProducts extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('cost');
-            $table->integer('quantiy');
-            $table->string('image');
+            $table->integer('quantity');
+            $table->string('image')->nullable();
             $table->string('description');
             $table->char('name', 100);
-            $table->string('history_price');
+            $table->char('sku', 100);
+            $table->string('history_price')->nullable();
         });
     }
 

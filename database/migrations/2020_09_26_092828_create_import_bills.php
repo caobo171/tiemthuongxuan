@@ -19,8 +19,8 @@ class CreateImportBills extends Migration
             $table->timestamps();
             $table->integer('cost');
             $table->char('status', 100);
-            $table->integer('user_id');
-
+            $table->integer('provider_id');
+            $table->string('data');
             $table->index('status');
         });
     }

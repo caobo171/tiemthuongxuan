@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = React.memo(() => {
   return (
-    <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/">
+    <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" 
+      id="accordionSidebar">
+      <Link className="sidebar-brand d-flex 
+      align-items-center justify-content-center" to="/">
         <div className="sidebar-brand-icon rotate-n-15">
           <i className="fas fa-laugh-wink"></i>
         </div>
@@ -14,9 +16,9 @@ const Sidebar = React.memo(() => {
       <hr className="sidebar-divider my-0" />
 
       <li className="nav-item active">
-        <a className="nav-link" href="index.html">
+        <Link className="nav-link" to="/dashboard">
           <i className="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Dashboard</span></Link>
       </li>
 
 
@@ -27,16 +29,16 @@ const Sidebar = React.memo(() => {
         </a>
         <div id="collapseOne" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
-            <Link className="collapse-item" >Tạo đơn</Link>
-            <Link className="collapse-item" href="buttons.html">Danh sách Đơn </Link>
+            <Link className="collapse-item" to="/bill/create" >Tạo đơn</Link>
+            <Link className="collapse-item" to="/bills">Danh sách Đơn </Link>
           </div>
         </div>
       </li>
 
       <li className="nav-item">
-        <a className="nav-link" href="tables.html">
+        <Link className="nav-link" to="/customers">
           <i className="fas fa-fw fa-table"></i>
-          <span>Khách hàng</span></a>
+          <span>Khách hàng</span></Link>
       </li>
 
       <li className="nav-item">
@@ -46,10 +48,11 @@ const Sidebar = React.memo(() => {
         </a>
         <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
-            <Link className="collapse-item">Tạo sản phẩm</Link>
-            <Link className="collapse-item">Danh sách sản phẩm</Link>
-            <Link className="collapse-item">Nhập hàng</Link>
-            <Link className="collapse-item">Nhà cung cấp</Link>
+            <Link className="collapse-item" to="/product/create">Tạo sản phẩm</Link>
+            <Link className="collapse-item" to="/products">Danh sách sản phẩm</Link>
+            <Link className="collapse-item" to="/importbill/create">Nhập hàng</Link>
+            <Link className="collapse-item" to="/importbills">Đơn nhập hàng</Link>       
+            <Link className="collapse-item" to="/providers">Nhà cung cấp</Link>
           </div>
         </div>
       </li>

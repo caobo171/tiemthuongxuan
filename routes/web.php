@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +18,29 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/product/create', function () {
+Route::get('/bill/create', function () {
     return view('index');
 });
 
+Route::get('/importbill/create', function () {
+    return view('index');
+});
+
+Route::get('/importbills', function () {
+    return view('index');
+});
+
+Route::get('/users', function () {
+    return view('index');
+});
+
+Route::get('/providers', function () {
+    return view('index');
+});
+
+Route::get('/bills', function () {
+    return view('index');
+});
 // Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
