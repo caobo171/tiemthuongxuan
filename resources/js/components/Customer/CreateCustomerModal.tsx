@@ -19,7 +19,7 @@ const CreateCustomerModal = React.memo(()=>{
         const email = emailRef.current.value;
         //@ts-ignore
         const description = noteRef.current.value;
-        const res = await Fetch.post('/api/customer',{
+        const res = await Fetch.post('api/customer',{
             name, phone, email, description
         });
 

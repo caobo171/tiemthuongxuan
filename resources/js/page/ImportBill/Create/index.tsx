@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import ProductListPopUp from '../../../components/Product/ProductListPopUp';
+import ProductSelectedList from '../../../components/Product/SelectedList';
 import SelectItem from '../../../components/Product/SelectItem';
+import { SelectProductContext } from '../../../components/Product/SelectProductContext';
 
 import ProviderListPopUp from '../../../components/Provider/ProviderListPopUp';
 import { ImportBillCreate } from './constate';
@@ -11,18 +13,22 @@ const Create = React.memo(() => {
     const provider = ImportBillCreate.useProvider();
     const items = ImportBillCreate.useItems();
     const createBill = ImportBillCreate.useCreateBill();
-    const setItem = ImportBillCreate.useSetItem();
+    const setItems = ImportBillCreate.useSetItems();
     const setProvider = ImportBillCreate.useSetProvider();
 
     const description = ImportBillCreate.useDescription();
     const setDescription = ImportBillCreate.useSetDescription();
 
+    const onCreateHandle = useCallback(()=>{
+        console.log('test')
+        createBill();
+    },[createBill]);
     const onChangeHandle = useCallback((e)=>{
         console.log(e.target.value)
         setDescription(e.target.value);
     },[description])
 
-    return (<>
+    return (<SelectProductContext.Provider value={{items, setItems }}>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
             <h1 className="h3 mb-0 text-gray-800">Create New Order</h1>
         </div>
@@ -44,42 +50,8 @@ const Create = React.memo(() => {
                         </div>
                     </div>
                 </div>
-
-
                 <div className="col">
-                    <div className="card shadow">
-                        <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 className="m-0 font-weight-bold text-primary">Thông tin sản phẩm</h6>
-                        </div>
-                        <div className="card-body">
-                            <div className="col">
-                                <div className="row">
-                                    <div className="h6 font-weight-bold text-gray-800">
-                                        Thông tin sản phẩm
-                                        </div>
-                                </div>
-                                <div className="row mb-2">
-                                    <ProductListPopUp onClickItem = {setItem}/>
-
-                                </div>
-
-                                <div className="row card-header mb-2">
-                                    <div className="col">Mã SKU</div>
-                                    <div className="col">Tên sản phẩm</div>
-                                    <div className="col">Số lượng </div>
-                                    <div className="col">Đơn giá</div>
-                                    <div className="col">Tổng giá</div>
-                                </div>
-
-                                {
-                                    Object.values(items).map(item => (
-                                        <SelectItem item={item} />
-                                    ))
-                                }
-                            </div>
-
-                        </div>
-                    </div>
+                    <ProductSelectedList/>
                 </div>
             </div>
 
@@ -103,14 +75,14 @@ const Create = React.memo(() => {
                         </div>
                         <div className="row no-gutters align-items-center">
                             <button type="button"
-                             onClick={createBill}
+                             onClick={onCreateHandle}
                              className="btn btn-primary btn-lg btn-block">Tạo đơn </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </>);
+    </SelectProductContext.Provider>);
 });
 
 

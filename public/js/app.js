@@ -109460,7 +109460,7 @@ var CreateCustomerModal = react_1.default.memo(function () {
                     phone = phoneRef.current.value;
                     email = emailRef.current.value;
                     description = noteRef.current.value;
-                    return [4 /*yield*/, Fetch_1.default.post('/api/customer', {
+                    return [4 /*yield*/, Fetch_1.default.post('api/customer', {
                             name: name, phone: phone, email: email, description: description
                         })];
                 case 1:
@@ -109588,20 +109588,20 @@ var CustomerListPopUp = react_1.default.memo(function (_a) {
     }); }, []), state = _b[0], fetch = _b[1];
     react_1.useEffect(function () {
         //@ts-ignore
-        window.$("#productDropDown").on("click", function () {
+        window.$("#customerDropdown").on("click", function () {
             fetch();
         });
         return function () {
             //@ts-ignore
-            window.$("#productDropDown").off('click');
+            window.$("#customerDropdown").off('click');
         };
     }, []);
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement("div", { className: "input-group" },
-            react_1.default.createElement("input", { className: "form-control dropdown-toggle", id: "customerDropdown", onClick: fetch, placeholder: "Search for...", role: "button", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true" }),
+        react_1.default.createElement("div", { className: "row" },
+            react_1.default.createElement("input", { className: "form-control dropdown-toggle", id: "customerDropdown", placeholder: "Search for...", role: "button", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true" }),
             react_1.default.createElement("div", { className: "dropdown-menu dropdown-menu-right animated--grow-in", "aria-labelledby": "customerDropdown" }, state.loading ? (react_1.default.createElement("div", null, "Loading ...")) : (react_1.default.createElement(react_1.default.Fragment, null,
                 react_1.default.createElement("a", { className: "dropdown-item", "data-toggle": "modal", "data-target": "#createUserModal" }, "Th\u00EAm m\u1EDBi kh\u00E1ch h\u00E0ng"),
-                (state.value || []).map(function (item) { return (react_1.default.createElement("a", { className: "dropdown-item", onClick: function () { return onClickItem(item); }, id: item.id, "data-toggle": "modal", "data-target": "#createUser`Modal" },
+                (state.value || []).map(function (item) { return (react_1.default.createElement("a", { className: "dropdown-item", key: item.id, onClick: function () { return onClickItem(item); }, id: item.id, "data-toggle": "modal", "data-target": "#createUser`Modal" },
                     item.name,
                     "-",
                     item.phone)); }))))),
@@ -109880,11 +109880,10 @@ var ProductListPopUp = react_1.default.memo(function (_a) {
         };
     }, []);
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement("div", { className: "input-group" },
-            react_1.default.createElement("input", { className: "form-control dropdown-toggle", id: "productDropDown", onClick: fetch, placeholder: "Search for...", role: "button", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true" }),
-            react_1.default.createElement("div", { className: "dropdown-menu dropdown-menu-right animated--grow-in", "aria-labelledby": "productDropDown" }, state.loading ? (react_1.default.createElement("div", null, "Loading ...")) : (react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement("a", { className: "dropdown-item", "data-toggle": "modal", "data-target": "#createProductModal" }, "Th\u00EAm s\u1EA3n ph\u1EA9m m\u1EDBi"),
-                (state.value || []).map(function (item) { return (react_1.default.createElement("a", { className: "dropdown-item", onClick: function () { return onClickItem(item); }, id: item.id, "data-toggle": "modal", "data-target": "#createUser`Modal" }, item.name)); }))))),
+        react_1.default.createElement("input", { className: "form-control dropdown-toggle", id: "productDropDown", placeholder: "Search for...", role: "button", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true" }),
+        react_1.default.createElement("div", { className: "dropdown-menu dropdown-menu-right animated--grow-in", "aria-labelledby": "productDropDown" }, state.loading ? (react_1.default.createElement("div", null, "Loading ...")) : (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement("a", { className: "dropdown-item", "data-toggle": "modal", "data-target": "#createProductModal" }, "Th\u00EAm s\u1EA3n ph\u1EA9m m\u1EDBi"),
+            (state.value || []).map(function (item) { return (react_1.default.createElement("a", { key: item.id, className: "dropdown-item", onClick: function () { return onClickItem(item); }, id: item.id, "data-toggle": "modal", "data-target": "#createUser`Modal" }, item.name)); })))),
         react_1.default.createElement(CreateProductModal_1.default, null)));
 });
 exports.default = ProductListPopUp;
@@ -109901,23 +109900,157 @@ exports.default = ProductListPopUp;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var SelectItem = react_1.default.memo(function (_a) {
-    var item = _a.item;
+    var item = _a.item, updateItem = _a.updateItem;
+    var onChangeHandle = react_1.useCallback(function (e) {
+        var _a;
+        var value = __assign(__assign({}, item), (_a = {}, _a[e.target.name] = e.target.value, _a));
+        updateItem(value);
+    }, [item, updateItem]);
     return (react_1.default.createElement("div", { className: "row mb-2" },
         react_1.default.createElement("div", { className: "col" }, item.sku),
         react_1.default.createElement("div", { className: "col" }, item.name),
         react_1.default.createElement("div", { className: "col" },
-            react_1.default.createElement("input", { value: item.quantity, type: "number", className: "form-control" })),
+            react_1.default.createElement("input", { onChange: onChangeHandle, name: "quantity", value: item.quantity, type: "number", className: "form-control" })),
         react_1.default.createElement("div", { className: "col" },
-            react_1.default.createElement("input", { value: item.cost, type: "number", className: "form-control" })),
+            react_1.default.createElement("input", { onChange: onChangeHandle, value: item.cost, type: "number", name: "cost", className: "form-control" })),
         react_1.default.createElement("div", { className: "col" }, item.cost * item.quantity)));
 });
 exports.default = SelectItem;
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Product/SelectProductContext.ts":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/Product/SelectProductContext.ts ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SelectProductContext = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+exports.SelectProductContext = react_1.default.createContext({
+    items: {},
+    setItems: function () { }
+});
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Product/SelectedList.tsx":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/Product/SelectedList.tsx ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var ProductListPopUp_1 = __importDefault(__webpack_require__(/*! ./ProductListPopUp */ "./resources/js/components/Product/ProductListPopUp.tsx"));
+var SelectItem_1 = __importDefault(__webpack_require__(/*! ./SelectItem */ "./resources/js/components/Product/SelectItem.tsx"));
+var SelectProductContext_1 = __webpack_require__(/*! ./SelectProductContext */ "./resources/js/components/Product/SelectProductContext.ts");
+var SelectedList = react_1.default.memo(function () {
+    var _a = react_1.default.useContext(SelectProductContext_1.SelectProductContext), items = _a.items, setItems = _a.setItems;
+    var rItems = react_1.default.useMemo(function () { return Object.values(items); }, [items]);
+    var selectItemHanlde = react_1.useCallback(function (item) {
+        var _a;
+        var value = __assign(__assign({}, item), { quantity: 1, product_name: item.name, status: 'normal' });
+        setItems(__assign(__assign({}, items), (_a = {}, _a[value.id] = value, _a)));
+    }, [items, setItems]);
+    var updateItem = react_1.useCallback(function (item) {
+        var _a;
+        setItems(__assign(__assign({}, items), (_a = {}, _a[item.id] = item, _a)));
+    }, [items, setItems]);
+    return (react_1.default.createElement("div", { className: "card shadow" },
+        react_1.default.createElement("div", { className: "card-header py-3 d-flex flex-row align-items-center justify-content-between" },
+            react_1.default.createElement("h6", { className: "m-0 font-weight-bold text-primary" }, "Th\u00F4ng tin s\u1EA3n ph\u1EA9m")),
+        react_1.default.createElement("div", { className: "card-body" },
+            react_1.default.createElement("div", { className: "col" },
+                react_1.default.createElement("div", { className: "row mb-2" },
+                    react_1.default.createElement(ProductListPopUp_1.default, { onClickItem: selectItemHanlde })),
+                react_1.default.createElement("div", { className: "row card-header mb-2" },
+                    react_1.default.createElement("div", { className: "col" }, "M\u00E3 SKU"),
+                    react_1.default.createElement("div", { className: "col" }, "T\u00EAn s\u1EA3n ph\u1EA9m"),
+                    react_1.default.createElement("div", { className: "col" }, "S\u1ED1 l\u01B0\u1EE3ng "),
+                    react_1.default.createElement("div", { className: "col" }, "\u0110\u01A1n gi\u00E1"),
+                    react_1.default.createElement("div", { className: "col" }, "T\u1ED5ng gi\u00E1")),
+                rItems.map(function (item) { return (react_1.default.createElement(SelectItem_1.default, { key: item.id, item: item, updateItem: updateItem })); })))));
+});
+exports.default = SelectedList;
 
 
 /***/ }),
@@ -110148,12 +110281,12 @@ var ProviderListPopUp = react_1.default.memo(function (_a) {
         };
     }, []);
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement("div", { className: "input-group" },
+        react_1.default.createElement("div", { className: "row" },
             react_1.default.createElement("input", { className: "form-control dropdown-toggle", id: "providerDropDown", placeholder: "Search for...", role: "button", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "true" }),
             react_1.default.createElement("div", { className: "dropdown-menu dropdown-menu-right animated--grow-in", "aria-labelledby": "productDropDown" }, state.loading ? (react_1.default.createElement("div", null, "Loading ...")) : (react_1.default.createElement(react_1.default.Fragment, null,
                 " ",
                 react_1.default.createElement("a", { className: "dropdown-item", "data-toggle": "modal", "data-target": "#createProviderModal" }, "Th\u00EAm m\u1EDBi nh\u00E0 cung c\u1EA5p "),
-                (state.value || []).map(function (item) { return (react_1.default.createElement("a", { className: "dropdown-item", onClick: function () { return onClickItem(item); }, id: item.id, "data-toggle": "modal", "data-target": "#createUser`Modal" },
+                (state.value || []).map(function (item) { return (react_1.default.createElement("a", { className: "dropdown-item", key: item.id, onClick: function () { return onClickItem(item); }, id: item.id },
                     item.name,
                     "-",
                     item.phone)); }))))),
@@ -110395,11 +110528,9 @@ var useCreate = function () {
     var setCustomerHandle = react_1.useCallback(function (customer) {
         setCustomer(customer);
     }, [customer]);
-    var setItemHandle = react_1.useCallback(function (item) {
-        var _a;
-        var value = __assign(__assign({}, items), (_a = {}, _a[item.id] = item, _a));
-        setItems(value);
-    }, [items]);
+    var setItemsHandle = react_1.useCallback(function (items) {
+        setItems(items);
+    }, [setItems]);
     var setDescriptionHandle = react_1.useCallback(function (value) {
         setDescription(value);
     }, [description]);
@@ -110412,7 +110543,7 @@ var useCreate = function () {
                     rItems = Object.values(items).map(function (e) { return (__assign(__assign({}, e), { quantity: 1 })); });
                     cost = 0;
                     for (i = 0; i < rItems.length; i++) {
-                        cost += items[i].cost * rItems[i].quantity;
+                        cost += rItems[i].cost * rItems[i].quantity;
                     }
                     return [4 /*yield*/, Fetch_1.default.post('api/bill', {
                             customer_id: customer_id,
@@ -110422,25 +110553,24 @@ var useCreate = function () {
                         })];
                 case 1:
                     res = _a.sent();
-                    console.log(res);
-                    return [2 /*return*/];
+                    return [2 /*return*/, res.data];
             }
         });
     }); }, [items, description, customer]), state = _d[0], createBill = _d[1];
     return {
         customer: customer, setCustomerHandle: setCustomerHandle,
-        items: items, setItemHandle: setItemHandle,
+        items: items, setItemsHandle: setItemsHandle,
         description: description, setDescriptionHandle: setDescriptionHandle,
         createBill: createBill
     };
 };
-var _a = constate_1.default(useCreate, function (value) { return value.items; }, function (value) { return value.customer; }, function (value) { return value.setCustomerHandle; }, function (value) { return value.setItemHandle; }, function (value) { return value.description; }, function (value) { return value.setDescriptionHandle; }, function (value) { return value.createBill; }), Provider = _a[0], useItems = _a[1], useCustomer = _a[2], useSetCustomer = _a[3], useSetItem = _a[4], useDescription = _a[5], useSetDescription = _a[6], useCreateBill = _a[7];
+var _a = constate_1.default(useCreate, function (value) { return value.items; }, function (value) { return value.customer; }, function (value) { return value.setCustomerHandle; }, function (value) { return value.setItemsHandle; }, function (value) { return value.description; }, function (value) { return value.setDescriptionHandle; }, function (value) { return value.createBill; }), Provider = _a[0], useItems = _a[1], useCustomer = _a[2], useSetCustomer = _a[3], useSetItems = _a[4], useDescription = _a[5], useSetDescription = _a[6], useCreateBill = _a[7];
 exports.BillCreate = {
     Provider: Provider,
     useItems: useItems,
     useCustomer: useCustomer,
     useSetCustomer: useSetCustomer,
-    useSetItem: useSetItem,
+    useSetItems: useSetItems,
     useDescription: useDescription,
     useSetDescription: useSetDescription,
     useCreateBill: useCreateBill
@@ -110482,22 +110612,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var ProductListPopUp_1 = __importDefault(__webpack_require__(/*! ../../../components/Product/ProductListPopUp */ "./resources/js/components/Product/ProductListPopUp.tsx"));
 var constate_1 = __webpack_require__(/*! ./constate */ "./resources/js/page/Bill/Create/constate.ts");
 var CustomerListPopUp_1 = __importDefault(__webpack_require__(/*! ../../../components/Customer/CustomerListPopUp */ "./resources/js/components/Customer/CustomerListPopUp.tsx"));
-var SelectItem_1 = __importDefault(__webpack_require__(/*! ../../../components/Product/SelectItem */ "./resources/js/components/Product/SelectItem.tsx"));
-var CreateProduct = react_1.default.memo(function () {
+var SelectedList_1 = __importDefault(__webpack_require__(/*! ../../../components/Product/SelectedList */ "./resources/js/components/Product/SelectedList.tsx"));
+var SelectProductContext_1 = __webpack_require__(/*! ../../../components/Product/SelectProductContext */ "./resources/js/components/Product/SelectProductContext.ts");
+var Create = react_1.default.memo(function () {
     var customer = constate_1.BillCreate.useCustomer();
     var items = constate_1.BillCreate.useItems();
     var createBill = constate_1.BillCreate.useCreateBill();
-    var setItem = constate_1.BillCreate.useSetItem();
+    var setItems = constate_1.BillCreate.useSetItems();
     var setCustomer = constate_1.BillCreate.useSetCustomer();
     var description = constate_1.BillCreate.useDescription();
     var setDescription = constate_1.BillCreate.useSetDescription();
     var onChangeHandle = react_1.useCallback(function (e) {
         setDescription(e.target.value);
     }, [description]);
-    return (react_1.default.createElement(react_1.default.Fragment, null,
+    return (react_1.default.createElement(SelectProductContext_1.SelectProductContext.Provider, { value: { setItems: setItems, items: items } },
         react_1.default.createElement("div", { className: "d-sm-flex align-items-center justify-content-between mb-4 mt-4" },
             react_1.default.createElement("h1", { className: "h3 mb-0 text-gray-800" }, "Create New Order")),
         react_1.default.createElement("div", { className: "row" },
@@ -110511,22 +110641,7 @@ var CreateProduct = react_1.default.memo(function () {
                                 react_1.default.createElement("div", { className: "h6" }, customer.name),
                                 react_1.default.createElement("div", { className: "text-xs" }, customer.phone))) : react_1.default.createElement(CustomerListPopUp_1.default, { onClickItem: setCustomer }))))),
                 react_1.default.createElement("div", { className: "col" },
-                    react_1.default.createElement("div", { className: "card shadow" },
-                        react_1.default.createElement("div", { className: "card-header py-3 d-flex flex-row align-items-center justify-content-between" },
-                            react_1.default.createElement("h6", { className: "m-0 font-weight-bold text-primary" }, "Th\u00F4ng tin s\u1EA3n ph\u1EA9m")),
-                        react_1.default.createElement("div", { className: "card-body" },
-                            react_1.default.createElement("div", { className: "col" },
-                                react_1.default.createElement("div", { className: "row" },
-                                    react_1.default.createElement("div", { className: "h6 font-weight-bold text-gray-800" }, "Th\u00F4ng tin s\u1EA3n ph\u1EA9m")),
-                                react_1.default.createElement("div", { className: "row mb-2" },
-                                    react_1.default.createElement(ProductListPopUp_1.default, { onClickItem: setItem })),
-                                react_1.default.createElement("div", { className: "row card-header mb-2" },
-                                    react_1.default.createElement("div", { className: "col" }, "M\u00E3 SKU"),
-                                    react_1.default.createElement("div", { className: "col" }, "T\u00EAn s\u1EA3n ph\u1EA9m"),
-                                    react_1.default.createElement("div", { className: "col" }, "S\u1ED1 l\u01B0\u1EE3ng "),
-                                    react_1.default.createElement("div", { className: "col" }, "\u0110\u01A1n gi\u00E1"),
-                                    react_1.default.createElement("div", { className: "col" }, "T\u1ED5ng gi\u00E1")),
-                                Object.values(items).map(function (item) { return (react_1.default.createElement(SelectItem_1.default, { item: item })); })))))),
+                    react_1.default.createElement(SelectedList_1.default, null))),
             react_1.default.createElement("div", { className: "col-xl-4 col-md-4 mb-4" },
                 react_1.default.createElement("div", { className: "card shadow py-2" },
                     react_1.default.createElement("div", { className: "card-body" },
@@ -110542,11 +110657,11 @@ var CreateProduct = react_1.default.memo(function () {
                         react_1.default.createElement("div", { className: "row no-gutters align-items-center" },
                             react_1.default.createElement("button", { type: "button", onClick: createBill, className: "btn btn-primary btn-lg btn-block" }, "T\u1EA1o \u0111\u01A1n "))))))));
 });
-var __CreateProduct = react_1.default.memo(function () {
+var __Create = react_1.default.memo(function () {
     return react_1.default.createElement(constate_1.BillCreate.Provider, null,
-        react_1.default.createElement(CreateProduct, null));
+        react_1.default.createElement(Create, null));
 });
-exports.default = __CreateProduct;
+exports.default = __Create;
 
 
 /***/ }),
@@ -110639,7 +110754,7 @@ var List = react_1.default.memo(function () {
                     react_1.default.createElement("div", { className: "col" }, "Tr\u1EA1ng th\u00E1i "),
                     react_1.default.createElement("div", { className: "col" }, "Gi\u00E1")),
                 react_1.default.createElement("div", { className: "card-body" }, (data.value || []).map(function (item) {
-                    return react_1.default.createElement(Item, { item: item });
+                    return react_1.default.createElement(Item, { item: item, key: item.id });
                 }))))));
 });
 exports.default = List;
@@ -110656,17 +110771,6 @@ exports.default = List;
 
 "use strict";
 
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -110711,7 +110815,7 @@ exports.ImportBillCreate = void 0;
 var constate_1 = __importDefault(__webpack_require__(/*! constate */ "./node_modules/constate/dist/constate.es.js"));
 var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_use_1 = __webpack_require__(/*! react-use */ "./node_modules/react-use/esm/index.js");
-var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+var Fetch_1 = __importDefault(__webpack_require__(/*! ../../../service/Fetch */ "./resources/js/service/Fetch.ts"));
 var useCreate = function () {
     var _a = react_1.useState(null), provider = _a[0], setProvider = _a[1];
     var _b = react_1.useState({}), items = _b[0], setItems = _b[1];
@@ -110719,11 +110823,9 @@ var useCreate = function () {
     var setProviderHandle = react_1.useCallback(function (item) {
         setProvider(item);
     }, [provider]);
-    var setItemHandle = react_1.useCallback(function (item) {
-        var _a;
-        var value = __assign(__assign({}, items), (_a = {}, _a[item.id] = item, _a));
-        setItems(value);
-    }, [items]);
+    var setItemsHandle = react_1.useCallback(function (items) {
+        setItems(items);
+    }, [setItems]);
     var setDescriptionHandle = react_1.useCallback(function (value) {
         setDescription(value);
     }, [description]);
@@ -110732,13 +110834,20 @@ var useCreate = function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log("test333");
                     provider_id = provider.id;
-                    rItems = Object.values(items).map(function (e) { return (__assign(__assign({}, e), { quantity: 1 })); });
+                    rItems = Object.values(items);
                     cost = 0;
                     for (i = 0; i < rItems.length; i++) {
-                        cost += items[i].cost * rItems[i].quantity;
+                        cost += rItems[i].cost * rItems[i].quantity;
                     }
-                    return [4 /*yield*/, axios_1.default.post('/api/importbill', {
+                    console.log({
+                        provider_id: provider_id,
+                        items: rItems,
+                        cost: cost,
+                        description: description
+                    });
+                    return [4 /*yield*/, Fetch_1.default.post('api/importbill', {
                             provider_id: provider_id,
                             items: rItems,
                             cost: cost,
@@ -110746,25 +110855,25 @@ var useCreate = function () {
                         })];
                 case 1:
                     res = _a.sent();
-                    console.log(res);
-                    return [2 /*return*/];
+                    return [2 /*return*/, res.data];
             }
         });
     }); }, [items, description, provider]), state = _d[0], createBill = _d[1];
+    console.log(state);
     return {
         provider: provider, setProviderHandle: setProviderHandle,
-        items: items, setItemHandle: setItemHandle,
+        items: items, setItemsHandle: setItemsHandle,
         description: description, setDescriptionHandle: setDescriptionHandle,
         createBill: createBill
     };
 };
-var _a = constate_1.default(useCreate, function (value) { return value.items; }, function (value) { return value.provider; }, function (value) { return value.setProviderHandle; }, function (value) { return value.setItemHandle; }, function (value) { return value.description; }, function (value) { return value.setDescriptionHandle; }, function (value) { return value.createBill; }), Provider = _a[0], useItems = _a[1], useProvider = _a[2], useSetProvider = _a[3], useSetItem = _a[4], useDescription = _a[5], useSetDescription = _a[6], useCreateBill = _a[7];
+var _a = constate_1.default(useCreate, function (value) { return value.items; }, function (value) { return value.provider; }, function (value) { return value.setProviderHandle; }, function (value) { return value.setItemsHandle; }, function (value) { return value.description; }, function (value) { return value.setDescriptionHandle; }, function (value) { return value.createBill; }), Provider = _a[0], useItems = _a[1], useProvider = _a[2], useSetProvider = _a[3], useSetItems = _a[4], useDescription = _a[5], useSetDescription = _a[6], useCreateBill = _a[7];
 exports.ImportBillCreate = {
     Provider: Provider,
     useItems: useItems,
     useProvider: useProvider,
     useSetProvider: useSetProvider,
-    useSetItem: useSetItem,
+    useSetItems: useSetItems,
     useDescription: useDescription,
     useSetDescription: useSetDescription,
     useCreateBill: useCreateBill
@@ -110806,23 +110915,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var ProductListPopUp_1 = __importDefault(__webpack_require__(/*! ../../../components/Product/ProductListPopUp */ "./resources/js/components/Product/ProductListPopUp.tsx"));
-var SelectItem_1 = __importDefault(__webpack_require__(/*! ../../../components/Product/SelectItem */ "./resources/js/components/Product/SelectItem.tsx"));
+var SelectedList_1 = __importDefault(__webpack_require__(/*! ../../../components/Product/SelectedList */ "./resources/js/components/Product/SelectedList.tsx"));
+var SelectProductContext_1 = __webpack_require__(/*! ../../../components/Product/SelectProductContext */ "./resources/js/components/Product/SelectProductContext.ts");
 var ProviderListPopUp_1 = __importDefault(__webpack_require__(/*! ../../../components/Provider/ProviderListPopUp */ "./resources/js/components/Provider/ProviderListPopUp.tsx"));
 var constate_1 = __webpack_require__(/*! ./constate */ "./resources/js/page/ImportBill/Create/constate.ts");
 var Create = react_1.default.memo(function () {
     var provider = constate_1.ImportBillCreate.useProvider();
     var items = constate_1.ImportBillCreate.useItems();
     var createBill = constate_1.ImportBillCreate.useCreateBill();
-    var setItem = constate_1.ImportBillCreate.useSetItem();
+    var setItems = constate_1.ImportBillCreate.useSetItems();
     var setProvider = constate_1.ImportBillCreate.useSetProvider();
     var description = constate_1.ImportBillCreate.useDescription();
     var setDescription = constate_1.ImportBillCreate.useSetDescription();
+    var onCreateHandle = react_1.useCallback(function () {
+        console.log('test');
+        createBill();
+    }, [createBill]);
     var onChangeHandle = react_1.useCallback(function (e) {
         console.log(e.target.value);
         setDescription(e.target.value);
     }, [description]);
-    return (react_1.default.createElement(react_1.default.Fragment, null,
+    return (react_1.default.createElement(SelectProductContext_1.SelectProductContext.Provider, { value: { items: items, setItems: setItems } },
         react_1.default.createElement("div", { className: "d-sm-flex align-items-center justify-content-between mb-4 mt-4" },
             react_1.default.createElement("h1", { className: "h3 mb-0 text-gray-800" }, "Create New Order")),
         react_1.default.createElement("div", { className: "row" },
@@ -110836,22 +110949,7 @@ var Create = react_1.default.memo(function () {
                                 react_1.default.createElement("div", { className: "h6" }, provider.name),
                                 react_1.default.createElement("div", { className: "text-xs" }, provider.phone))) : react_1.default.createElement(ProviderListPopUp_1.default, { onClickItem: setProvider }))))),
                 react_1.default.createElement("div", { className: "col" },
-                    react_1.default.createElement("div", { className: "card shadow" },
-                        react_1.default.createElement("div", { className: "card-header py-3 d-flex flex-row align-items-center justify-content-between" },
-                            react_1.default.createElement("h6", { className: "m-0 font-weight-bold text-primary" }, "Th\u00F4ng tin s\u1EA3n ph\u1EA9m")),
-                        react_1.default.createElement("div", { className: "card-body" },
-                            react_1.default.createElement("div", { className: "col" },
-                                react_1.default.createElement("div", { className: "row" },
-                                    react_1.default.createElement("div", { className: "h6 font-weight-bold text-gray-800" }, "Th\u00F4ng tin s\u1EA3n ph\u1EA9m")),
-                                react_1.default.createElement("div", { className: "row mb-2" },
-                                    react_1.default.createElement(ProductListPopUp_1.default, { onClickItem: setItem })),
-                                react_1.default.createElement("div", { className: "row card-header mb-2" },
-                                    react_1.default.createElement("div", { className: "col" }, "M\u00E3 SKU"),
-                                    react_1.default.createElement("div", { className: "col" }, "T\u00EAn s\u1EA3n ph\u1EA9m"),
-                                    react_1.default.createElement("div", { className: "col" }, "S\u1ED1 l\u01B0\u1EE3ng "),
-                                    react_1.default.createElement("div", { className: "col" }, "\u0110\u01A1n gi\u00E1"),
-                                    react_1.default.createElement("div", { className: "col" }, "T\u1ED5ng gi\u00E1")),
-                                Object.values(items).map(function (item) { return (react_1.default.createElement(SelectItem_1.default, { item: item })); })))))),
+                    react_1.default.createElement(SelectedList_1.default, null))),
             react_1.default.createElement("div", { className: "col-xl-4 col-md-4 mb-4" },
                 react_1.default.createElement("div", { className: "card shadow py-2" },
                     react_1.default.createElement("div", { className: "card-body" },
@@ -110865,7 +110963,7 @@ var Create = react_1.default.memo(function () {
                             react_1.default.createElement("label", null, "Ghi ch\u00FA"),
                             react_1.default.createElement("textarea", { className: "form-control", value: description, onChange: onChangeHandle })),
                         react_1.default.createElement("div", { className: "row no-gutters align-items-center" },
-                            react_1.default.createElement("button", { type: "button", onClick: createBill, className: "btn btn-primary btn-lg btn-block" }, "T\u1EA1o \u0111\u01A1n "))))))));
+                            react_1.default.createElement("button", { type: "button", onClick: onCreateHandle, className: "btn btn-primary btn-lg btn-block" }, "T\u1EA1o \u0111\u01A1n "))))))));
 });
 var __Create = react_1.default.memo(function () {
     return react_1.default.createElement(constate_1.ImportBillCreate.Provider, null,
@@ -110984,7 +111082,7 @@ var List = react_1.default.memo(function () {
                     react_1.default.createElement("div", { className: "col" }, "Tr\u1EA1ng th\u00E1i "),
                     react_1.default.createElement("div", { className: "col" }, "Gi\u00E1")),
                 react_1.default.createElement("div", { className: "card-body" }, (data.value || []).map(function (item) {
-                    return react_1.default.createElement(Item_1.default, { item: item });
+                    return react_1.default.createElement(Item_1.default, { key: item.id, item: item });
                 }))))));
 });
 exports.default = List;

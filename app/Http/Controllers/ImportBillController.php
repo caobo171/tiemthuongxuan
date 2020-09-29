@@ -6,7 +6,9 @@ use App\Models\Customer;
 use App\Models\ImportBill;
 use App\Models\ImportBillItem;
 use App\Models\Product;
+use App\Models\Provider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ImportBillController extends Controller
 {
@@ -79,7 +81,13 @@ class ImportBillController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $bill = ImportBill::find($id);
+        $bill_items = ImportBillItem::where('bill_id', $bill->id)->get();
+        return array(
+            "bill" => $bill,
+            "bill_items" => $bill_items
+        );
     }
 
     /**

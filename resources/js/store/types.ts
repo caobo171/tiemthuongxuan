@@ -35,11 +35,8 @@ export type RawItem = {
 
 export type SelectItemType = {
     id: number,
-    product_id: number,
     sku: string,
     name: string
-    created_at: Date,
-    bill_id: number,
     product_name: string,
     status: string,
     cost: number,

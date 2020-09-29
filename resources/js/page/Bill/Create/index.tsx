@@ -1,16 +1,16 @@
 import React , {useCallback} from 'react';
-import ProductListPopUp from '../../../components/Product/ProductListPopUp';
 import { BillCreate } from './constate';
 import CustomerListPopUp from '../../../components/Customer/CustomerListPopUp';
-import SelectItem from '../../../components/Product/SelectItem';
+import ProductSelectedList from '../../../components/Product/SelectedList';
+import { SelectProductContext } from '../../../components/Product/SelectProductContext';
 
 
-const CreateProduct = React.memo(() => {
+const Create = React.memo(() => {
 
     const customer = BillCreate.useCustomer();
     const items = BillCreate.useItems();
     const createBill = BillCreate.useCreateBill();
-    const setItem = BillCreate.useSetItem();
+    const setItems = BillCreate.useSetItems();
     const setCustomer = BillCreate.useSetCustomer();
 
     const description = BillCreate.useDescription();
@@ -21,7 +21,7 @@ const CreateProduct = React.memo(() => {
         setDescription(e.target.value);
     },[description])
 
-    return (<>
+    return (<SelectProductContext.Provider value={{setItems, items}}>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
             <h1 className="h3 mb-0 text-gray-800">Create New Order</h1>
         </div>
@@ -46,38 +46,7 @@ const CreateProduct = React.memo(() => {
 
 
                 <div className="col">
-                    <div className="card shadow">
-                        <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 className="m-0 font-weight-bold text-primary">Thông tin sản phẩm</h6>
-                        </div>
-                        <div className="card-body">
-                            <div className="col">
-                                <div className="row">
-                                    <div className="h6 font-weight-bold text-gray-800">
-                                        Thông tin sản phẩm
-                                        </div>
-                                </div>
-                                <div className="row mb-2">
-                                    <ProductListPopUp onClickItem = {setItem} />
-                                </div>
-
-                                <div className="row card-header mb-2">
-                                    <div className="col">Mã SKU</div>
-                                    <div className="col">Tên sản phẩm</div>
-                                    <div className="col">Số lượng </div>
-                                    <div className="col">Đơn giá</div>
-                                    <div className="col">Tổng giá</div>
-                                </div>
-
-                                {
-                                    Object.values(items).map(item => (
-                                        <SelectItem item={item} />
-                                    ))
-                                }
-                            </div>
-
-                        </div>
-                    </div>
+                    <ProductSelectedList/>
                 </div>
             </div>
 
@@ -108,14 +77,14 @@ const CreateProduct = React.memo(() => {
                 </div>
             </div>
         </div>
-    </>);
+    </SelectProductContext.Provider>);
 });
 
 
-const __CreateProduct = React.memo(() => {
+const __Create = React.memo(() => {
     return <BillCreate.Provider>
-        <CreateProduct />
+        <Create />
     </BillCreate.Provider>
 })
 
-export default __CreateProduct;
+export default __Create;

@@ -15,13 +15,9 @@ const useCreate = ()=>{
         setCustomer(customer);
     },[customer]);
 
-    const setItemHandle = useCallback((item)=>{
-        const value = {
-            ...items,
-            [item.id]: item
-        };
-        setItems(value);
-    },[items]);
+    const setItemsHandle = useCallback((items)=>{
+        setItems(items);
+    },[setItems]);
 
     const setDescriptionHandle = useCallback((value)=>{
         setDescription(value);
@@ -36,21 +32,22 @@ const useCreate = ()=>{
         }));
         let cost = 0 ;
         for (let i = 0; i < rItems.length; i++){
-            cost += items[i].cost * rItems[i].quantity;
+            cost += rItems[i].cost * rItems[i].quantity;
         }
-        
+
         const res = await Fetch.post('api/bill',{
             customer_id,
             items: rItems,
             cost,
             description
         });
-        console.log(res);
+
+        return res.data;
     },[items, description, customer]);
 
     return {
         customer, setCustomerHandle, 
-        items, setItemHandle, 
+        items, setItemsHandle, 
         description, setDescriptionHandle,
         createBill
     }
@@ -60,7 +57,7 @@ const [Provider,
     useItems,
     useCustomer,
     useSetCustomer,
-    useSetItem,
+    useSetItems,
     useDescription, 
     useSetDescription,
     useCreateBill
@@ -68,7 +65,7 @@ const [Provider,
     value=> value.items,
     value=> value.customer,
     value=> value.setCustomerHandle,
-    value=> value.setItemHandle,
+    value=> value.setItemsHandle,
     value=> value.description,
     value=> value.setDescriptionHandle,
     value=> value.createBill
@@ -80,7 +77,7 @@ export const BillCreate =  {
     useItems,
     useCustomer,
     useSetCustomer,
-    useSetItem,
+    useSetItems,
     useDescription, 
     useSetDescription,
     useCreateBill

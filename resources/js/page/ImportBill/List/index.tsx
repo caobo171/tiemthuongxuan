@@ -25,7 +25,7 @@ const List = React.memo(() => {
                 </div>
                 <div className="card-body">
                     {(data.value || []).map(item => {    
-                        return <Item item={item} />})
+                        return <Item key={item.id} item={item} />})
                     }
                 </div>
             </div>

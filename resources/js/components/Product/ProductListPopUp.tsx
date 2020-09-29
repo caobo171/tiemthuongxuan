@@ -29,9 +29,7 @@ const ProductListPopUp = React.memo(({ onClickItem }: Props) => {
 
     return (
         <>
-            <div className="input-group">
                 <input className="form-control dropdown-toggle" id="productDropDown"
-                    onClick={fetch}
                     placeholder="Search for..."
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 </input>
@@ -42,7 +40,9 @@ const ProductListPopUp = React.memo(({ onClickItem }: Props) => {
                         ) : (
                                 <><a className="dropdown-item" data-toggle="modal" data-target="#createProductModal">Thêm sản phẩm mới</a>
                                     {(state.value || []).map(item => (
-                                        <a className="dropdown-item"
+                                        <a 
+                                            key={item.id}
+                                            className="dropdown-item"
                                             onClick={() => onClickItem(item)}
                                             id={item.id}
                                             data-toggle="modal"
@@ -55,7 +55,7 @@ const ProductListPopUp = React.memo(({ onClickItem }: Props) => {
                     }
 
                 </div>
-            </div>
+   
 
             <CreateProductModal />
         </>

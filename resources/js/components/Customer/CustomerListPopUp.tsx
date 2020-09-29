@@ -19,19 +19,18 @@ const CustomerListPopUp = React.memo(({ onClickItem }: Props) => {
     useEffect(()=>{
 
         //@ts-ignore
-        window.$("#productDropDown").on("click", ()=>{
+        window.$("#customerDropdown").on("click", ()=>{
             fetch();
         })
         return ()=>{
             //@ts-ignore
-            window.$("#productDropDown").off('click');
+            window.$("#customerDropdown").off('click');
         }
     }, [])
     return (
         <>
-            <div className="input-group">
+            <div className="row">
                 <input className="form-control dropdown-toggle" id="customerDropdown"
-                    onClick={fetch}
                     placeholder="Search for..."
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 </input>
@@ -41,6 +40,7 @@ const CustomerListPopUp = React.memo(({ onClickItem }: Props) => {
                     ) : (<><a className="dropdown-item" data-toggle="modal" data-target="#createUserModal">Thêm mới khách hàng</a>
                         {(state.value || []).map(item => (
                             <a className="dropdown-item"
+                                key={item.id}
                                 onClick={() => onClickItem(item)}
                                 id={item.id}
                                 data-toggle="modal"
