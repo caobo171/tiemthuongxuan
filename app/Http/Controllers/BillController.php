@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bill;
 use App\Models\BillItem;
+use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -52,7 +53,7 @@ class BillController extends Controller
                 if(is_array($items)){
                     foreach($items as $item){
                         $bill_item = new BillItem();
-                        $bill_item->quantiy = $item['quantity'];
+                        $bill_item->quantity = $item['quantity'];
                         $bill_item->product_id = $item['product_id'];
                         $bill_item->bill_id = $bill->id;
                         $bill_item->product_name = $item['name'];
@@ -83,7 +84,13 @@ class BillController extends Controller
     {
         //
         $bill = Bill::find($id);
-        
+        $bill_items = BillItem::where("bill_id", $bill->id)->get();
+        $customer = Customer::find($bill->customer_id);
+        return array(
+            "bill" => $bill,
+            "bill_items" => $bill_items,
+            "customer" => $customer
+        );
     }
 
     /**
@@ -118,5 +125,14 @@ class BillController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function status(Request $request){
+        $bill = Bill::find($request->input('id'));
+        $bill->status = $request->input('status');
+        if($bill->save()){
+            return $bill;
+        }
+        return $bill;
     }
 }

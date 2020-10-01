@@ -2,6 +2,7 @@ import Axios from 'axios';
 import { useAsync } from 'react-use';
 import React from 'react';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 interface Props {
     item: any
@@ -13,6 +14,7 @@ const Item = React.memo(({ item }: Props) => {
         <div className="col">{item.user_id}</div>
         <div className="col">{item.status} </div>
         <div className="col">{item.cost}</div>
+        <Link className="col" to={`bill/detail/${item.id}`}>View</Link>
     </div>
 });
 
@@ -35,6 +37,7 @@ const List = React.memo(() => {
                     <div className="col">Khách hàng</div>
                     <div className="col">Trạng thái </div>
                     <div className="col">Giá</div>
+                    <div className="col"></div>
                 </div>
                 <div className="card-body">
                     {(data.value || []).map(item => {    

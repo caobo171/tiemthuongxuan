@@ -1,11 +1,9 @@
-import React, { useCallback } from 'react';
-import ProductListPopUp from '../../../components/Product/ProductListPopUp';
-import ProductSelectedList from '../../../components/Product/SelectedList';
-import SelectItem from '../../../components/Product/SelectItem';
-import { SelectProductContext } from '../../../components/Product/SelectProductContext';
-
-import ProviderListPopUp from '../../../components/Provider/ProviderListPopUp';
+import React , {useCallback} from 'react';
 import { ImportBillCreate } from './constate';
+import CustomerListPopUp from '../../../components/Customer/CustomerListPopUp';
+import ProductSelectedList from '../../../components/Product/SelectedList';
+import { SelectProductContext } from '../../../components/Product/SelectProductContext';
+import ProviderListPopUp from '../../../components/Provider/ProviderListPopUp';
 
 
 const Create = React.memo(() => {
@@ -16,19 +14,15 @@ const Create = React.memo(() => {
     const setItems = ImportBillCreate.useSetItems();
     const setProvider = ImportBillCreate.useSetProvider();
 
-    const description = ImportBillCreate.useDescription();
-    const setDescription = ImportBillCreate.useSetDescription();
+    const bill = ImportBillCreate.useBill();
+    const changeBill = ImportBillCreate.useChangeBill();
 
-    const onCreateHandle = useCallback(()=>{
-        console.log('test')
-        createBill();
-    },[createBill]);
+
     const onChangeHandle = useCallback((e)=>{
-        console.log(e.target.value)
-        setDescription(e.target.value);
-    },[description])
+        changeBill(e.target.name, e.target.value);
+    },[bill, changeBill])
 
-    return (<SelectProductContext.Provider value={{items, setItems }}>
+    return (<SelectProductContext.Provider value={{setItems, items}}>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
             <h1 className="h3 mb-0 text-gray-800">Create New Order</h1>
         </div>
@@ -37,7 +31,7 @@ const Create = React.memo(() => {
                 <div className="col mb-4">
                     <div className="card shadow">
                         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 className="m-0 font-weight-bold text-primary">Thông tin nhà cung cấp</h6>
+                            <h6 className="m-0 font-weight-bold text-primary">Thông tin khách hàng</h6>
                         </div>
                         <div className="card-body">
                             <div className="col">
@@ -45,11 +39,13 @@ const Create = React.memo(() => {
                                     <div className="h6">{provider.name}</div>
                                     <div className="text-xs">{provider.phone}</div>
                                 </>
-                                ) : <ProviderListPopUp onClickItem= {setProvider}/>}
+                                ) : <ProviderListPopUp onClickItem={setProvider}/>}
                             </div>
                         </div>
                     </div>
                 </div>
+
+
                 <div className="col">
                     <ProductSelectedList/>
                 </div>
@@ -67,15 +63,25 @@ const Create = React.memo(() => {
                                 <i className="fas fa-calendar fa-2x text-gray-300"></i>
                             </div>
                         </div>
-                        <div className="row no-gutters align-items-center">
+                        <div className="form-group">
                             <label>Ghi chú</label>
-                            <textarea className="form-control" value={description}
+                            <textarea className="form-control" value={bill.description}
                                 onChange = {onChangeHandle}
+                                name={"description"}
                             ></textarea>
+    
+                        </div>
+                        <div className="form-group">
+                            <label>Extra Cost</label>
+                            <input className="form-control" 
+                                value={bill.extra_cost}
+                                onChange = {onChangeHandle}
+                                type="number" name= "extra_cost"
+                            ></input>
                         </div>
                         <div className="row no-gutters align-items-center">
                             <button type="button"
-                             onClick={onCreateHandle}
+                             onClick={createBill}
                              className="btn btn-primary btn-lg btn-block">Tạo đơn </button>
                         </div>
                     </div>

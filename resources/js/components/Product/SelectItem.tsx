@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { RawItem } from '../../store/types';
+import { ITEM_STATUS } from '../../Constants';
 
 interface Props {
     item: RawItem,
@@ -27,11 +28,15 @@ const SelectItem = React.memo(({item, updateItem}: Props)=>{
                     type="number" className="form-control"/>
             </div>
             <div className="col">
-                <input 
+                <select 
                     onChange={onChangeHandle}
                     name="status"
                     value={item.status} 
-                    className="form-control"/>
+                    className="form-control">
+                    {Object.keys(ITEM_STATUS).map(key=>(
+                        <option value={key}>{ITEM_STATUS[key]}</option>
+                    ))}
+                </select>
             </div>
             <div className="col">
                 <input 

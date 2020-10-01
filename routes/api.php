@@ -29,3 +29,4 @@ Route::resource('provider', ProviderController::class);
 Route::resource('customer', CustomerController::class);
 Route::resource('importbill', ImportBillController::class);
 Route::resource('bill', BillController::class);
+Route::post('bills/status', [BillController::class, 'status']);

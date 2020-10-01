@@ -41,6 +41,13 @@ Route::get('/providers', function () {
 Route::get('/bills', function () {
     return view('index');
 });
+
+Route::get('/bill/detail/{id}', function () {
+    return view('index');
+});
+Route::get('/importbill/detail/{id}', function () {
+    return view('index');
+});
 // Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

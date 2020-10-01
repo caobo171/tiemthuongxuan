@@ -47,19 +47,20 @@ class ImportBillController extends Controller
             $bill->description = $request->input('description');
             $bill->cost = $request->input('cost');
             $bill->provider_id = $request->input('provider_id');
+            $bill->extra_cost = $request->input('extra_cost');
 
             if($bill->save()){
                 $items = $request->input('items');
                 if(is_array($items)){
                     foreach($items as $item){
-                        for($i = 0 ; $i < $item['quantity'] ; $i++){
-                            $bill_item = new ImportBillItem();
-                            $bill_item->product_id = $item['product_id'];
-                            $bill_item->bill_id = $bill->id;
-                            $bill_item->product_name = $item['name'];
-                            $bill_item->cost = $item['cost'];
-                            $bill_item->save();
-                        }
+                        $bill_item = new ImportBillItem();
+                        $bill_item->quantity = $item['quantity'];
+                        $bill_item->product_id = $item['product_id'];
+                        $bill_item->bill_id = $bill->id;
+                        $bill_item->product_name = $item['name'];
+                        $bill_item->cost = $item['cost'];
+                        $bill_item->sku = $item['sku'];
+                        $bill_item->save();    
                     }
 
                     $product = Product::find($item['product_id']);

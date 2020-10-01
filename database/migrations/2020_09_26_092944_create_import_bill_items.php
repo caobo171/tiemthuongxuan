@@ -22,7 +22,7 @@ class CreateImportBillItems extends Migration
             $table->char('status', 100);
             $table->integer('cost');
             $table->string('sku');
-            $table->integer('quantiy');
+            $table->integer('quantity');
 
             $table->index(['product_id', 'bill_id']);
         });

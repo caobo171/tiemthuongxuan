@@ -110138,6 +110138,34 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/Constants.ts":
+/*!***********************************!*\
+  !*** ./resources/js/Constants.ts ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ITEM_STATUS = exports.BILL_STATUS = void 0;
+exports.BILL_STATUS = {
+    'processing': 'processing',
+    'calling': 'calling',
+    'delivering': 'delivering',
+    'success': 'success',
+    'broken': 'broken',
+    'refund': 'refund'
+};
+exports.ITEM_STATUS = {
+    'normal': 'normal',
+    'gifted': 'gifted',
+    'repay': 'repay'
+};
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -110618,6 +110646,71 @@ exports.default = CreateProductModal;
 
 /***/ }),
 
+/***/ "./resources/js/components/Product/Item.tsx":
+/*!**************************************************!*\
+  !*** ./resources/js/components/Product/Item.tsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var Item = react_1.default.memo(function (_a) {
+    var item = _a.item;
+    return (react_1.default.createElement("div", { className: "row mb-2" },
+        react_1.default.createElement("div", { className: "col" }, item.sku),
+        react_1.default.createElement("div", { className: "col" }, item.product_name),
+        react_1.default.createElement("div", { className: "col" }, item.quantity),
+        react_1.default.createElement("div", { className: "col" }, item.status),
+        react_1.default.createElement("div", { className: "col" }, item.cost),
+        react_1.default.createElement("div", { className: "col" }, item.cost * item.quantity)));
+});
+exports.default = Item;
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Product/List.tsx":
+/*!**************************************************!*\
+  !*** ./resources/js/components/Product/List.tsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var Item_1 = __importDefault(__webpack_require__(/*! ./Item */ "./resources/js/components/Product/Item.tsx"));
+var SelectedList = react_1.default.memo(function (_a) {
+    var items = _a.items;
+    return (react_1.default.createElement("div", { className: "card shadow" },
+        react_1.default.createElement("div", { className: "card-header py-3 d-flex flex-row align-items-center justify-content-between" },
+            react_1.default.createElement("h6", { className: "m-0 font-weight-bold text-primary" }, "Th\u00F4ng tin s\u1EA3n ph\u1EA9m")),
+        react_1.default.createElement("div", { className: "card-body" },
+            react_1.default.createElement("div", { className: "col" },
+                react_1.default.createElement("div", { className: "row card-header mb-2" },
+                    react_1.default.createElement("div", { className: "col" }, "M\u00E3 SKU"),
+                    react_1.default.createElement("div", { className: "col" }, "T\u00EAn s\u1EA3n ph\u1EA9m"),
+                    react_1.default.createElement("div", { className: "col" }, "S\u1ED1 l\u01B0\u1EE3ng "),
+                    react_1.default.createElement("div", { className: "col" }, "Tr\u1EA1ng th\u00E1i "),
+                    react_1.default.createElement("div", { className: "col" }, "\u0110\u01A1n gi\u00E1"),
+                    react_1.default.createElement("div", { className: "col" }, "T\u1ED5ng gi\u00E1")),
+                items.map(function (item) { return (react_1.default.createElement(Item_1.default, { key: item.id, item: item })); })))));
+});
+exports.default = SelectedList;
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Product/ProductListPopUp.tsx":
 /*!**************************************************************!*\
   !*** ./resources/js/components/Product/ProductListPopUp.tsx ***!
@@ -110766,6 +110859,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var Constants_1 = __webpack_require__(/*! ../../Constants */ "./resources/js/Constants.ts");
 var SelectItem = react_1.default.memo(function (_a) {
     var item = _a.item, updateItem = _a.updateItem;
     var onChangeHandle = react_1.useCallback(function (e) {
@@ -110779,7 +110873,7 @@ var SelectItem = react_1.default.memo(function (_a) {
         react_1.default.createElement("div", { className: "col" },
             react_1.default.createElement("input", { onChange: onChangeHandle, name: "quantity", value: item.quantity, type: "number", className: "form-control" })),
         react_1.default.createElement("div", { className: "col" },
-            react_1.default.createElement("input", { onChange: onChangeHandle, name: "status", value: item.status, className: "form-control" })),
+            react_1.default.createElement("select", { onChange: onChangeHandle, name: "status", value: item.status, className: "form-control" }, Object.keys(Constants_1.ITEM_STATUS).map(function (key) { return (react_1.default.createElement("option", { value: key }, Constants_1.ITEM_STATUS[key])); }))),
         react_1.default.createElement("div", { className: "col" },
             react_1.default.createElement("input", { onChange: onChangeHandle, value: item.cost, type: "number", name: "cost", className: "form-control" })),
         react_1.default.createElement("div", { className: "col" }, item.cost * item.quantity)));
@@ -111516,6 +111610,193 @@ exports.default = __Create;
 
 /***/ }),
 
+/***/ "./resources/js/page/Bill/Detail/constate.ts":
+/*!***************************************************!*\
+  !*** ./resources/js/page/Bill/Detail/constate.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BillDetail = void 0;
+var constate_1 = __importDefault(__webpack_require__(/*! constate */ "./node_modules/constate/dist/constate.es.js"));
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_use_1 = __webpack_require__(/*! react-use */ "./node_modules/react-use/esm/index.js");
+var Fetch_1 = __importDefault(__webpack_require__(/*! ../../../service/Fetch */ "./resources/js/service/Fetch.ts"));
+var useDetail = function (_a) {
+    var billId = _a.billId;
+    var _b = react_use_1.useAsyncFn(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Fetch_1.default.get("api/bill/" + billId)];
+                case 1:
+                    res = _a.sent();
+                    return [2 /*return*/, res.data];
+            }
+        });
+    }); }, [billId]), stateBill = _b[0], fetch = _b[1];
+    var _c = react_use_1.useAsyncFn(function (status) { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, Fetch_1.default.post("api/bills/status", {
+                        id: (_a = stateBill.value) === null || _a === void 0 ? void 0 : _a.bill.id,
+                        status: status
+                    })];
+                case 1:
+                    res = _b.sent();
+                    return [2 /*return*/, res.data];
+            }
+        });
+    }); }, [stateBill]), status = _c[0], changeStatus = _c[1];
+    react_1.useEffect(function () {
+        if (!status.loading) {
+            fetch();
+        }
+    }, [status]);
+    return { stateBill: stateBill, changeStatus: changeStatus };
+};
+var _a = constate_1.default(useDetail, function (value) { return value.stateBill; }, function (value) { return value.changeStatus; }), Provider = _a[0], useStateBill = _a[1], useChangeStatus = _a[2];
+exports.BillDetail = {
+    Provider: Provider,
+    useStateBill: useStateBill,
+    useChangeStatus: useChangeStatus
+};
+
+
+/***/ }),
+
+/***/ "./resources/js/page/Bill/Detail/index.tsx":
+/*!*************************************************!*\
+  !*** ./resources/js/page/Bill/Detail/index.tsx ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var constate_1 = __webpack_require__(/*! ./constate */ "./resources/js/page/Bill/Detail/constate.ts");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var List_1 = __importDefault(__webpack_require__(/*! ../../../components/Product/List */ "./resources/js/components/Product/List.tsx"));
+var Constants_1 = __webpack_require__(/*! ../../../Constants */ "./resources/js/Constants.ts");
+var Detail = react_1.default.memo(function () {
+    var state = constate_1.BillDetail.useStateBill();
+    var changeStatus = constate_1.BillDetail.useChangeStatus();
+    var onChangeStatus = react_1.useCallback(function (e) {
+        if (window.confirm('Are you sure to change bill state?')) {
+            changeStatus(e.target.value);
+        }
+    }, [changeStatus]);
+    return (react_1.default.createElement(react_1.default.Fragment, null, state.value && (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("div", { className: "d-sm-flex align-items-center justify-content-between mb-4 mt-4" },
+            react_1.default.createElement("h1", { className: "h3 mb-0 text-gray-800" }, "Create New Order"),
+            react_1.default.createElement("div", { className: "form-group mr-2" },
+                react_1.default.createElement("select", { className: "form-control", onChange: onChangeStatus, value: state.value.bill.status }, Object.keys(Constants_1.BILL_STATUS).map(function (key) { return (react_1.default.createElement("option", { value: key }, Constants_1.BILL_STATUS[key])); })))),
+        react_1.default.createElement("div", { className: "row" },
+            react_1.default.createElement("div", { className: "col-xl-8 col-md-8 mb-8" },
+                react_1.default.createElement("div", { className: "col mb-4" },
+                    react_1.default.createElement("div", { className: "card shadow" },
+                        react_1.default.createElement("div", { className: "card-header py-3 d-flex flex-row align-items-center justify-content-between" },
+                            react_1.default.createElement("h6", { className: "m-0 font-weight-bold text-primary" }, "Th\u00F4ng tin kh\u00E1ch h\u00E0ng")),
+                        react_1.default.createElement("div", { className: "card-body" },
+                            react_1.default.createElement("div", { className: "col" },
+                                react_1.default.createElement("div", { className: "h6" }, state.value.customer.name),
+                                react_1.default.createElement("div", { className: "text-xs" }, state.value.customer.phone))))),
+                react_1.default.createElement("div", { className: "col" },
+                    react_1.default.createElement(List_1.default, { items: state.value.bill_items }))),
+            react_1.default.createElement("div", { className: "col-xl-4 col-md-4 mb-4" },
+                react_1.default.createElement("div", { className: "card shadow py-2" },
+                    react_1.default.createElement("div", { className: "card-body" },
+                        react_1.default.createElement("div", { className: "row no-gutters align-items-center" },
+                            react_1.default.createElement("div", { className: "col mr-2" },
+                                react_1.default.createElement("div", { className: "text-xs font-weight-bold text-primary text-uppercase mb-1" }, "Th\u00F4ng tin \u0111\u01A1n h\u00E0ng"),
+                                react_1.default.createElement("div", { className: "h5 mb-0 font-weight-bold text-gray-800" }, "$40,000")),
+                            react_1.default.createElement("div", { className: "col-auto" },
+                                react_1.default.createElement("i", { className: "fas fa-calendar fa-2x text-gray-300" }))),
+                        react_1.default.createElement("div", { className: "form-group" },
+                            react_1.default.createElement("label", null, "Ghi ch\u00FA"),
+                            react_1.default.createElement("div", null, state.value.bill.description)),
+                        react_1.default.createElement("div", { className: "form-group" },
+                            react_1.default.createElement("label", null, "Extra Cost"),
+                            react_1.default.createElement("div", null, state.value.bill.extra_cost))))))))));
+});
+var __Detail = react_1.default.memo(function () {
+    var id = react_router_dom_1.useParams().id;
+    return react_1.default.createElement(constate_1.BillDetail.Provider, { billId: id },
+        react_1.default.createElement(Detail, null));
+});
+exports.default = __Detail;
+
+
+/***/ }),
+
 /***/ "./resources/js/page/Bill/List/index.tsx":
 /*!***********************************************!*\
   !*** ./resources/js/page/Bill/List/index.tsx ***!
@@ -111569,6 +111850,7 @@ var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/a
 var react_use_1 = __webpack_require__(/*! react-use */ "./node_modules/react-use/esm/index.js");
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var Item = react_1.default.memo(function (_a) {
     var item = _a.item;
     return react_1.default.createElement("div", { className: "row" },
@@ -111578,7 +111860,8 @@ var Item = react_1.default.memo(function (_a) {
         react_1.default.createElement("div", { className: "col" },
             item.status,
             " "),
-        react_1.default.createElement("div", { className: "col" }, item.cost));
+        react_1.default.createElement("div", { className: "col" }, item.cost),
+        react_1.default.createElement(react_router_dom_1.Link, { className: "col", to: "bill/detail/" + item.id }, "View"));
 });
 var List = react_1.default.memo(function () {
     var data = react_use_1.useAsync(function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -111602,7 +111885,8 @@ var List = react_1.default.memo(function () {
                     react_1.default.createElement("div", { className: "col" }, "Ng\u00E0y t\u1EA1o \u0111\u01A1n"),
                     react_1.default.createElement("div", { className: "col" }, "Kh\u00E1ch h\u00E0ng"),
                     react_1.default.createElement("div", { className: "col" }, "Tr\u1EA1ng th\u00E1i "),
-                    react_1.default.createElement("div", { className: "col" }, "Gi\u00E1")),
+                    react_1.default.createElement("div", { className: "col" }, "Gi\u00E1"),
+                    react_1.default.createElement("div", { className: "col" })),
                 react_1.default.createElement("div", { className: "card-body" }, (data.value || []).map(function (item) {
                     return react_1.default.createElement(Item, { item: item, key: item.id });
                 }))))));
@@ -111621,6 +111905,17 @@ exports.default = List;
 
 "use strict";
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -111669,63 +111964,62 @@ var Fetch_1 = __importDefault(__webpack_require__(/*! ../../../service/Fetch */ 
 var useCreate = function () {
     var _a = react_1.useState(null), provider = _a[0], setProvider = _a[1];
     var _b = react_1.useState({}), items = _b[0], setItems = _b[1];
-    var _c = react_1.useState(''), description = _c[0], setDescription = _c[1];
+    var _c = react_1.useState({
+        id: -1,
+        description: '',
+        created_at: new Date,
+        cost: 0,
+        status: 'processing',
+        provider_id: -1,
+        data: "{}",
+        extra_cost: 0
+    }), bill = _c[0], setBill = _c[1];
     var setProviderHandle = react_1.useCallback(function (item) {
         setProvider(item);
     }, [provider]);
     var setItemsHandle = react_1.useCallback(function (items) {
         setItems(items);
     }, [setItems]);
-    var setDescriptionHandle = react_1.useCallback(function (value) {
-        setDescription(value);
-    }, [description]);
+    var changeBill = react_1.useCallback(function (key, value) {
+        var _a;
+        setBill(__assign(__assign({}, bill), (_a = {}, _a[key] = value, _a)));
+    }, [bill]);
     var _d = react_use_1.useAsyncFn(function () { return __awaiter(void 0, void 0, void 0, function () {
         var provider_id, rItems, cost, i, res;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log("test333");
                     provider_id = provider.id;
                     rItems = Object.values(items);
                     cost = 0;
                     for (i = 0; i < rItems.length; i++) {
                         cost += rItems[i].cost * rItems[i].quantity;
                     }
-                    console.log({
-                        provider_id: provider_id,
-                        items: rItems,
-                        cost: cost,
-                        description: description
-                    });
-                    return [4 /*yield*/, Fetch_1.default.post('api/importbill', {
-                            provider_id: provider_id,
-                            items: rItems,
-                            cost: cost,
-                            description: description
-                        })];
+                    return [4 /*yield*/, Fetch_1.default.post('api/importbill', __assign(__assign({}, bill), { items: rItems, cost: cost,
+                            provider_id: provider_id }))];
                 case 1:
                     res = _a.sent();
                     return [2 /*return*/, res.data];
             }
         });
-    }); }, [items, description, provider]), state = _d[0], createBill = _d[1];
+    }); }, [items, bill, provider]), state = _d[0], createBill = _d[1];
     console.log(state);
     return {
         provider: provider, setProviderHandle: setProviderHandle,
         items: items, setItemsHandle: setItemsHandle,
-        description: description, setDescriptionHandle: setDescriptionHandle,
+        bill: bill, changeBill: changeBill,
         createBill: createBill
     };
 };
-var _a = constate_1.default(useCreate, function (value) { return value.items; }, function (value) { return value.provider; }, function (value) { return value.setProviderHandle; }, function (value) { return value.setItemsHandle; }, function (value) { return value.description; }, function (value) { return value.setDescriptionHandle; }, function (value) { return value.createBill; }), Provider = _a[0], useItems = _a[1], useProvider = _a[2], useSetProvider = _a[3], useSetItems = _a[4], useDescription = _a[5], useSetDescription = _a[6], useCreateBill = _a[7];
+var _a = constate_1.default(useCreate, function (value) { return value.items; }, function (value) { return value.provider; }, function (value) { return value.setProviderHandle; }, function (value) { return value.setItemsHandle; }, function (value) { return value.bill; }, function (value) { return value.changeBill; }, function (value) { return value.createBill; }), Provider = _a[0], useItems = _a[1], useProvider = _a[2], useSetProvider = _a[3], useSetItems = _a[4], useBill = _a[5], useChangeBill = _a[6], useCreateBill = _a[7];
 exports.ImportBillCreate = {
     Provider: Provider,
     useItems: useItems,
     useProvider: useProvider,
     useSetProvider: useSetProvider,
     useSetItems: useSetItems,
-    useDescription: useDescription,
-    useSetDescription: useSetDescription,
+    useBill: useBill,
+    useChangeBill: useChangeBill,
     useCreateBill: useCreateBill
 };
 
@@ -111765,27 +112059,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var constate_1 = __webpack_require__(/*! ./constate */ "./resources/js/page/ImportBill/Create/constate.ts");
 var SelectedList_1 = __importDefault(__webpack_require__(/*! ../../../components/Product/SelectedList */ "./resources/js/components/Product/SelectedList.tsx"));
 var SelectProductContext_1 = __webpack_require__(/*! ../../../components/Product/SelectProductContext */ "./resources/js/components/Product/SelectProductContext.ts");
 var ProviderListPopUp_1 = __importDefault(__webpack_require__(/*! ../../../components/Provider/ProviderListPopUp */ "./resources/js/components/Provider/ProviderListPopUp.tsx"));
-var constate_1 = __webpack_require__(/*! ./constate */ "./resources/js/page/ImportBill/Create/constate.ts");
 var Create = react_1.default.memo(function () {
     var provider = constate_1.ImportBillCreate.useProvider();
     var items = constate_1.ImportBillCreate.useItems();
     var createBill = constate_1.ImportBillCreate.useCreateBill();
     var setItems = constate_1.ImportBillCreate.useSetItems();
     var setProvider = constate_1.ImportBillCreate.useSetProvider();
-    var description = constate_1.ImportBillCreate.useDescription();
-    var setDescription = constate_1.ImportBillCreate.useSetDescription();
-    var onCreateHandle = react_1.useCallback(function () {
-        console.log('test');
-        createBill();
-    }, [createBill]);
+    var bill = constate_1.ImportBillCreate.useBill();
+    var changeBill = constate_1.ImportBillCreate.useChangeBill();
     var onChangeHandle = react_1.useCallback(function (e) {
-        console.log(e.target.value);
-        setDescription(e.target.value);
-    }, [description]);
-    return (react_1.default.createElement(SelectProductContext_1.SelectProductContext.Provider, { value: { items: items, setItems: setItems } },
+        changeBill(e.target.name, e.target.value);
+    }, [bill, changeBill]);
+    return (react_1.default.createElement(SelectProductContext_1.SelectProductContext.Provider, { value: { setItems: setItems, items: items } },
         react_1.default.createElement("div", { className: "d-sm-flex align-items-center justify-content-between mb-4 mt-4" },
             react_1.default.createElement("h1", { className: "h3 mb-0 text-gray-800" }, "Create New Order")),
         react_1.default.createElement("div", { className: "row" },
@@ -111793,7 +112082,7 @@ var Create = react_1.default.memo(function () {
                 react_1.default.createElement("div", { className: "col mb-4" },
                     react_1.default.createElement("div", { className: "card shadow" },
                         react_1.default.createElement("div", { className: "card-header py-3 d-flex flex-row align-items-center justify-content-between" },
-                            react_1.default.createElement("h6", { className: "m-0 font-weight-bold text-primary" }, "Th\u00F4ng tin nh\u00E0 cung c\u1EA5p")),
+                            react_1.default.createElement("h6", { className: "m-0 font-weight-bold text-primary" }, "Th\u00F4ng tin kh\u00E1ch h\u00E0ng")),
                         react_1.default.createElement("div", { className: "card-body" },
                             react_1.default.createElement("div", { className: "col" }, provider ? (react_1.default.createElement(react_1.default.Fragment, null,
                                 react_1.default.createElement("div", { className: "h6" }, provider.name),
@@ -111809,17 +112098,119 @@ var Create = react_1.default.memo(function () {
                                 react_1.default.createElement("div", { className: "h5 mb-0 font-weight-bold text-gray-800" }, "$40,000")),
                             react_1.default.createElement("div", { className: "col-auto" },
                                 react_1.default.createElement("i", { className: "fas fa-calendar fa-2x text-gray-300" }))),
-                        react_1.default.createElement("div", { className: "row no-gutters align-items-center" },
+                        react_1.default.createElement("div", { className: "form-group" },
                             react_1.default.createElement("label", null, "Ghi ch\u00FA"),
-                            react_1.default.createElement("textarea", { className: "form-control", value: description, onChange: onChangeHandle })),
+                            react_1.default.createElement("textarea", { className: "form-control", value: bill.description, onChange: onChangeHandle, name: "description" })),
+                        react_1.default.createElement("div", { className: "form-group" },
+                            react_1.default.createElement("label", null, "Extra Cost"),
+                            react_1.default.createElement("input", { className: "form-control", value: bill.extra_cost, onChange: onChangeHandle, type: "number", name: "extra_cost" })),
                         react_1.default.createElement("div", { className: "row no-gutters align-items-center" },
-                            react_1.default.createElement("button", { type: "button", onClick: onCreateHandle, className: "btn btn-primary btn-lg btn-block" }, "T\u1EA1o \u0111\u01A1n "))))))));
+                            react_1.default.createElement("button", { type: "button", onClick: createBill, className: "btn btn-primary btn-lg btn-block" }, "T\u1EA1o \u0111\u01A1n "))))))));
 });
 var __Create = react_1.default.memo(function () {
     return react_1.default.createElement(constate_1.ImportBillCreate.Provider, null,
         react_1.default.createElement(Create, null));
 });
 exports.default = __Create;
+
+
+/***/ }),
+
+/***/ "./resources/js/page/ImportBill/Detail/index.tsx":
+/*!*******************************************************!*\
+  !*** ./resources/js/page/ImportBill/Detail/index.tsx ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BillDetail = void 0;
+var constate_1 = __importDefault(__webpack_require__(/*! constate */ "./node_modules/constate/dist/constate.es.js"));
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_use_1 = __webpack_require__(/*! react-use */ "./node_modules/react-use/esm/index.js");
+var Fetch_1 = __importDefault(__webpack_require__(/*! ../../../service/Fetch */ "./resources/js/service/Fetch.ts"));
+var useDetail = function (_a) {
+    var billId = _a.billId;
+    var _b = react_use_1.useAsyncFn(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Fetch_1.default.get("api/bill/" + billId)];
+                case 1:
+                    res = _a.sent();
+                    return [2 /*return*/, res.data];
+            }
+        });
+    }); }, [billId]), stateBill = _b[0], fetch = _b[1];
+    var _c = react_use_1.useAsyncFn(function (status) { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, Fetch_1.default.post("api/bills/status", {
+                        id: (_a = stateBill.value) === null || _a === void 0 ? void 0 : _a.bill.id,
+                        status: status
+                    })];
+                case 1:
+                    res = _b.sent();
+                    return [2 /*return*/, res.data];
+            }
+        });
+    }); }, [stateBill]), status = _c[0], changeStatus = _c[1];
+    react_1.useEffect(function () {
+        if (!status.loading) {
+            fetch();
+        }
+    }, [status]);
+    return { stateBill: stateBill, changeStatus: changeStatus };
+};
+var _a = constate_1.default(useDetail, function (value) { return value.stateBill; }, function (value) { return value.changeStatus; }), Provider = _a[0], useStateBill = _a[1], useChangeStatus = _a[2];
+exports.BillDetail = {
+    Provider: Provider,
+    useStateBill: useStateBill,
+    useChangeStatus: useChangeStatus
+};
 
 
 /***/ }),
@@ -111959,12 +112350,16 @@ var List_1 = __importDefault(__webpack_require__(/*! ./page/Bill/List */ "./reso
 var List_2 = __importDefault(__webpack_require__(/*! ./page/ImportBill/List */ "./resources/js/page/ImportBill/List/index.tsx"));
 var Create_1 = __importDefault(__webpack_require__(/*! ./page/Bill/Create */ "./resources/js/page/Bill/Create/index.tsx"));
 var Create_2 = __importDefault(__webpack_require__(/*! ./page/ImportBill/Create */ "./resources/js/page/ImportBill/Create/index.tsx"));
+var Detail_1 = __importDefault(__webpack_require__(/*! ./page/Bill/Detail */ "./resources/js/page/Bill/Detail/index.tsx"));
+var Detail_2 = __importDefault(__webpack_require__(/*! ./page/ImportBill/Detail */ "./resources/js/page/ImportBill/Detail/index.tsx"));
 var Routes = react_1.default.memo(function () {
     return (react_1.default.createElement(react_router_dom_1.Switch, null,
         react_1.default.createElement(react_router_dom_1.Route, { path: "/bills", component: List_1.default }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "/bill/create", component: Create_1.default }),
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/bill/detail/:id", component: Detail_1.default }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "/importbills", component: List_2.default }),
-        react_1.default.createElement(react_router_dom_1.Route, { path: "/importbill/create", component: Create_2.default })));
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/importbill/create", component: Create_2.default }),
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/bill/detail/:id", component: Detail_2.default })));
 });
 exports.default = Routes;
 

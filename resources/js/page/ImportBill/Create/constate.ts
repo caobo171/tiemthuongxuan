@@ -2,14 +2,23 @@ import constate from 'constate';
 import {useCallback, useState} from 'react';
 import { useAsyncFn } from 'react-use';
 import Axios from 'axios';
-import { RawProvider, SelectItemsType } from '../../../store/types';
+import { RawProvider, SelectItemsType, RawImportBill } from '../../../store/types';
 import Fetch from '../../../service/Fetch';
 
 
 const useCreate = ()=>{
     const [provider, setProvider] = useState<RawProvider | null>(null);
     const [items, setItems] = useState<SelectItemsType>({});
-    const [description, setDescription ] = useState('');
+    const [bill, setBill ] = useState<RawImportBill>({
+        id: -1,
+        description: '',
+        created_at: new Date,
+        cost: 0,
+        status: 'processing',
+        provider_id: -1,
+        data: "{}",
+        extra_cost: 0
+    });
 
     const setProviderHandle = useCallback((item)=>{
         setProvider(item);
@@ -19,13 +28,15 @@ const useCreate = ()=>{
         setItems(items);
     },[setItems]);
 
-    const setDescriptionHandle = useCallback((value)=>{
-        setDescription(value);
-    },[description]);
+    const changeBill = useCallback((key, value)=>{
+        setBill({
+            ...bill,
+            [key]: value
+        })
+    },[bill])
 
 
     const [state, createBill] = useAsyncFn(async ()=>{
-        console.log("test333")
         const provider_id = (provider as RawProvider).id;
         const rItems = Object.values(items);
         let cost = 0 ;
@@ -33,28 +44,23 @@ const useCreate = ()=>{
             cost += rItems[i].cost * rItems[i].quantity;
         }
 
-        console.log({
-            provider_id,
-            items: rItems,
-            cost,
-            description    
-        });
+
         const res = await Fetch.post('api/importbill',{
-            provider_id,
+            ...bill,
             items: rItems,
             cost,
-            description
+            provider_id
         });
 
         return res.data
-    },[items, description, provider]);
+    },[items, bill, provider]);
 
     console.log(state);
 
     return {
         provider, setProviderHandle, 
         items, setItemsHandle, 
-        description, setDescriptionHandle,
+        bill, changeBill,
         createBill
     }
 }
@@ -64,16 +70,16 @@ const [Provider,
     useProvider,
     useSetProvider,
     useSetItems,
-    useDescription, 
-    useSetDescription,
+    useBill, 
+    useChangeBill,
     useCreateBill
 ] = constate(useCreate,
     value=> value.items,
     value=> value.provider,
     value=> value.setProviderHandle,
     value=> value.setItemsHandle,
-    value=> value.description,
-    value=> value.setDescriptionHandle,
+    value=> value.bill,
+    value=> value.changeBill,
     value=> value.createBill
 )
 
@@ -84,7 +90,7 @@ export const ImportBillCreate =  {
     useProvider,
     useSetProvider,
     useSetItems,
-    useDescription, 
-    useSetDescription,
+    useBill, 
+    useChangeBill,
     useCreateBill
 };

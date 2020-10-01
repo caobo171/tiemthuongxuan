@@ -6,14 +6,18 @@ import ImportBillList from './page/ImportBill/List';
 
 import BillCreate from './page/Bill/Create';
 import ImportBillCreate from './page/ImportBill/Create'
+import  BillDetail  from './page/Bill/Detail';
+import ImportBillDetail from './page/ImportBill/Detail';
 
 const Routes = React.memo(()=>{
     return (
       <Switch>
         <Route path="/bills" component={BillList} />
         <Route path="/bill/create" component={BillCreate} />
+        <Route path="/bill/detail/:id" component={BillDetail} />
         <Route path="/importbills" component={ImportBillList} />
         <Route path="/importbill/create" component={ImportBillCreate} />
+        <Route path="/bill/detail/:id" component={ImportBillDetail} />
       </Switch>
 
     )

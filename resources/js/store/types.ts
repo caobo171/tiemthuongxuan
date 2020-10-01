@@ -73,7 +73,8 @@ export type RawImportBill = {
     cost: number,
     status: string,
     provider_id: number,
-    data: any
+    data: any,
+    extra_cost: number
 }
 
 
