@@ -21,6 +21,7 @@ class CreateExportBill extends Migration
             $table->char('status', 100);
             $table->integer('customer_id');
             $table->string('data');
+            $table->integer('extra_cost');
             $table->index('status');
         });
     }

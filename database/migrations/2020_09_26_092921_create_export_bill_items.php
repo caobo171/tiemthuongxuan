@@ -21,7 +21,8 @@ class CreateExportBillItems extends Migration
             $table->char('product_name',255);
             $table->char('status', 100);
             $table->integer('cost');
-
+            $table->string('sku');
+            $table->integer('quantiy');
             $table->index(['product_id', 'bill_id']);
         });
     }

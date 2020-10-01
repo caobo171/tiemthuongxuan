@@ -54,7 +54,7 @@ class ImportBillController extends Controller
                     foreach($items as $item){
                         for($i = 0 ; $i < $item['quantity'] ; $i++){
                             $bill_item = new ImportBillItem();
-                            $bill_item->product_id = $item['id'];
+                            $bill_item->product_id = $item['product_id'];
                             $bill_item->bill_id = $bill->id;
                             $bill_item->product_name = $item['name'];
                             $bill_item->cost = $item['cost'];
@@ -62,7 +62,7 @@ class ImportBillController extends Controller
                         }
                     }
 
-                    $product = Product::find($item['id']);
+                    $product = Product::find($item['product_id']);
                     $product->quantity = $product->quantity + $item['quantity'];
                     $product->save();
                 }

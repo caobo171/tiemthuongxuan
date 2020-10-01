@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import { RawProduct, SelectItemsType, SelectItemType } from '../../store/types';
+import { RawProduct, SelectItemsType, RawItem } from '../../store/types';
 import ProductListPopUp from './ProductListPopUp';
 import SelectItem from './SelectItem';
 import { SelectProductContext } from './SelectProductContext';
-
+import { v4 as uuidv4 } from 'uuid';
 
 
 const SelectedList = React.memo(()=>{
@@ -11,24 +11,33 @@ const SelectedList = React.memo(()=>{
     const rItems = React.useMemo(()=>Object.values(items),[items]);
 
     const selectItemHanlde = useCallback((item: RawProduct)=>{
-        const value: SelectItemType = {
+        const value: RawItem = {
             ...item,
             quantity: 1,
             product_name: item.name,
-            status: 'normal'
+            status: 'normal',
+            product_id: item.id,
+            bill_id : -1,
+            id: uuidv4()
         };
 
         setItems({
             ...items,
             [value.id]: value
         });
+
+        console.log({
+            ...items,
+            [item.id]: item
+        })
     }, [items, setItems]);
 
-    const updateItem = useCallback((item: SelectItemType)=>{
+    const updateItem = useCallback((item: RawItem)=>{
         setItems({
             ...items,
             [item.id]: item
         });
+
     },[items, setItems])
 
 
@@ -45,6 +54,7 @@ const SelectedList = React.memo(()=>{
                     <div className="col">Mã SKU</div>
                     <div className="col">Tên sản phẩm</div>
                     <div className="col">Số lượng </div>
+                    <div className="col">Trạng thái </div>
                     <div className="col">Đơn giá</div>
                     <div className="col">Tổng giá</div>
                 </div>

@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import { SelectItemType } from '../../store/types';
+import { RawItem } from '../../store/types';
 
 interface Props {
-    item: SelectItemType,
-    updateItem: (value:SelectItemType )=> void
+    item: RawItem,
+    updateItem: (value:RawItem )=> void
 }
 
 const SelectItem = React.memo(({item, updateItem}: Props)=>{
@@ -18,13 +18,20 @@ const SelectItem = React.memo(({item, updateItem}: Props)=>{
     return (
         <div className="row mb-2">
             <div className="col">{item.sku}</div>
-            <div className="col">{item.name}</div>
+            <div className="col">{item.product_name}</div>
             <div className="col">
                 <input 
                     onChange={onChangeHandle}
                     name="quantity"
                     value={item.quantity} 
                     type="number" className="form-control"/>
+            </div>
+            <div className="col">
+                <input 
+                    onChange={onChangeHandle}
+                    name="status"
+                    value={item.status} 
+                    className="form-control"/>
             </div>
             <div className="col">
                 <input 

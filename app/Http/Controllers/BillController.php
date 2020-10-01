@@ -44,23 +44,25 @@ class BillController extends Controller
             $bill = new Bill();
             $bill->description = $request->input('description');
             $bill->cost = $request->input('cost');
+            $bill->extra_cost = $request->input('extra_cost');
             $bill->customer_id = $request->input('customer_id');
 
             if($bill->save()){
                 $items = $request->input('items');
                 if(is_array($items)){
                     foreach($items as $item){
-                        for($i = 0 ; $i < $item['quantity'] ; $i++){
-                            $bill_item = new BillItem();
-                            $bill_item->product_id = $item['id'];
-                            $bill_item->bill_id = $bill->id;
-                            $bill_item->product_name = $item['name'];
-                            $bill_item->cost = $item['cost'];
-                            $bill_item->save();
-                        }
+                        $bill_item = new BillItem();
+                        $bill_item->quantiy = $item['quantity'];
+                        $bill_item->product_id = $item['product_id'];
+                        $bill_item->bill_id = $bill->id;
+                        $bill_item->product_name = $item['name'];
+                        $bill_item->cost = $item['cost'];
+                        $bill_item->sku = $item['sku'];
+                        $bill_item->save();
+                    
                     }
 
-                    $product = Product::find($item['id']);
+                    $product = Product::find($item['product_id']);
                     $product->quantity = $product->quantity - $item['quantity'];
                     $product->save();
                 }

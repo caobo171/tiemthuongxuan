@@ -24,24 +24,17 @@ export type RawProduct = {
 }
 
 export type RawItem = {
-    id: number,
+    id: number |string,
     product_id: number,
     created_at: Date,
     bill_id: number,
     product_name: string,
     status: string,
-    cost: number
+    cost: number,
+    quantity: number,
+    sku: string
 }
 
-export type SelectItemType = {
-    id: number,
-    sku: string,
-    name: string
-    product_name: string,
-    status: string,
-    cost: number,
-    quantity: number
-}
 
 export type RawProvider = {
     id: number,
@@ -67,8 +60,9 @@ export type RawBill = {
     created_at: Date,
     cost: number,
     status: string,
-    user_id: number,
-    data: any
+    customer_id: number,
+    data: any,
+    extra_cost: number
 }
 
 
@@ -78,11 +72,11 @@ export type RawImportBill = {
     created_at: Date,
     cost: number,
     status: string,
-    user_id: number,
+    provider_id: number,
     data: any
 }
 
 
 export type SelectItemsType = {
-    [key:number]: SelectItemType
+    [key:number]: RawItem
 }

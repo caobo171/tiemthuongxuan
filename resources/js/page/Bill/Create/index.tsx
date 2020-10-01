@@ -13,13 +13,13 @@ const Create = React.memo(() => {
     const setItems = BillCreate.useSetItems();
     const setCustomer = BillCreate.useSetCustomer();
 
-    const description = BillCreate.useDescription();
-    const setDescription = BillCreate.useSetDescription();
+    const bill = BillCreate.useBill();
+    const changeBill = BillCreate.useChangeBill();
 
 
     const onChangeHandle = useCallback((e)=>{
-        setDescription(e.target.value);
-    },[description])
+        changeBill(e.target.name, e.target.value);
+    },[bill, changeBill])
 
     return (<SelectProductContext.Provider value={{setItems, items}}>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
@@ -62,11 +62,21 @@ const Create = React.memo(() => {
                                 <i className="fas fa-calendar fa-2x text-gray-300"></i>
                             </div>
                         </div>
-                        <div className="row no-gutters align-items-center">
+                        <div className="form-group">
                             <label>Ghi chú</label>
-                            <textarea className="form-control" value={description}
+                            <textarea className="form-control" value={bill.description}
                                 onChange = {onChangeHandle}
+                                name={"description"}
                             ></textarea>
+    
+                        </div>
+                        <div className="form-group">
+                            <label>Extra Cost</label>
+                            <input className="form-control" 
+                                value={bill.extra_cost}
+                                onChange = {onChangeHandle}
+                                type="number" name= "extra_cost"
+                            ></input>
                         </div>
                         <div className="row no-gutters align-items-center">
                             <button type="button"
