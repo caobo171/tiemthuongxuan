@@ -85,9 +85,11 @@ class ImportBillController extends Controller
         
         $bill = ImportBill::find($id);
         $bill_items = ImportBillItem::where('bill_id', $bill->id)->get();
+        $provider = Provider::find($bill->provider_id);
         return array(
             "bill" => $bill,
-            "bill_items" => $bill_items
+            "bill_items" => $bill_items,
+            "provider"=> $provider
         );
     }
 

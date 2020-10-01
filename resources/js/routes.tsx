@@ -17,7 +17,7 @@ const Routes = React.memo(()=>{
         <Route path="/bill/detail/:id" component={BillDetail} />
         <Route path="/importbills" component={ImportBillList} />
         <Route path="/importbill/create" component={ImportBillCreate} />
-        <Route path="/bill/detail/:id" component={ImportBillDetail} />
+        <Route path="/importbill/detail/:id" component={ImportBillDetail} />
       </Switch>
 
     )
