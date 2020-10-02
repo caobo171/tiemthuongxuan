@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ImportBillController;
@@ -29,6 +30,8 @@ Route::resource('product', ProductController::class);
 Route::post('product/search', [ProductController::class, 'search']);
 Route::resource('provider', ProviderController::class);
 Route::post('provider/search', [ProviderController::class, 'search']);
+
+Route::resource('asset', AssetController::class);
 
 Route::resource('customer', CustomerController::class);
 Route::post('customer/search', [CustomerController::class, 'search']);

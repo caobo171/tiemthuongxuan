@@ -60,7 +60,6 @@ class BillController extends Controller
                         $bill_item->cost = $item['cost'];
                         $bill_item->sku = $item['sku'];
                         $bill_item->save();
-                    
                     }
 
                     $product = Product::find($item['product_id']);
@@ -71,7 +70,7 @@ class BillController extends Controller
             return $bill;
         }
 
-        return null;   
+        return null;
     }
 
     /**

@@ -78,6 +78,15 @@ export type RawImportBill = {
     extra_cost: number
 }
 
+export type RawAsset = {
+    id: number,
+    created_at: Date,
+    description: string,
+    cost: number,
+    cycle: number
+    name: string
+}
+
 
 export type SelectItemsType = {
     [key:number]: RawItem

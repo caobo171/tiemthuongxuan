@@ -62,6 +62,12 @@ Route::get('/provider/detail/{id}', function () {
     return view('index');
 });
 
+Route::get('/assets', function () {
+    return view('index');
+});
+Route::get('/asset/detail/{id}', function () {
+    return view('index');
+});
 
 // Auth::routes();
 
