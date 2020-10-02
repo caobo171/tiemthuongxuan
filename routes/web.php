@@ -48,6 +48,13 @@ Route::get('/bill/detail/{id}', function () {
 Route::get('/importbill/detail/{id}', function () {
     return view('index');
 });
+Route::get('/customers', function () {
+    return view('index');
+});
+Route::get('/customer/detail/{id}', function () {
+    return view('index');
+});
+
 
 
 // Auth::routes();

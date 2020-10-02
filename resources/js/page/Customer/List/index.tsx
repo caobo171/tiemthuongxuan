@@ -3,27 +3,32 @@ import { useAsync } from 'react-use';
 import React from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { RawBill } from '../../../store/types';
+import { RawCustomer } from '../../../store/types';
 
 interface Props {
-    item: RawBill
+    item: RawCustomer
 }
 const Item = React.memo(({ item }: Props) => {
     return <div className="row">
         <div className="col">{item.id}</div>
-        <div className="col">{moment(item.created_at).format('DD/MM/YYYY')}</div>
-        <div className="col">{item.customer_id}</div>
-        <div className="col">{item.status} </div>
-        <div className="col">{item.cost}</div>
-        <Link className="col" to={`bill/detail/${item.id}`}>View</Link>
+
+        <div className="col">{item.name}</div>
+        <div className="col">{item.phone || item.email} </div>
+        <div className="col">{item.platform}</div>
+        <Link className="col" to={`/customer/detail/${item.id}`}>View</Link>
     </div>
 });
 
 const List = React.memo(() => {
 
     const data = useAsync(async () => {
-        const res = await Axios.get('/api/bill');
-        return res.data;
+        const res = await Axios.get('/api/customer');
+
+        // const res2 = await Axios.post('/api/importbill/search', {
+        //     q: '9'
+        // });
+        // console.log(res2)
+;        return res.data;
     });
 
     return (<>
@@ -32,6 +37,14 @@ const List = React.memo(() => {
         </div>
         <div className="row">
             <div className="card shadow col">
+                <div className="input-group mb-2 mt-2">
+                    <input type="text" className="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"/>
+                    <div className="input-group-append">
+                        <button className="btn btn-primary" type="button">
+                        <i className="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
                 <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between row">
                     <div className="col">Mã đơn hàng</div>
                     <div className="col">Ngày tạo đơn</div>

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = React.memo(() => {
   return (
-    <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" 
+    <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
       id="accordionSidebar">
-      <Link className="sidebar-brand d-flex 
+      <Link className="sidebar-brand d-flex
       align-items-center justify-content-center" to="/">
         <div className="sidebar-brand-icon rotate-n-15">
           <i className="fas fa-laugh-wink"></i>
@@ -43,7 +43,6 @@ const Sidebar = React.memo(() => {
         <div id="collapseThree" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
           <Link className="collapse-item" to="/customers">Danh sách</Link>
-          <Link className="collapse-item" to="/platforms">Nền tảng</Link>
         </div>
         </div>
       </li>
@@ -58,7 +57,7 @@ const Sidebar = React.memo(() => {
             <Link className="collapse-item" to="/product/create">Tạo sản phẩm</Link>
             <Link className="collapse-item" to="/products">Danh sách sản phẩm</Link>
             <Link className="collapse-item" to="/importbill/create">Nhập hàng</Link>
-            <Link className="collapse-item" to="/importbills">Đơn nhập hàng</Link>       
+            <Link className="collapse-item" to="/importbills">Đơn nhập hàng</Link>
             <Link className="collapse-item" to="/providers">Nhà cung cấp</Link>
           </div>
         </div>

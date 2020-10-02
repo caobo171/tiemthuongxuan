@@ -12,4 +12,10 @@ export const ITEM_STATUS = {
     'normal': 'normal',
     'gifted': 'gifted',
     'repay': 'repay'
+};
+
+export const PLATFORMS = {
+    'shopee': 'shopee',
+    'facebook': 'facebook',
+    'onshop': 'onshop'
 }

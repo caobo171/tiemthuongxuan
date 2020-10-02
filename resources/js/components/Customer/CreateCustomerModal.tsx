@@ -1,6 +1,7 @@
 import React, { useRef, useCallback } from 'react';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
+import { PLATFORMS } from '../../Constants';
 
 const CreateCustomerModal = React.memo(()=>{
 
@@ -8,7 +9,7 @@ const CreateCustomerModal = React.memo(()=>{
     const phoneRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const noteRef = useRef<HTMLInputElement>(null);
-
+    const platformRef = useRef<HTMLSelectElement>(null);
 
     const [state, createCustomer] = useAsyncFn(async()=>{
         //@ts-ignore
@@ -18,17 +19,19 @@ const CreateCustomerModal = React.memo(()=>{
         //@ts-ignore
         const email = emailRef.current.value;
         //@ts-ignore
+        const platform = platformRef.current.value;
+        //@ts-ignore
         const description = noteRef.current.value;
         const res = await Fetch.post('api/customer',{
-            name, phone, email, description
+            name, phone, email, description, platform
         });
 
-        return res.data 
+        return res.data
     },[]);
 
     return(
         <>
-        <div className="modal fade" id="createUserModal" tabIndex={-1} role="dialog" 
+        <div className="modal fade" id="createUserModal" tabIndex={-1} role="dialog"
         aria-labelledby="create-user-modal" aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <form className="modal-content">
@@ -46,9 +49,18 @@ const CreateCustomerModal = React.memo(()=>{
                             </div>
                             <div className="form-group col">
                                 <label>Số điện thoại </label>
-                                <input className="form-control" 
+                                <input className="form-control"
                                 type="tel" pattern="^\d{4}-\d{3}-\d{4}$"
                                 ref={phoneRef}></input>
+                            </div>
+                            <div className="form-group col">
+                                <label>Số điện thoại </label>
+                                <select className="form-control"
+                                ref={platformRef}>
+                                    {Object.keys(PLATFORMS).map(e=>(
+                                        <option value={e}>{PLATFORMS[e]}</option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
                         <div className="row">

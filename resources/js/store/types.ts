@@ -51,7 +51,8 @@ export type RawCustomer = {
     name: string,
     phone: string,
     email: string,
-    description: string
+    description: string,
+    platform: string
 }
 
 export type RawBill = {

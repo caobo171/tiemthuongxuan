@@ -20,6 +20,7 @@ class CreateUsers extends Migration
             $table->char('phone', 100)->nullable();
             $table->char('email', 100)->nullable();
             $table->string('description');
+            $table->string('platform');
             $table->index('phone');
             $table->index('email');
         });

@@ -8,6 +8,8 @@ import BillCreate from './page/Bill/Create';
 import ImportBillCreate from './page/ImportBill/Create'
 import  BillDetail  from './page/Bill/Detail';
 import ImportBillDetail from './page/ImportBill/Detail';
+import CustomerList from './page/Customer/List';
+import CustomerDetail from './page/Customer/Detail';
 
 const Routes = React.memo(()=>{
     return (
@@ -18,6 +20,8 @@ const Routes = React.memo(()=>{
         <Route path="/importbills" component={ImportBillList} />
         <Route path="/importbill/create" component={ImportBillCreate} />
         <Route path="/importbill/detail/:id" component={ImportBillDetail} />
+        <Route path="/customers/" component={CustomerList} />
+        <Route path="/customer/detail/:id" component={CustomerDetail} />
       </Switch>
 
     )
