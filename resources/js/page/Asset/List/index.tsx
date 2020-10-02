@@ -1,9 +1,7 @@
 import Axios from 'axios';
-import { useAsync, useLocation } from 'react-use';
+import { useAsync } from 'react-use';
 import React, { useRef, useEffect } from 'react';
-import moment from 'moment';
-import { Link } from 'react-router-dom';
-import { RawCustomer, RawAsset } from '../../../store/types';
+import { RawAsset } from '../../../store/types';
 import { useHistory } from "react-router-dom";
 import CreateAssetModal from '../../../components/Asset/CreateAssetModal';
 
@@ -14,7 +12,6 @@ interface Props {
 const Item = React.memo(({ item }: Props) => {
     return <div className="row">
         <div className="col">{item.id}</div>
-
         <div className="col">{item.name}</div>
         <div className="col">{item.cycle} </div>
         <div className="col">{item.description}</div>
