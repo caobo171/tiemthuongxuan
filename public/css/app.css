@@ -4,6 +4,14 @@
   width: 100%;
 }
 
+.container-fluid,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+  max-width: 1200px;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

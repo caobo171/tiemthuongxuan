@@ -6,6 +6,7 @@ use App\Models\ImportBill;
 use App\Models\ImportBillItem;
 use App\Models\Provider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProviderController extends Controller
 {
@@ -17,7 +18,7 @@ class ProviderController extends Controller
     public function index()
     {
         //
-        return Provider::all();
+        return Provider::orderBy('created_at')->get();
     }
 
     /**
@@ -101,4 +102,15 @@ class ProviderController extends Controller
     {
         //
     }
+    
+    /**
+     * Full text search for customer
+     */
+    public function search(Request $request)
+    {
+        $q = $request->input('q');
+        $customers = Provider::query()->where(DB::raw("CONCAT_WS('',name,phone)"), 'like', '%' .$q. '%')->get();
+        return $customers;
+    }
+
 }

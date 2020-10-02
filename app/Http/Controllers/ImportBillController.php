@@ -21,7 +21,7 @@ class ImportBillController extends Controller
     public function index()
     {
         //
-        return ImportBill::all();
+        return ImportBill::orderBy('created_at')->get();
     }
 
     /**

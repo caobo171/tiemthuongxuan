@@ -69,7 +69,7 @@ const CreateProviderModal = React.memo(()=>{
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <input title={"Tạo"} type="submit" className="btn btn-primary" onClick={onCreateHandle}></input>
+                        <input title={"Tạo"} type="submit" data-dismiss="modal" className="btn btn-primary" onClick={onCreateHandle}></input>
                     </div>
                 </form>
             </div>

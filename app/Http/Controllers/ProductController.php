@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return Product::orderBy('created_at')->get();
     }
 
     /**
@@ -91,5 +92,15 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Full Text Search for product
+     */
+    public function search(Request $request)
+    {
+        $q = $request->input('q');
+        $products = Product::query()->where('name', 'like', '%' .$q. '%')->get();
+        return $products;
     }
 }

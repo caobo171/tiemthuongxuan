@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bill;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -16,7 +17,7 @@ class CustomerController extends Controller
     public function index()
     {
         //
-        return Customer::all();
+        return Customer::orderBy('created_at')->get();
     }
 
     /**
@@ -100,5 +101,16 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    /**
+     * Full text search for customer
+     */
+    public function search(Request $request)
+    {
+        $q = $request->input('q');
+        $customers = Customer::query()->where(DB::raw("CONCAT_WS('',name,phone)"), 'like', '%' .$q. '%')->get();
+        return $customers;
     }
 }

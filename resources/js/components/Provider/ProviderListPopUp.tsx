@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import { useAsyncFn } from 'react-use';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useAsyncFn, useThrottle } from 'react-use';
 import CreateProviderModal from './CreateProviderModal';
 import Axios from 'axios';
 import { RawProvider } from '../../store/types';
@@ -9,12 +9,25 @@ interface Props {
 }
 
 const ProviderListPopUp = React.memo(({ onClickItem }: Props) => {
+    const [text, setText] = useState('');
+    const throttledText = useThrottle(text, 1000);
+    const onChangeHandle = useCallback((e)=>{
+        setText(e.target.value)
+    },[text])
 
     const [state, fetch] = useAsyncFn(async () => {
-        const res = await Axios.get('/api/provider');
+        if(text.replace(/\s/g, '') === ''){
+            const res = await Axios.get('/api/provider');
+            return res.data;
+        }
+        const res = await Axios.post('/api/provider/search',{q: throttledText});
         return res.data;
-    }, []);
-    
+    }, [throttledText]);
+
+    useEffect(()=>{
+        fetch();
+    },[fetch])
+
     useEffect(()=>{
         //@ts-ignore
         window.$("#providerDropDown").on("click", ()=>{
@@ -32,6 +45,8 @@ const ProviderListPopUp = React.memo(({ onClickItem }: Props) => {
             <div className="row">
                 <input className="form-control dropdown-toggle"  id="providerDropDown"
                     placeholder="Search for..."
+                    value={text}
+                    onChange={onChangeHandle}
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 </input>
                 <div className="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="productDropDown">

@@ -1,9 +1,11 @@
 import Axios from 'axios';
-import { useAsync } from 'react-use';
-import React from 'react';
+import { useAsync, useLocation } from 'react-use';
+import React, { useRef, useEffect } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { RawCustomer } from '../../../store/types';
+import { useHistory } from "react-router-dom";
+
 
 interface Props {
     item: RawCustomer
@@ -21,24 +23,46 @@ const Item = React.memo(({ item }: Props) => {
 
 const List = React.memo(() => {
 
-    const data = useAsync(async () => {
-        const res = await Axios.get('/api/customer');
+    const searchRef = useRef<HTMLInputElement>(null);
+    const history = useHistory();
+    const urlParams = new URLSearchParams(window.location.search);
+    const q = urlParams.get('q');
+    useEffect(()=>{
+        if (searchRef.current){
+            searchRef.current.addEventListener('keypress',(e)=>{
+                if(e.code==='Enter'){
+                    //@ts-ignore
+                    history.push("/customers?q="+e.target.value);
+                }
+            })
+        }
+        return ()=>{
+        }
+    },[history, searchRef])
 
-        // const res2 = await Axios.post('/api/importbill/search', {
-        //     q: '9'
-        // });
-        // console.log(res2)
-;        return res.data;
-    });
+    const data = useAsync(async () => {
+        if(q){
+            const res = await Axios.post('/api/customer/search',{q});
+            return res.data
+        }
+        const res = await Axios.get('/api/customer');
+        return res.data;
+    },[q]);
 
     return (<>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-            <h1 className="h3 mb-0 text-gray-800">Order</h1>
+            <h1 className="h3 mb-0 text-gray-800">Khach hang</h1>
+
+            <div className="form-group">
+                <div className="btn btn-primary">Them khach hang</div>
+            </div>
         </div>
         <div className="row">
             <div className="card shadow col">
                 <div className="input-group mb-2 mt-2">
-                    <input type="text" className="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"/>
+                    <input type="text" 
+                    ref={searchRef}
+                    className="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"/>
                     <div className="input-group-append">
                         <button className="btn btn-primary" type="button">
                         <i className="fas fa-search fa-sm"></i>

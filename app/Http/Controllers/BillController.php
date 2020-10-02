@@ -18,7 +18,7 @@ class BillController extends Controller
     public function index()
     {
         //
-        return Bill::all();
+        return Bill::orderBy('created_at')->get();
     }
 
     /**
