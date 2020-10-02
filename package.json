@@ -36,6 +36,7 @@
         "@fortawesome/free-solid-svg-icons": "^5.14.0",
         "@fortawesome/react-fontawesome": "^0.1.11",
         "@reduxjs/toolkit": "^1.4.0",
+        "chart.js": "^2.9.3",
         "constate": "^3.0.1",
         "moment": "^2.29.0",
         "react-alert": "^7.0.2",

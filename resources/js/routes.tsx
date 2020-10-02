@@ -13,6 +13,7 @@ import CustomerDetail from './page/Customer/Detail';
 
 import ProviderList from './page/Provider/List';
 import ProviderDetail from './page/Provider/Detail';
+import Dashboard from './page/Dashboard';
 
 const Routes = React.memo(()=>{
     return (
@@ -27,6 +28,7 @@ const Routes = React.memo(()=>{
         <Route path="/customer/detail/:id" component={CustomerDetail} />
         <Route path="/providers/" component={ProviderList} />
         <Route path="/provider/detail/:id" component={ProviderDetail} />
+        <Route path="/" component={Dashboard} />
       </Switch>
 
     )
