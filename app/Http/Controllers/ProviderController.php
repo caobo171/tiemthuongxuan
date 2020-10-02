@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ImportBill;
+use App\Models\ImportBillItem;
 use App\Models\Provider;
 use Illuminate\Http\Request;
 
@@ -58,6 +60,12 @@ class ProviderController extends Controller
     public function show($id)
     {
         //
+        $provider = Provider::find($id);
+        $bills = ImportBill::where('provider_id', $provider->id)->get();
+        return array(
+            'provider'=> $provider,
+            'bills' => $bills
+        );
     }
 
     /**

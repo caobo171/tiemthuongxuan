@@ -55,6 +55,12 @@ Route::get('/customer/detail/{id}', function () {
     return view('index');
 });
 
+Route::get('/providers', function () {
+    return view('index');
+});
+Route::get('/provider/detail/{id}', function () {
+    return view('index');
+});
 
 
 // Auth::routes();

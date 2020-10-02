@@ -112681,6 +112681,259 @@ exports.default = List;
 
 /***/ }),
 
+/***/ "./resources/js/page/Provider/Detail/constate.tsx":
+/*!********************************************************!*\
+  !*** ./resources/js/page/Provider/Detail/constate.tsx ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProviderDetail = void 0;
+var constate_1 = __importDefault(__webpack_require__(/*! constate */ "./node_modules/constate/dist/constate.es.js"));
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_use_1 = __webpack_require__(/*! react-use */ "./node_modules/react-use/esm/index.js");
+var Fetch_1 = __importDefault(__webpack_require__(/*! ../../../service/Fetch */ "./resources/js/service/Fetch.ts"));
+var useDetail = function (_a) {
+    var providerId = _a.providerId;
+    var _b = react_use_1.useAsyncFn(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Fetch_1.default.get("api/provider/" + providerId)];
+                case 1:
+                    res = _a.sent();
+                    return [2 /*return*/, res.data];
+            }
+        });
+    }); }, [providerId]), stateProvider = _b[0], fetch = _b[1];
+    react_1.useEffect(function () {
+        fetch();
+    }, [fetch]);
+    return { stateProvider: stateProvider };
+};
+var _a = constate_1.default(useDetail, function (value) { return value.stateProvider; }), Provider = _a[0], useStateProvider = _a[1];
+exports.ProviderDetail = {
+    Provider: Provider,
+    useStateProvider: useStateProvider
+};
+
+
+/***/ }),
+
+/***/ "./resources/js/page/Provider/Detail/index.tsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/page/Provider/Detail/index.tsx ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var constate_1 = __webpack_require__(/*! ./constate */ "./resources/js/page/Provider/Detail/constate.tsx");
+var react_router_dom_2 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
+var Item = react_1.default.memo(function (_a) {
+    var item = _a.item;
+    return react_1.default.createElement("div", { className: "row" },
+        react_1.default.createElement("div", { className: "col" }, item.id),
+        react_1.default.createElement("div", { className: "col" }, moment_1.default(item.created_at).format('DD/MM/YYYY')),
+        react_1.default.createElement("div", { className: "col" }, item.provider_id),
+        react_1.default.createElement("div", { className: "col" },
+            item.status,
+            " "),
+        react_1.default.createElement("div", { className: "col" }, item.cost),
+        react_1.default.createElement(react_router_dom_2.Link, { className: "col", to: "/importbill/detail/" + item.id }, "View"));
+});
+var Detail = react_1.default.memo(function () {
+    var state = constate_1.ProviderDetail.useStateProvider();
+    return (react_1.default.createElement(react_1.default.Fragment, null, state.value && (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("div", { className: "d-sm-flex align-items-center justify-content-between mb-4 mt-4" },
+            react_1.default.createElement("h1", { className: "h3 mb-0 text-gray-800" }, "Create New Order")),
+        react_1.default.createElement("div", { className: "row mb-4" },
+            react_1.default.createElement("div", { className: "card shadow col" },
+                react_1.default.createElement("div", { className: "card-header py-3 d-flex flex-row align-items-center justify-content-between" },
+                    react_1.default.createElement("h6", { className: "m-0 font-weight-bold text-primary" }, "Th\u00F4ng tin kh\u00E1ch h\u00E0ng")),
+                react_1.default.createElement("div", { className: "card-body" },
+                    react_1.default.createElement("div", { className: "col" },
+                        react_1.default.createElement("div", { className: "h6" }, state.value.provider.name),
+                        react_1.default.createElement("div", { className: "text-xs" }, state.value.provider.phone))))),
+        react_1.default.createElement("div", { className: "row" },
+            react_1.default.createElement("div", { className: "card shadow col" },
+                react_1.default.createElement("div", { className: "card-header py-3 d-flex flex-row align-items-center justify-content-between row" },
+                    react_1.default.createElement("div", { className: "col" }, "M\u00E3 \u0111\u01A1n h\u00E0ng"),
+                    react_1.default.createElement("div", { className: "col" }, "Ng\u00E0y t\u1EA1o \u0111\u01A1n"),
+                    react_1.default.createElement("div", { className: "col" }, "Kh\u00E1ch h\u00E0ng"),
+                    react_1.default.createElement("div", { className: "col" }, "Tr\u1EA1ng th\u00E1i "),
+                    react_1.default.createElement("div", { className: "col" }, "Gi\u00E1"),
+                    react_1.default.createElement("div", { className: "col" })),
+                react_1.default.createElement("div", { className: "card-body" }, (state.value.bills || []).map(function (item) {
+                    return react_1.default.createElement(Item, { item: item, key: item.id });
+                }))))))));
+});
+var __Detail = react_1.default.memo(function () {
+    var id = react_router_dom_1.useParams().id;
+    return react_1.default.createElement(constate_1.ProviderDetail.Provider, { providerId: id },
+        react_1.default.createElement(Detail, null));
+});
+exports.default = __Detail;
+
+
+/***/ }),
+
+/***/ "./resources/js/page/Provider/List/index.tsx":
+/*!***************************************************!*\
+  !*** ./resources/js/page/Provider/List/index.tsx ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+var react_use_1 = __webpack_require__(/*! react-use */ "./node_modules/react-use/esm/index.js");
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var Item = react_1.default.memo(function (_a) {
+    var item = _a.item;
+    return react_1.default.createElement("div", { className: "row" },
+        react_1.default.createElement("div", { className: "col" }, item.id),
+        react_1.default.createElement("div", { className: "col" }, item.name),
+        react_1.default.createElement("div", { className: "col" },
+            item.phone || item.email,
+            " "),
+        react_1.default.createElement(react_router_dom_1.Link, { className: "col", to: "/provider/detail/" + item.id }, "View"));
+});
+var List = react_1.default.memo(function () {
+    var data = react_use_1.useAsync(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, axios_1.default.get('/api/provider')];
+                case 1:
+                    res = _a.sent();
+                    // const res2 = await Axios.post('/api/importbill/search', {
+                    //     q: '9'
+                    // });
+                    // console.log(res2)
+                    ;
+                    return [2 /*return*/, res.data];
+            }
+        });
+    }); });
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("div", { className: "d-sm-flex align-items-center justify-content-between mb-4 mt-4" },
+            react_1.default.createElement("h1", { className: "h3 mb-0 text-gray-800" }, "Order")),
+        react_1.default.createElement("div", { className: "row" },
+            react_1.default.createElement("div", { className: "card shadow col" },
+                react_1.default.createElement("div", { className: "input-group mb-2 mt-2" },
+                    react_1.default.createElement("input", { type: "text", className: "form-control bg-light border-0 small", placeholder: "Search for...", "aria-label": "Search", "aria-describedby": "basic-addon2" }),
+                    react_1.default.createElement("div", { className: "input-group-append" },
+                        react_1.default.createElement("button", { className: "btn btn-primary", type: "button" },
+                            react_1.default.createElement("i", { className: "fas fa-search fa-sm" })))),
+                react_1.default.createElement("div", { className: "card-header py-3 d-flex flex-row align-items-center justify-content-between row" },
+                    react_1.default.createElement("div", { className: "col" }, "M\u00E3 \u0111\u01A1n h\u00E0ng"),
+                    react_1.default.createElement("div", { className: "col" }, "Ng\u00E0y t\u1EA1o \u0111\u01A1n"),
+                    react_1.default.createElement("div", { className: "col" }, "Kh\u00E1ch h\u00E0ng"),
+                    react_1.default.createElement("div", { className: "col" }, "Tr\u1EA1ng th\u00E1i "),
+                    react_1.default.createElement("div", { className: "col" }, "Gi\u00E1"),
+                    react_1.default.createElement("div", { className: "col" })),
+                react_1.default.createElement("div", { className: "card-body" }, (data.value || []).map(function (item) {
+                    return react_1.default.createElement(Item, { item: item, key: item.id });
+                }))))));
+});
+exports.default = List;
+
+
+/***/ }),
+
 /***/ "./resources/js/routes.tsx":
 /*!*********************************!*\
   !*** ./resources/js/routes.tsx ***!
@@ -112704,6 +112957,8 @@ var Detail_1 = __importDefault(__webpack_require__(/*! ./page/Bill/Detail */ "./
 var Detail_2 = __importDefault(__webpack_require__(/*! ./page/ImportBill/Detail */ "./resources/js/page/ImportBill/Detail/index.tsx"));
 var List_3 = __importDefault(__webpack_require__(/*! ./page/Customer/List */ "./resources/js/page/Customer/List/index.tsx"));
 var Detail_3 = __importDefault(__webpack_require__(/*! ./page/Customer/Detail */ "./resources/js/page/Customer/Detail/index.tsx"));
+var List_4 = __importDefault(__webpack_require__(/*! ./page/Provider/List */ "./resources/js/page/Provider/List/index.tsx"));
+var Detail_4 = __importDefault(__webpack_require__(/*! ./page/Provider/Detail */ "./resources/js/page/Provider/Detail/index.tsx"));
 var Routes = react_1.default.memo(function () {
     return (react_1.default.createElement(react_router_dom_1.Switch, null,
         react_1.default.createElement(react_router_dom_1.Route, { path: "/bills", component: List_1.default }),
@@ -112713,7 +112968,9 @@ var Routes = react_1.default.memo(function () {
         react_1.default.createElement(react_router_dom_1.Route, { path: "/importbill/create", component: Create_2.default }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "/importbill/detail/:id", component: Detail_2.default }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "/customers/", component: List_3.default }),
-        react_1.default.createElement(react_router_dom_1.Route, { path: "/customer/detail/:id", component: Detail_3.default })));
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/customer/detail/:id", component: Detail_3.default }),
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/providers/", component: List_4.default }),
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/provider/detail/:id", component: Detail_4.default })));
 });
 exports.default = Routes;
 
