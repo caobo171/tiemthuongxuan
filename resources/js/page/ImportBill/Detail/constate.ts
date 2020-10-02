@@ -2,7 +2,7 @@ import constate from 'constate';
 import {useCallback, useState, useEffect} from 'react';
 import { useAsyncFn } from 'react-use';
 import Axios from 'axios';
-import { RawCustomer, SelectItemsType, RawImportBill, RawItem } from '../../../store/types';
+import { RawCustomer, SelectItemsType, RawImportBill, RawItem, RawProvider } from '../../../store/types';
 import Fetch from '../../../service/Fetch';
 
 
@@ -11,7 +11,7 @@ const useDetail = ({billId})=>{
         const res = await Fetch.get<{
             bill: RawImportBill,
             bill_items: RawItem[],
-            customer: RawCustomer
+            provider: RawProvider
         }>(`api/importbill/${billId}`);
 
         return res.data;

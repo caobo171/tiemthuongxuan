@@ -40,8 +40,8 @@ const Detail = React.memo(() => {
                         </div>
                         <div className="card-body">
                             <div className="col">
-                                <div className="h6">{state.value.customer.name}</div>
-                                <div className="text-xs">{state.value.customer.phone}</div>
+                                <div className="h6">{state.value.provider.name}</div>
+                                <div className="text-xs">{state.value.provider.phone}</div>
                             </div>
                         </div>
                     </div>

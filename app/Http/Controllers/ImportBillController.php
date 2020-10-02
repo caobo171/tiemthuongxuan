@@ -8,6 +8,7 @@ use App\Models\ImportBillItem;
 use App\Models\Product;
 use App\Models\Provider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ImportBillController extends Controller
@@ -20,6 +21,7 @@ class ImportBillController extends Controller
     public function index()
     {
         //
+        return ImportBill::all();
     }
 
     /**
@@ -125,5 +127,11 @@ class ImportBillController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function search(Request $request){
+        $bills = Customer::query()->where(DB::raw("CONCAT_WS('',name,phone)"), 'like', '%' . $request->input('q') . '%')->get();
+        return $bills;
     }
 }

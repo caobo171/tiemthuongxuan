@@ -48,6 +48,8 @@ Route::get('/bill/detail/{id}', function () {
 Route::get('/importbill/detail/{id}', function () {
     return view('index');
 });
+
+
 // Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
