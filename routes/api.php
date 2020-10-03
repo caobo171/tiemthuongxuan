@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ImportBillController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\ReportController;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,3 +41,6 @@ Route::resource('importbill', ImportBillController::class);
 Route::resource('bill', BillController::class);
 Route::post('bills/status', [BillController::class, 'status']);
 Route::post('importbill/search', [ImportBillController::class, 'search']);
+
+
+Route::post('report', [ReportController::class, 'index']);

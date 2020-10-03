@@ -15,6 +15,18 @@ const Sidebar = React.memo(() => {
 
       <hr className="sidebar-divider my-0" />
 
+      <li className="nav-item">
+        <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseZero" aria-expanded="true" aria-controls="collapseTwo">
+           <i className="fas fa-fw fa-tachometer-alt"></i>
+          <span>Báo cáo</span>
+        </a>
+        <div id="collapseZero" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
+            <Link className="collapse-item" to="/" >Dashboard</Link>
+            <Link className="collapse-item" to="/report/products">Mặt hàng</Link>
+          </div>
+        </div>
+      </li>
       <li className="nav-item active">
         <Link className="nav-link" to="/">
           <i className="fas fa-fw fa-tachometer-alt"></i>
