@@ -27,13 +27,6 @@ const Sidebar = React.memo(() => {
           </div>
         </div>
       </li>
-      <li className="nav-item active">
-        <Link className="nav-link" to="/">
-          <i className="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></Link>
-      </li>
-
-
       <li className="nav-item">
         <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
           <i className="fas fa-fw fa-cog"></i>

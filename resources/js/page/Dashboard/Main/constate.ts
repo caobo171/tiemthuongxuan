@@ -4,7 +4,7 @@ import { useAsyncFn, useAsync } from 'react-use';
 import Axios from 'axios';
 import Fetch from '../../../service/Fetch';
 import { RawBill, RawImportBill, RawItem, RawAsset } from '../../../store/types';
-import { PLATFORMS } from '../../../Constants';
+import { PLATFORMS, BILL_STATUS } from '../../../Constants';
 
 
 const useDashboard = ({startDate, endDate})=>{
@@ -22,10 +22,11 @@ const useDashboard = ({startDate, endDate})=>{
 
 	if(res.data){
 		//bad code
-		const success_bills = res.data.bills.filter(e=>e.status === 'success')
+        const success_bills = res.data.bills.filter(e=>e.status === 'success')
 
 
         const revenue = success_bills.map(e=>e.cost).reduce((a, b) => a + b, 0);
+        const totalRevenue = res.data.bills.map(e=>e.cost).reduce((a,b)=> a + b, 0);
 
 		//bad code
 		const fund = res.data.import_bills
@@ -79,7 +80,10 @@ const useDashboard = ({startDate, endDate})=>{
 			profit,
             fixedExpense,
             platforms,
-            customers: Object.values(customers)
+            billsLength:res.data.bills.length,
+            successBillsLength: success_bills.length,
+            customers: Object.values(customers),
+            totalRevenue
 		};
 	}
 	return null;
