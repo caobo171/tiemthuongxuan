@@ -17,7 +17,8 @@ const useCreate = ()=>{
         status: 'processing',
         provider_id: -1,
         data: "{}",
-        extra_cost: 0
+        extra_cost: 0,
+        provider_name: ''
     });
 
     const setProviderHandle = useCallback((item)=>{
@@ -49,7 +50,8 @@ const useCreate = ()=>{
             ...bill,
             items: rItems,
             cost,
-            provider_id
+            provider_id,
+            provider_name: (provider as RawProvider).name
         });
 
         return res.data
@@ -58,8 +60,8 @@ const useCreate = ()=>{
     console.log(state);
 
     return {
-        provider, setProviderHandle, 
-        items, setItemsHandle, 
+        provider, setProviderHandle,
+        items, setItemsHandle,
         bill, changeBill,
         createBill
     }
@@ -70,7 +72,7 @@ const [Provider,
     useProvider,
     useSetProvider,
     useSetItems,
-    useBill, 
+    useBill,
     useChangeBill,
     useCreateBill
 ] = constate(useCreate,
@@ -84,13 +86,13 @@ const [Provider,
 )
 
 
-export const ImportBillCreate =  { 
+export const ImportBillCreate =  {
     Provider,
     useItems,
     useProvider,
     useSetProvider,
     useSetItems,
-    useBill, 
+    useBill,
     useChangeBill,
     useCreateBill
 };

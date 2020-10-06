@@ -62,6 +62,8 @@ export type RawBill = {
     cost: number,
     status: string,
     customer_id: number,
+    customer_platform: string,
+    customer_name: string,
     data: any,
     extra_cost: number
 }
@@ -73,6 +75,7 @@ export type RawImportBill = {
     created_at: Date,
     cost: number,
     status: string,
+    provider_name: string,
     provider_id: number,
     data: any,
     extra_cost: number

@@ -61,6 +61,9 @@ Route::get('/providers', function () {
 Route::get('/provider/detail/{id}', function () {
     return view('index');
 });
+Route::get('/report/products', function () {
+    return view('index');
+});
 
 Route::get('/assets', function () {
     return view('index');

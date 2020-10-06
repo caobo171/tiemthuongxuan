@@ -20,6 +20,7 @@ class CreateImportBills extends Migration
             $table->integer('cost');
             $table->char('status', 100);
             $table->integer('provider_id');
+            $table->string('provider_name');
             $table->string('data');
             $table->integer('extra_cost');
             $table->index('status');

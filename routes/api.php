@@ -44,3 +44,4 @@ Route::post('importbill/search', [ImportBillController::class, 'search']);
 
 
 Route::post('report', [ReportController::class, 'index']);
+Route::post('report.product', [ReportController::class, 'product']);

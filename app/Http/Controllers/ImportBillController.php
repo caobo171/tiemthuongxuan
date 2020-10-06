@@ -42,7 +42,7 @@ class ImportBillController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $is_editing = $request->isMethod('put');
         if(!$is_editing){
             $bill = new ImportBill();
@@ -50,6 +50,8 @@ class ImportBillController extends Controller
             $bill->cost = $request->input('cost');
             $bill->provider_id = $request->input('provider_id');
             $bill->extra_cost = $request->input('extra_cost');
+            $bill->provider_name = $request->input('provider_name');
+
 
             if($bill->save()){
                 $items = $request->input('items');
@@ -62,7 +64,7 @@ class ImportBillController extends Controller
                         $bill_item->product_name = $item['name'];
                         $bill_item->cost = $item['cost'];
                         $bill_item->sku = $item['sku'];
-                        $bill_item->save();    
+                        $bill_item->save();
                     }
 
                     $product = Product::find($item['product_id']);
@@ -73,7 +75,7 @@ class ImportBillController extends Controller
             return $bill;
         }
 
-        return null;       
+        return null;
     }
 
     /**
@@ -84,7 +86,7 @@ class ImportBillController extends Controller
      */
     public function show($id)
     {
-        
+
         $bill = ImportBill::find($id);
         $bill_items = ImportBillItem::where('bill_id', $bill->id)->get();
         $provider = Provider::find($bill->provider_id);

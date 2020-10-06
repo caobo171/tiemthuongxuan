@@ -7,6 +7,7 @@ use App\Models\BillItem;
 use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BillController extends Controller
 {
@@ -42,11 +43,14 @@ class BillController extends Controller
         //
         $is_editing = $request->isMethod('put');
         if(!$is_editing){
+            DB::beginTransaction();
             $bill = new Bill();
             $bill->description = $request->input('description');
             $bill->cost = $request->input('cost');
             $bill->extra_cost = $request->input('extra_cost');
             $bill->customer_id = $request->input('customer_id');
+            $bill->customer_name = $request->input('customer_name');
+            $bill->customer_platform = $request->input('customer_platform');
 
             if($bill->save()){
                 $items = $request->input('items');
@@ -60,13 +64,21 @@ class BillController extends Controller
                         $bill_item->cost = $item['cost'];
                         $bill_item->sku = $item['sku'];
                         $bill_item->save();
-                    }
+                        $product = Product::find($item['product_id']);
 
-                    $product = Product::find($item['product_id']);
-                    $product->quantity = $product->quantity - $item['quantity'];
-                    $product->save();
+                        if($product->quantity < $item['quantity']){
+                            DB::rollBack();
+                            return array(
+                                'message'=>'Out of stock',
+                                'error' => true
+                            );
+                        }
+                        $product->quantity = $product->quantity - $item['quantity'];
+                        $product->save();
+                    }
                 }
             }
+            DB::commit();
             return $bill;
         }
 

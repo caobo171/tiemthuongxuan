@@ -1,7 +1,6 @@
 import constate from 'constate';
 import {useCallback, useState} from 'react';
 import { useAsyncFn } from 'react-use';
-import Axios from 'axios';
 import { RawCustomer, SelectItemsType, RawBill } from '../../../store/types';
 import Fetch from '../../../service/Fetch';
 
@@ -17,7 +16,9 @@ const useCreate = ()=>{
         status: 'processing',
         customer_id: -1,
         data: "{}",
-        extra_cost: 0
+        extra_cost: 0,
+        customer_name: '',
+        customer_platform:'onshop'
     });
 
     const changeBill = useCallback((key, value)=>{
@@ -36,7 +37,7 @@ const useCreate = ()=>{
     },[setItems]);
 
     const [state, createBill] = useAsyncFn(async ()=>{
-        const customer_id = (customer as RawCustomer).id;
+
         const rItems = Object.values(items).map(e=>({
             ...e,
             quantity: 1
@@ -51,17 +52,19 @@ const useCreate = ()=>{
 
         const res = await Fetch.post('api/bill',{
             ...bill,
-            customer_id,
+            customer_id: (customer as RawCustomer).id,
             items: rItems,
-            cost
+            cost,
+            customer_name: (customer as RawCustomer).name,
+            customer_platform: (customer as RawCustomer).platform
         });
 
         return res.data;
     },[items, bill, customer]);
 
     return {
-        customer, setCustomerHandle, 
-        items, setItemsHandle, 
+        customer, setCustomerHandle,
+        items, setItemsHandle,
         bill, changeBill,
         createBill
     }
@@ -72,7 +75,7 @@ const [Provider,
     useCustomer,
     useSetCustomer,
     useSetItems,
-    useBill, 
+    useBill,
     useChangeBill,
     useCreateBill
 ] = constate(useCreate,
@@ -86,13 +89,13 @@ const [Provider,
 )
 
 
-export const BillCreate =  { 
+export const BillCreate =  {
     Provider,
     useItems,
     useCustomer,
     useSetCustomer,
     useSetItems,
-    useBill, 
+    useBill,
     useChangeBill,
     useCreateBill
 };
