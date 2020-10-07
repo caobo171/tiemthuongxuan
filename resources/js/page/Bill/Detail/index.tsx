@@ -1,11 +1,9 @@
 import React , {useCallback} from 'react';
 import {  BillDetail } from './constate';
-import CustomerListPopUp from '../../../components/Customer/CustomerListPopUp';
-import ProductSelectedList from '../../../components/Product/SelectedList';
-import { SelectProductContext } from '../../../components/Product/SelectProductContext';
 import {useParams} from 'react-router-dom';
 import ProductList from '../../../components/Product/List';
 import { BILL_STATUS } from '../../../Constants';
+import CustomerInfo from '../CustomerInfo';
 
 const Detail = React.memo(() => {
 
@@ -19,7 +17,7 @@ const Detail = React.memo(() => {
     return (
         <>{state.value && (<>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-            <h1 className="h3 mb-0 text-gray-800">Create New Order</h1>
+            <h1 className="h3 mb-0 text-gray-800">Khách hàng</h1>
 
             <div className="form-group mr-2">
                 <select className="form-control" 
@@ -38,12 +36,7 @@ const Detail = React.memo(() => {
                         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 className="m-0 font-weight-bold text-primary">Thông tin khách hàng</h6>
                         </div>
-                        <div className="card-body">
-                            <div className="col">
-                                <div className="h6">{state.value.customer.name}</div>
-                                <div className="text-xs">{state.value.customer.phone}</div>
-                            </div>
-                        </div>
+                        <CustomerInfo customer={state.value.customer}/>
                     </div>
                 </div>
 

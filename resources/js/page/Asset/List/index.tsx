@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { useAsync } from 'react-use';
 import React, { useMemo } from 'react';
 import { RawAsset } from '../../../store/types';
-import CreateAssetModal from '../../../components/Asset/CreateAssetModal';
+import CreateModal from '../../../components/Asset/CreateModal';
 import { SearchTableList } from '../../../components/TableList';
 
 
@@ -54,7 +54,7 @@ const List = React.memo(() => {
                 placeholder={'Tìm kiếm tài sản ...'}
             />
         </div>
-        <CreateAssetModal />
+        <CreateModal/>
     </>
     )
 });

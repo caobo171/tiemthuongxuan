@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import { RawProduct, SelectItemsType, RawItem } from '../../store/types';
-import ProductListPopUp from './ProductListPopUp';
+import ListPopUp from '../ListPopUp';
 import SelectItem from './SelectItem';
-import { SelectProductContext } from './SelectProductContext';
+import { SelectProductContext } from './SelectContext';
 import { v4 as uuidv4 } from 'uuid';
 import TableList from '../TableList';
+import CreateProductModal from './CreateModal';
 
 
 
@@ -57,8 +58,15 @@ const SelectedList = React.memo(()=>{
         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 className="m-0 font-weight-bold text-primary">Thông tin sản phẩm</h6>
         </div>
-        <div className="row mb-2">
-            <ProductListPopUp onClickItem = {selectItemHanlde} />
+        <div className="my-2 mx-4 px-2">
+            <ListPopUp
+                onClickItem = {selectItemHanlde}
+                addText = {'Thêm sản phẩm mới'}
+                mainUrl = {'api/product'}
+                searchUrl = {'api/product/search'}
+                modal = {CreateProductModal}
+                modalId = {'product'}
+            />
         </div>
         <TableList
             data={rItems}

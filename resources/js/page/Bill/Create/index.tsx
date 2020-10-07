@@ -1,12 +1,13 @@
 import React , {useCallback} from 'react';
 import { BillCreate } from './constate';
-import CustomerListPopUp from '../../../components/Customer/CustomerListPopUp';
+import ListPopUp from '../../../components/ListPopUp';
 import ProductSelectedList from '../../../components/Product/SelectedList';
-import { SelectProductContext } from '../../../components/Product/SelectProductContext';
+import { SelectProductContext } from '../../../components/Product/SelectContext';
+import CustomerInfo from '../CustomerInfo';
+import CreateCustomerModal from '../../../components/Customer/CreateModal';
 
 
 const Create = React.memo(() => {
-
     const customer = BillCreate.useCustomer();
     const items = BillCreate.useItems();
     const createBill = BillCreate.useCreateBill();
@@ -35,11 +36,16 @@ const Create = React.memo(() => {
                             </div>
                             <div className="card-body">
                                 <div className="col">
-                                    {customer ? (<>
-                                        <div className="h6">{customer.name}</div>
-                                        <div className="text-xs">{customer.phone}</div>
-                                    </>
-                                    ) : <CustomerListPopUp onClickItem={setCustomer}/>}
+                                    {customer ? <CustomerInfo customer={customer}/> : (
+                                        <ListPopUp
+                                            onClickItem={setCustomer}
+                                            addText = {'Thêm khách hàng mới'}
+                                            mainUrl = {'api/customer'}
+                                            searchUrl = {'api/customer/search'}
+                                            modalId = {'customer'}
+                                            modal = {CreateCustomerModal}
+                                        />
+                                    )}
                                 </div>
                             </div>
                         </div>

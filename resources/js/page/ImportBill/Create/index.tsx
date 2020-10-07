@@ -1,9 +1,10 @@
-import React , {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import { ImportBillCreate } from './constate';
-import CustomerListPopUp from '../../../components/Customer/CustomerListPopUp';
 import ProductSelectedList from '../../../components/Product/SelectedList';
-import { SelectProductContext } from '../../../components/Product/SelectProductContext';
-import ProviderListPopUp from '../../../components/Provider/ProviderListPopUp';
+import { SelectProductContext } from '../../../components/Product/SelectContext';
+import ProviderInfo from '../ProviderInfo';
+import ListPopUp from '../../../components/ListPopUp';
+import CreateProviderModal from '../../../components/Provider/CreateProviderModal';
 
 
 const Create = React.memo(() => {
@@ -18,13 +19,13 @@ const Create = React.memo(() => {
     const changeBill = ImportBillCreate.useChangeBill();
 
 
-    const onChangeHandle = useCallback((e)=>{
+    const onChangeHandle = useCallback((e) => {
         changeBill(e.target.name, e.target.value);
-    },[bill, changeBill])
+    }, [bill, changeBill])
 
-    return (<SelectProductContext.Provider value={{setItems, items}}>
+    return (<SelectProductContext.Provider value={{ setItems, items }}>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-            <h1 className="h3 mb-0 text-gray-800">Create New Order</h1>
+            <h1 className="h3 mb-0 text-gray-800">Tạo đơn nhập hàng</h1>
         </div>
         <div className="row">
             <div className="col-xl-8 col-md-8 mb-8">
@@ -32,24 +33,31 @@ const Create = React.memo(() => {
                     <div className="col">
                         <div className="card shadow">
                             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 className="m-0 font-weight-bold text-primary">Thông tin khách hàng</h6>
+                                <h6 className="m-0 font-weight-bold text-primary">Thông tin nhà cung cấp</h6>
                             </div>
-                            <div className="card-body">
-                                <div className="col">
-                                    {provider ? (<>
-                                        <div className="h6">{provider.name}</div>
-                                        <div className="text-xs">{provider.phone}</div>
-                                    </>
-                                    ) : <ProviderListPopUp onClickItem={setProvider}/>}
+
+                            {provider ? <ProviderInfo provider={provider} /> : (
+                                <div className="card-body">
+                                    <div className="col">
+                                        <ListPopUp
+                                            mainUrl={'api/provider'}
+                                            searchUrl={'api/provider/search'}
+                                            onClickItem={setProvider}
+                                            addText={'Thêm mới nhà cung cấp'}
+                                            modal={CreateProviderModal}
+                                            modalId={'provider'}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
+                            )
+                            }
                         </div>
                     </div>
                 </div>
 
                 <div className="row mb-4">
                     <div className="col">
-                        <ProductSelectedList/>
+                        <ProductSelectedList />
                     </div>
                 </div>
             </div>
@@ -71,7 +79,7 @@ const Create = React.memo(() => {
                                 <div className="form-group">
                                     <label>Ghi chú</label>
                                     <textarea className="form-control" value={bill.description}
-                                        onChange = {onChangeHandle}
+                                        onChange={onChangeHandle}
                                         name={"description"}
                                     ></textarea>
 
@@ -80,14 +88,14 @@ const Create = React.memo(() => {
                                     <label>Extra Cost</label>
                                     <input className="form-control"
                                         value={bill.extra_cost}
-                                        onChange = {onChangeHandle}
-                                        type="number" name= "extra_cost"
+                                        onChange={onChangeHandle}
+                                        type="number" name="extra_cost"
                                     ></input>
                                 </div>
                                 <div className="row no-gutters align-items-center">
                                     <button type="button"
-                                    onClick={createBill}
-                                    className="btn btn-primary bg-gradient-primary btn-lg btn-block">Tạo đơn </button>
+                                        onClick={createBill}
+                                        className="btn btn-primary bg-gradient-primary btn-lg btn-block">Tạo đơn </button>
                                 </div>
                             </div>
                         </div>

@@ -1,8 +1,5 @@
 import React , {useCallback} from 'react';
 import {  BillDetail } from './constate';
-import CustomerListPopUp from '../../../components/Customer/CustomerListPopUp';
-import ProductSelectedList from '../../../components/Product/SelectedList';
-import { SelectProductContext } from '../../../components/Product/SelectProductContext';
 import {useParams} from 'react-router-dom';
 import ProductList from '../../../components/Product/List';
 import { BILL_STATUS } from '../../../Constants';

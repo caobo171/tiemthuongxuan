@@ -1,31 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { DashboardConstate } from './constate';
+import TableList from '../../../components/TableList';
 
 const Item = React.memo(({ item }: { item: any }) => {
-    return <div className="row">
-        <div className="col">{item.id}</div>
-        <div className="col">{item.name}</div>
-        <div className="col">{item.cost}</div>
-    </div>
+    return <>
+        <td>{item.id}</td>
+        <td>{item.name}</td>
+        <td>{item.cost}</td>
+    </>
 });
 
 const CustomerBillboard = React.memo(() => {
     const state = DashboardConstate.useReport();
+    const header = useMemo(()=>(
+        <>
+            <td>ID</td>
+            <td>Khách hàng</td>
+            <td>Số đơn hàng</td>
+            <td>Tổng giá trị</td>
+            <td>Giá trị mỗi đơn</td>
+        </>
+    ),[]);
     return (
-        <div className="col">
-            <div className="row card-header mb-2">
-                <div className="col">Mã SKU</div>
-                <div className="col">Tên sản phẩm</div>
-                <div className="col">Số lượng </div>
-                <div className="col">Trạng thái </div>
-                <div className="col">Đơn giá</div>
-                <div className="col">Tổng giá</div>
-            </div>
-
-            {(state.value ? state.value.customers : []).map((item: any) => (
-                <Item key={item.id} item={item} />
-            ))}
-        </div>
+        <>
+            <TableList 
+                header = {header}
+                data={state.value ? state.value.customers : []}
+                rowItem={Item}
+            />
+        </>
     )
 });
 

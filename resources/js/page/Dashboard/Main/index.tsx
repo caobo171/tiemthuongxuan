@@ -25,10 +25,6 @@ const Dashboard = React.memo(() => {
 	useEffect(() => {
 		if (!chartRef.current) return;
 
-
-		// Area Chart Example
-		//  var ctx = document.getElementById("myAreaChart");
-
 		var myLineChart = new Chart(chartRef.current, {
 			type: 'line',
 			data: {
@@ -157,17 +153,15 @@ const Dashboard = React.memo(() => {
 				<div className="col-xl-8 col-lg-7">
 					<div className="card shadow mb-4">
 						<div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-							<h6 className="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+							<h6 className="m-0 font-weight-bold text-primary">Khách hàng nổi bật</h6>
 						</div>
-						<div className="card-body">
-							<CustomerBillboard/>
-						</div>
+						<CustomerBillboard/>
 					</div>
 				</div>
 				<div className="col-xl-4 col-lg-5">
 					<div className="card shadow mb-4">
 						<div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-							<h6 className="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+							<h6 className="m-0 font-weight-bold text-primary">Tỉ lệ trên platform</h6>
 						</div>
                         <PieChart/>
 					</div>

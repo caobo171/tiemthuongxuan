@@ -34,11 +34,11 @@ const CreateProviderModal = React.memo(()=>{
 
     return(
         <>
-        <div className="modal fade" id="createProviderModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="provider" tabIndex={-1} role="dialog"aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <form className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Thêm nhà cung cấp</h5>
+                        <h5 className="modal-title">Thêm nhà cung cấp</h5>
                         <button className="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
