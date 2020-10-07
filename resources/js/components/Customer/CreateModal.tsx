@@ -1,7 +1,8 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
 import { PLATFORMS } from '../../Constants';
+import { useAlert } from 'react-alert';
 
 const CreateCustomerModal = React.memo(()=>{
 
@@ -28,6 +29,17 @@ const CreateCustomerModal = React.memo(()=>{
 
         return res.data
     },[]);
+
+    const alert = useAlert();
+    useEffect(()=>{
+        if(state.value){
+            alert.show("Create customer successful", {type: 'success'});
+            return ;
+        }
+        if(state.error){
+            alert.show(state.error.message, {type: 'error'});
+        }
+    },[state])
 
     return(
         <>

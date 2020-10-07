@@ -10,8 +10,8 @@ import { Provider } from 'react-redux';
 import Routes from './routes';
 
 const options = {
-  position: positions.BOTTOM_CENTER,
-  timeout: 5000,
+  position: positions.TOP_CENTER,
+  timeout: 4000,
   offset: '30px',
   transition: transitions.SCALE
 }
@@ -19,7 +19,7 @@ const options = {
 class Index extends Component {
   render() {
     return (
-      
+
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...options}>
 
@@ -32,10 +32,10 @@ class Index extends Component {
                   <Routes/>
                 </div>
               </div>
-            </div>    
+            </div>
           </BrowserRouter>
         </div>
-                  
+
         </AlertProvider>
       </Provider>
 

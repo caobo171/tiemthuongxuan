@@ -1,20 +1,27 @@
 import React, { useCallback } from 'react';
-import { RawItem } from '../../store/types';
+import { RawItem, RawProduct } from '../../store/types';
 import { ITEM_STATUS } from '../../Constants';
+import { SelectProductContext } from './SelectContext';
 
 interface Props {
-    item: RawItem,
-    updateItem: (value:RawItem )=> void
+    item: RawItem
 }
 
-const SelectItem = React.memo(({item, updateItem}: Props)=>{
-    const onChangeHandle = useCallback((e)=>{
-        const value = {
-            ...item,
-            [e.target.name]: e.target.value
-        };
-        updateItem(value);
-    },[item, updateItem]);
+const SelectItem = React.memo(({item}: Props)=>{
+
+    const { items, setItems } = React.useContext(SelectProductContext);
+
+    const updateItem = useCallback((e)=>{
+
+        setItems({
+            ...items,
+            [item.id]: {
+                ...item,
+                [e.target.name]: e.target.value
+            }
+        });
+
+    },[items, setItems, item])
 
     return (
         <>
@@ -22,14 +29,14 @@ const SelectItem = React.memo(({item, updateItem}: Props)=>{
             <td>{item.product_name}</td>
             <td>
                 <input
-                    onChange={onChangeHandle}
+                    onChange={updateItem}
                     name="quantity"
                     value={item.quantity}
                     type="number" className="form-control"/>
             </td>
             <td>
                 <select
-                    onChange={onChangeHandle}
+                    onChange={updateItem}
                     name="status"
                     value={item.status}
                     className="form-control">
@@ -40,7 +47,7 @@ const SelectItem = React.memo(({item, updateItem}: Props)=>{
             </td>
             <td>
                 <input
-                    onChange={onChangeHandle}
+                    onChange={updateItem}
                     value={item.cost} type="number"
                     name= "cost"
                     className="form-control"/>

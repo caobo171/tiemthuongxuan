@@ -1,9 +1,11 @@
 import constate from 'constate';
-import {useCallback, useState} from 'react';
+import {useCallback, useState, useEffect} from 'react';
 import { useAsyncFn } from 'react-use';
 import Axios from 'axios';
 import { RawProvider, SelectItemsType, RawImportBill } from '../../../store/types';
 import Fetch from '../../../service/Fetch';
+import { useAlert } from 'react-alert';
+import { useHistory } from 'react-router-dom';
 
 
 const useCreate = ()=>{
@@ -51,13 +53,26 @@ const useCreate = ()=>{
             items: rItems,
             cost,
             provider_id,
-            provider_name: (provider as RawProvider).name
+            provider_name: (provider as RawProvider).name,
+            //@ts-ignore
+            description: window.editor.getData()
         });
 
         return res.data
     },[items, bill, provider]);
 
-    console.log(state);
+    const alert = useAlert();
+    const history = useHistory();
+    useEffect(()=>{
+        if(state.value){
+            alert.show("Create bill successful", {type: 'success'});
+            history.push('/bills')
+            return ;
+        }
+        if(state.error){
+            alert.show(state.error.message, {type: 'error'});
+        }
+    },[state])
 
     return {
         provider, setProviderHandle,

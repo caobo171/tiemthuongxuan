@@ -1,6 +1,6 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import { useAsyncFn } from 'react-use';
-import Axios from 'axios';
+import { useAlert } from 'react-alert';
 import Fetch from '../../service/Fetch';
 
 const CreateProviderModal = React.memo(()=>{
@@ -24,13 +24,24 @@ const CreateProviderModal = React.memo(()=>{
             name, phone, email, description
         });
 
-        return res.data 
+        return res.data
     },[]);
 
     const onCreateHandle = useCallback((e)=>{
         e.preventDefault();
         createProvider();
     },[])
+
+    const alert = useAlert();
+    useEffect(()=>{
+        if(state.value){
+            alert.show("Create provider successful", {type: 'success'});
+            return ;
+        }
+        if(state.error){
+            alert.show(state.error.message, {type: 'error'});
+        }
+    },[state])
 
     return(
         <>
@@ -51,8 +62,8 @@ const CreateProviderModal = React.memo(()=>{
                             </div>
                             <div className="form-group col">
                                 <label>Số điện thoại </label>
-                                <input className="form-control" 
-                                type="tel" 
+                                <input className="form-control"
+                                type="tel"
                                 ref={phoneRef}></input>
                             </div>
                         </div>

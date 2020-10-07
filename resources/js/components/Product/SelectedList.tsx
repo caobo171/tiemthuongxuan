@@ -31,6 +31,7 @@ const SelectedList = React.memo(()=>{
     }, [items, setItems]);
 
     const updateItem = useCallback((item: RawItem)=>{
+        console.log(item);
         setItems({
             ...items,
             [item.id]: item
@@ -49,29 +50,26 @@ const SelectedList = React.memo(()=>{
         </>
     ),[])
 
-    const Item = useCallback(({item})=>(
-        <SelectItem item = {item} updateItem={updateItem}/>
-    ),[updateItem])
-
-
     return (<div className="card shadow">
         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 className="m-0 font-weight-bold text-primary">Thông tin sản phẩm</h6>
         </div>
-        <div className="my-2 mx-4 px-2">
-            <ListPopUp
-                onClickItem = {selectItemHanlde}
-                addText = {'Thêm sản phẩm mới'}
-                mainUrl = {'api/product'}
-                searchUrl = {'api/product/search'}
-                modal = {CreateProductModal}
-                modalId = {'product'}
-            />
+        <div className="px-4 mt-2">
+            <div className="col">
+                <ListPopUp
+                    onClickItem = {selectItemHanlde}
+                    addText = {'Thêm sản phẩm mới'}
+                    mainUrl = {'api/product'}
+                    searchUrl = {'api/product/search'}
+                    modal = {CreateProductModal}
+                    modalId = {'product'}
+                />
+            </div>
         </div>
         <TableList
             data={rItems}
             header = {header}
-            rowItem= {Item}
+            rowItem= {SelectItem}
         />
     </div>
     )

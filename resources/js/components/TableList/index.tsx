@@ -5,7 +5,7 @@ import { useAsync } from 'react-use';
 
 interface Props {
     data: Array<any>;
-    rowItem: React.ComponentType<{ item }>;
+    rowItem: React.ComponentType<{ item, updateItem? }>;
     header: React.ReactElement;
     loading?: boolean
 }

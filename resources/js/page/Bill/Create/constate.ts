@@ -1,8 +1,10 @@
 import constate from 'constate';
-import {useCallback, useState} from 'react';
+import {useCallback, useState, useEffect} from 'react';
 import { useAsyncFn } from 'react-use';
 import { RawCustomer, SelectItemsType, RawBill } from '../../../store/types';
 import Fetch from '../../../service/Fetch';
+import { useAlert } from 'react-alert';
+import { useHistory } from 'react-router-dom';
 
 
 const useCreate = ()=>{
@@ -46,8 +48,8 @@ const useCreate = ()=>{
         for (let i = 0; i < rItems.length; i++){
             cost += rItems[i].cost * rItems[i].quantity;
         }
-        console.log(cost, typeof cost);
-        console.log(bill.extra_cost, typeof bill.extra_cost)
+
+        console.log(rItems);
         cost += Number(bill.extra_cost);
 
         const res = await Fetch.post('api/bill',{
@@ -56,11 +58,26 @@ const useCreate = ()=>{
             items: rItems,
             cost,
             customer_name: (customer as RawCustomer).name,
-            customer_platform: (customer as RawCustomer).platform
+            customer_platform: (customer as RawCustomer).platform,
+            //@ts-ignore
+            description: window.editor.getData()
         });
 
         return res.data;
     },[items, bill, customer]);
+
+    const alert = useAlert();
+    const history = useHistory();
+    useEffect(()=>{
+        if(state.value){
+            alert.show("Create bill successful", {type: 'success'});
+            history.push('/bills')
+            return ;
+        }
+        if(state.error){
+            alert.show(state.error.message, {type: 'error'});
+        }
+    },[state])
 
     return {
         customer, setCustomerHandle,
@@ -68,6 +85,8 @@ const useCreate = ()=>{
         bill, changeBill,
         createBill
     }
+
+
 }
 
 const [Provider,

@@ -4,6 +4,7 @@ import {useParams} from 'react-router-dom';
 import ProductList from '../../../components/Product/List';
 import { BILL_STATUS } from '../../../Constants';
 import CustomerInfo from '../CustomerInfo';
+import  html from 'html-to-react';
 
 const Detail = React.memo(() => {
 
@@ -12,7 +13,7 @@ const Detail = React.memo(() => {
     const onChangeStatus= useCallback((e)=>{
         if(window.confirm('Are you sure to change bill state?')){
             changeStatus(e.target.value);
-        } 
+        }
     },[changeStatus])
     return (
         <>{state.value && (<>
@@ -20,7 +21,7 @@ const Detail = React.memo(() => {
             <h1 className="h3 mb-0 text-gray-800">Khách hàng</h1>
 
             <div className="form-group mr-2">
-                <select className="form-control" 
+                <select className="form-control"
                 onChange = {onChangeStatus}
                 value={state.value.bill.status}>
                     {Object.keys(BILL_STATUS).map(key=>(
@@ -52,21 +53,23 @@ const Detail = React.memo(() => {
                         <div className="row no-gutters align-items-center">
                             <div className="col mr-2">
                                 <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Thông tin đơn hàng</div>
-                                <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                <div className="h5 mb-3 font-weight-bold text-gray-800">Tổng giá: {
+                                    state.value.bill.cost
+                                }</div>
                             </div>
                             <div className="col-auto">
                                 <i className="fas fa-calendar fa-2x text-gray-300"></i>
                             </div>
                         </div>
                         <div className="form-group">
-                            <label>Ghi chú</label>
+                            <label className="h6 font-weight-bold text-primary">Ghi chú</label>
                             <div>
-                                {state.value.bill.description}
+                                {html.Parser().parse(state.value.bill.description)}
                             </div>
-    
+
                         </div>
                         <div className="form-group">
-                            <label>Extra Cost</label>
+                            <label className="h6 font-weight-bold text-primary">Extra Cost</label>
                             <div>{state.value.bill.extra_cost}</div>
                         </div>
                     </div>

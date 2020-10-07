@@ -11,11 +11,11 @@ interface Props {
     item: any
 }
 const Item = React.memo(({ item }: Props) => {
-    return <td>
+    return <>
         <td>{item.id}</td>
         <td>{item.name}</td>
         <td>{item.cost}</td>
-    </td>
+    </>
 });
 
 const List = React.memo(() => {

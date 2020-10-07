@@ -39,6 +39,7 @@
         "@types/lodash": "^4.14.161",
         "chart.js": "^2.9.3",
         "constate": "^3.0.1",
+        "html-to-react": "^1.4.4",
         "moment": "^2.29.0",
         "react-alert": "^7.0.2",
         "react-alert-template-basic": "^1.0.0",

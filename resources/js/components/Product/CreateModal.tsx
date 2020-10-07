@@ -1,15 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useAlert } from 'react-alert';
 import { useAsyncFn } from 'react-use';
-import Axios from 'axios';
 import Fetch from '../../service/Fetch';
+
 const CreateProductModal = React.memo(()=>{
 
     const nameRef = useRef<HTMLInputElement>(null);
     const skuRef = useRef<HTMLInputElement>(null);
     const costRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLInputElement>(null);
-    const alert = useAlert();
 
     const [state, createProduct] = useAsyncFn(async()=>{
         //@ts-ignore
@@ -24,21 +23,29 @@ const CreateProductModal = React.memo(()=>{
         const res = await Fetch.post('api/product',{
             name, sku, cost, description
         });
-        if(res.data){
-            alert.show("Create Product Successful", {type: 'success'});
-        }
         return res.data;
-    },[]); 
+    },[]);
+
+    const alert = useAlert();
+    useEffect(()=>{
+        if(state.value){
+            alert.show("Create product successful", {type: 'success'});
+            return ;
+        }
+        if(state.error){
+            alert.show(state.error.message, {type: 'error'});
+        }
+    },[state])
 
     return(
         <>
-        <div className="modal fade" id="product" 
+        <div className="modal fade" id="product"
             tabIndex={-1} role="dialog" aria-hidden="true">
             <div className="modal-dialog">
                 <form className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Thêm sản phẩm</h5>
-                        <button className="close" type="button" 
+                        <button className="close" type="button"
                             data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>

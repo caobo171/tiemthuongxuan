@@ -8,20 +8,20 @@ interface Props {
 const Item = React.memo(({item}: Props)=>{
 
     return (
-        <div className="row mb-2">
-            <div className="col">{item.sku}</div>
-            <div className="col">{item.product_name}</div>
-            <div className="col">
+        <>
+            <td>{item.sku}</td>
+            <td>{item.product_name}</td>
+            <td>
                 {item.quantity}
-            </div>
-            <div className="col">
+            </td>
+            <td>
                 {item.status}
-            </div>
-            <div className="col">
+            </td>
+            <td>
                 {item.cost}
-            </div>
-            <div className="col">{item.cost * item.quantity}</div>
-        </div>
+            </td>
+            <td>{item.cost * item.quantity}</td>
+        </>
 
     );
 });

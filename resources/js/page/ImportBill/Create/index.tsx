@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ImportBillCreate } from './constate';
 import ProductSelectedList from '../../../components/Product/SelectedList';
 import { SelectProductContext } from '../../../components/Product/SelectContext';
 import ProviderInfo from '../ProviderInfo';
 import ListPopUp from '../../../components/ListPopUp';
-import CreateProviderModal from '../../../components/Provider/CreateProviderModal';
+import CreateModal from '../../../components/Provider/CreateModal';
 
 
 const Create = React.memo(() => {
@@ -22,6 +22,16 @@ const Create = React.memo(() => {
     const onChangeHandle = useCallback((e) => {
         changeBill(e.target.name, e.target.value);
     }, [bill, changeBill])
+
+    useEffect(() => {
+        //@ts-ignore
+        window.ClassicEditor
+            .create(document.querySelector('#editor'),)
+            .then( newEditor => {
+                //@ts-ignore
+                window.editor = newEditor;
+            } )
+    }, [])
 
     return (<SelectProductContext.Provider value={{ setItems, items }}>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
@@ -44,7 +54,7 @@ const Create = React.memo(() => {
                                             searchUrl={'api/provider/search'}
                                             onClickItem={setProvider}
                                             addText={'Thêm mới nhà cung cấp'}
-                                            modal={CreateProviderModal}
+                                            modal={CreateModal}
                                             modalId={'provider'}
                                         />
                                     </div>
@@ -78,9 +88,8 @@ const Create = React.memo(() => {
                                 </div>
                                 <div className="form-group">
                                     <label>Ghi chú</label>
-                                    <textarea className="form-control" value={bill.description}
-                                        onChange={onChangeHandle}
-                                        name={"description"}
+                                    <textarea className="form-control"
+                                        id="editor"
                                     ></textarea>
 
                                 </div>
