@@ -87,7 +87,7 @@ const Create = React.memo(() => {
                                 <div className="row no-gutters align-items-center">
                                     <button type="button"
                                     onClick={createBill}
-                                    className="btn btn-primary btn-lg btn-block">Tạo đơn </button>
+                                    className="btn btn-primary bg-gradient-primary btn-lg btn-block">Tạo đơn </button>
                                 </div>
                             </div>
                         </div>

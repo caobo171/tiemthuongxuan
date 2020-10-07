@@ -33,6 +33,7 @@ Route::resource('provider', ProviderController::class);
 Route::post('provider/search', [ProviderController::class, 'search']);
 
 Route::resource('asset', AssetController::class);
+Route::post('asset/search', [AssetController::class, 'search']);
 
 Route::resource('customer', CustomerController::class);
 Route::post('customer/search', [CustomerController::class, 'search']);

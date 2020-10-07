@@ -3,5 +3,33 @@
 }
 
 .container-fluid{
-    max-width: 1200px;
+    max-width: 900px;
+}
+
+.form-control {
+    font-size: 0.75rem;
+}
+
+
+.card-header {
+    padding: 0.5rem 1.25rem;
+}
+
+.table-row {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+input.form-control {
+    height: 38px;
+}
+
+select.form-control {
+    height: 38px;
+}
+
+.shadow {
+    box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px 0 rgba(63,63,68,.15) !important;
 }

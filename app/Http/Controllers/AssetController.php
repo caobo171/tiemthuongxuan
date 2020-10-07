@@ -94,8 +94,14 @@ class AssetController extends Controller
         //
     }
 
+
+    public function search(Request $request){
+        $q = $request->input('q');
+        $assets = Asset::query()->where('name', 'like', '%' .$q. '%')->get();
+        return $assets;
+    }
     /**
-     * 
+     *
      */
 
 }

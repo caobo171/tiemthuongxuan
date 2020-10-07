@@ -1,17 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
-.dropdown-menu.show {
-  width: 100%;
-}
-
-.container-fluid,
-.container-xl,
-.container-lg,
-.container-md,
-.container-sm {
-  max-width: 1200px;
-}
-
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -10909,5 +10897,44 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+
+.dropdown-menu.show {
+  width: 100%;
+}
+
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  max-width: 900px;
+}
+
+.form-control {
+  font-size: 0.75rem;
+}
+
+.card-header {
+  padding: 0.5rem 1.25rem;
+}
+
+.table-row {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+input.form-control {
+  height: 38px;
+}
+
+select.form-control {
+  height: 38px;
+}
+
+.shadow {
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15) !important;
 }
 

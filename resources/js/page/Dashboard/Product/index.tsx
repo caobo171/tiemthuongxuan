@@ -45,7 +45,7 @@ const ProductsReport = React.memo(() => {
 						<input className="form-control" type="date" ref={endRef} defaultValue={moment().endOf('month').format('YYYY-MM-DD')} />
 					</div>
 					<div className="col">
-						<div className="btn btn-sm btn-primary shadow-sm" onClick={onReloadHandle}>Reload</div>
+						<div className="btn btn-sm btn-primary bg-gradient-primary shadow-sm" onClick={onReloadHandle}>Reload</div>
 					</div>
 				</div>
 			</div>

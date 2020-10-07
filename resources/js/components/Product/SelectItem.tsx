@@ -17,36 +17,36 @@ const SelectItem = React.memo(({item, updateItem}: Props)=>{
     },[item, updateItem]);
 
     return (
-        <div className="row mb-2">
-            <div className="col">{item.sku}</div>
-            <div className="col">{item.product_name}</div>
-            <div className="col">
-                <input 
+        <>
+            <td>{item.sku}</td>
+            <td>{item.product_name}</td>
+            <td>
+                <input
                     onChange={onChangeHandle}
                     name="quantity"
-                    value={item.quantity} 
+                    value={item.quantity}
                     type="number" className="form-control"/>
-            </div>
-            <div className="col">
-                <select 
+            </td>
+            <td>
+                <select
                     onChange={onChangeHandle}
                     name="status"
-                    value={item.status} 
+                    value={item.status}
                     className="form-control">
                     {Object.keys(ITEM_STATUS).map(key=>(
                         <option value={key}>{ITEM_STATUS[key]}</option>
                     ))}
                 </select>
-            </div>
-            <div className="col">
-                <input 
+            </td>
+            <td>
+                <input
                     onChange={onChangeHandle}
-                    value={item.cost} type="number" 
+                    value={item.cost} type="number"
                     name= "cost"
                     className="form-control"/>
-            </div>
-            <div className="col">{item.cost * item.quantity}</div>
-        </div>
+            </td>
+            <td>{item.cost * item.quantity}</td>
+        </>
 
     );
 });
