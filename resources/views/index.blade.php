@@ -27,6 +27,7 @@
 
 <body>
     <div id="page-top"></div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

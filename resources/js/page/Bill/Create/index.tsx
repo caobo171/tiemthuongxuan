@@ -76,7 +76,7 @@ const Create = React.memo(() => {
                             </div>
                             <div className="form-group">
                                 <label>Ghi chú</label>
-                                <textarea className="form-control" value={bill.description}
+                                <textarea className="form-control" id="editor" value={bill.description}
                                     onChange = {onChangeHandle}
                                     name={"description"}
                                 ></textarea>
