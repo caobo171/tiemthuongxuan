@@ -35,21 +35,18 @@ const useCreate = ()=>{
     },[customer]);
 
     const setItemsHandle = useCallback((items)=>{
+        console.log(items);
         setItems(items);
     },[setItems]);
 
     const [state, createBill] = useAsyncFn(async ()=>{
 
-        const rItems = Object.values(items).map(e=>({
-            ...e,
-            quantity: 1
-        }));
+        const rItems = Object.values(items);
         let cost = 0 ;
         for (let i = 0; i < rItems.length; i++){
             cost += rItems[i].cost * rItems[i].quantity;
         }
 
-        console.log(rItems);
         cost += Number(bill.extra_cost);
 
         const res = await Fetch.post('api/bill',{
@@ -70,6 +67,12 @@ const useCreate = ()=>{
     const history = useHistory();
     useEffect(()=>{
         if(state.value){
+            //@ts-ignore
+            if(state.value.errror){
+                //@ts-ignore
+                alert.show(state.value.message, {type: 'error'});
+                return ;
+            }
             alert.show("Create bill successful", {type: 'success'});
             history.push('/bills')
             return ;

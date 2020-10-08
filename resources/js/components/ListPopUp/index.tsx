@@ -67,7 +67,7 @@ const ListPopUp = React.memo(({ onClickItem, addText, mainUrl, searchUrl , modal
                                 id={item.id}
                                 data-toggle="modal"
                                 data-target="#createUser`Modal">
-                                {item.name}-{item.phone}
+                                {item.name} {item.phone}
                             </a>))}</>)}
                 </div>
             </div>

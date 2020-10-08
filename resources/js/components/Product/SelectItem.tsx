@@ -13,6 +13,7 @@ const SelectItem = React.memo(({item}: Props)=>{
 
     const updateItem = useCallback((e)=>{
 
+        console.log(items)
         setItems({
             ...items,
             [item.id]: {

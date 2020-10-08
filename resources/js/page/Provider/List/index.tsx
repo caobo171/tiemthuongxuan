@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { RawCustomer, RawProvider } from '../../../store/types';
 import { SearchTableList } from '../../../components/TableList';
+import CreateProviderModal from '../../../components/Provider/CreateModal';
 
 interface Props {
     item: RawProvider
@@ -40,9 +41,9 @@ const List = React.memo(() => {
         <div className="d-sm-flex align-items-center justify-content-between mb-2 mt-3">
             <h1 className="h3 mb-0 text-gray-800">Nhà cung cấp</h1>
 
-            <Link to={'/importbill/create'} className="d-none d-sm-inline-block btn btn-sm btn-primary bg-gradient-primary shadow-sm">
+            <a data-toggle="modal" data-target="#provider" className="d-none d-sm-inline-block btn btn-sm btn-primary bg-gradient-primary shadow-sm">
                 <i className="fas fa-plus fa-sm text-white-50">
-                </i> <span className="text-white-50">Thêm nhà cung cấp</span></Link>
+                </i> <span className="text-white-50">Thêm nhà cung cấp</span></a>
         </div>
         <div className="row">
             <SearchTableList
@@ -56,6 +57,7 @@ const List = React.memo(() => {
                 placeholder={'Tìm kiếm nhà cung cấp ...'}
             />
         </div>
+        <CreateProviderModal/>
     </>
     )
 });

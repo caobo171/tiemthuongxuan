@@ -17,7 +17,7 @@ const Detail = React.memo(() => {
     return (
         <>{state.value && (<>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-            <h1 className="h3 mb-0 text-gray-800">Create New Order</h1>
+            <h1 className="h3 mb-0 text-gray-800">Đơn nhập hàng</h1>
 
             <div className="form-group mr-2">
                 <select className="form-control"
@@ -34,7 +34,7 @@ const Detail = React.memo(() => {
                 <div className="col mb-4">
                     <div className="card shadow">
                         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 className="m-0 font-weight-bold text-primary">Thông tin khách hàng</h6>
+                            <h6 className="m-0 font-weight-bold text-primary">Thông tin nhà cung cấp</h6>
                         </div>
                         <div className="card-body">
                             <div className="col">

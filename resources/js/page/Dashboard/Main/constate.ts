@@ -7,6 +7,8 @@ import { RawBill, RawImportBill, RawItem, RawAsset } from '../../../store/types'
 import { PLATFORMS, BILL_STATUS } from '../../../Constants';
 
 
+
+
 const useDashboard = ({startDate, endDate})=>{
   const state = useAsync(async ()=>{
 	const res = await Fetch.post<{
@@ -21,70 +23,95 @@ const useDashboard = ({startDate, endDate})=>{
 	});
 
 	if(res.data){
-		//bad code
-        const success_bills = res.data.bills.filter(e=>e.status === 'success')
+        const result = {
+            bills: res.data.bills.length,
+            success_bills: 0,
+            failed_bills: 0,
+            other_bills: 0,
+
+            revenue : 0,
+            totalProfit: 0,
+            profit: 0,
+
+            fund: 0,
+            fixed_asset: 0,
+            import_fund: 0,
+            repay: 0,
+
+            pending_money: 0,
 
 
-        const revenue = success_bills.map(e=>e.cost).reduce((a, b) => a + b, 0);
-        const totalRevenue = res.data.bills.map(e=>e.cost).reduce((a,b)=> a + b, 0);
+            customers: {},
+            platforms : {
+                'shopee': 0,
+                'facebook': 0,
+                'onshop': 0
+            }
+        };
 
-		//bad code
-		const fund = res.data.import_bills
-		.map(e=>e.cost).reduce((a, b) => a + b, 0);
+        const bills = res.data.bills;
+        const import_bills = res.data.import_bills;
+        for(let i = 0 ; i < bills.length; i++){
+            const bill  = res.data.bills[i];
 
-		//bad code
-		const fixedExpense = res.data.assets
-		.filter(e => {
-			let expiredDate = new Date(e.created_at);
-			expiredDate.setDate(expiredDate.getDate() + e.cycle);
-			if(expiredDate.getTime() < endDate.getTime()){
-				return true;
-			}else{
-				return false;
-			}
-		})
-		.map(e=> {
-			return (e.cost)
-		}).reduce((a, b) => a + b, 0);
-
-		const totalProfit = revenue - fund;
-        const profit = totalProfit - fixedExpense;
-
-        const platforms = {};
-        const keys = Object.keys(PLATFORMS);
-        for(let i = 0 ;i< keys.length; i++){
-            platforms[keys[i]] = 0;
-        }
-
-        for(let i = 0; i < success_bills.length; i++){
-            platforms[success_bills[i].customer_platform] += success_bills[i].cost;
-        }
-
-        const customers = {};
-        for(let i = 0; i< res.data.bills.length; i++){
-            if(!customers[res.data.bills[i].customer_id]){
-                customers[res.data.bills[i].customer_id] = {
+            result.platforms[bill.customer_platform] += bill.cost;
+            if(!result.customers[res.data.bills[i].customer_id]){
+                result.customers[res.data.bills[i].customer_id] = {
                     id: res.data.bills[i].customer_id,
                     name: res.data.bills[i].customer_name,
-                    cost: 0
+                    cost: 0,
+                    bills: 0,
+                    pending: 0,
+                    pending_bills: 0
                 };
             }
-            customers[res.data.bills[i].customer_id].cost += res.data.bills[i].cost;
+            result.customers[res.data.bills[i].customer_id].bills += 1;
+            if(bill.status === 'success'){
+                result.revenue += bill.cost;
+                result.success_bills += 1;
+                console.log('test', bill)
+                result.customers[res.data.bills[i].customer_id].cost += bill.cost;
+            }
+            else if(bill.status === 'broken'){
+                result.failed_bills += 1;
+                result.repay += bill.cost;
+            }
+            else {
+                result.other_bills +=1;
+                result.pending_money += bill.cost;
+                result.customers[res.data.bills[i].customer_id].pending += bill.cost;
+                result.customers[res.data.bills[i].customer_id].pending_bills += 1;
+            }
         }
 
+        for (let i = 0 ; i < import_bills.length; i++){
+            result.import_fund += import_bills[i].cost;
+        }
 
-		return {
-			revenue,
-			fund,
-			totalProfit,
-			profit,
-            fixedExpense,
-            platforms,
-            billsLength:res.data.bills.length,
-            successBillsLength: success_bills.length,
-            customers: Object.values(customers),
-            totalRevenue
-		};
+        for (let i=0 ; i< res.data.assets.length; i++){
+            const asset = res.data.assets[i];
+            const start = Math.max(new Date(startDate).getTime(), new Date(asset.created_at).getTime());
+
+            const expired_date = new Date(asset.created_at);
+            expired_date.setDate(expired_date.getDate() + asset.cycle);
+            const end = Math.min(new Date(endDate).getTime(), expired_date.getTime());
+
+            const difference = Math.floor((end - start)/ (1000 * 3600 * 24));
+
+            if(difference > 0 ){
+                result.fixed_asset += (asset.cost / asset.cycle) * difference;
+            }
+        }
+
+        result.fund = result.fixed_asset + result.import_fund + result.repay;
+        result.totalProfit = result.revenue - result.import_fund;
+        result.profit = result.revenue - result.fund;
+
+
+        return {
+            ...result,
+            customers: Object.values(result.customers)
+        };
 	}
 	return null;
   },[startDate, endDate])

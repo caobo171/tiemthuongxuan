@@ -15,7 +15,7 @@ export type RawProduct = {
     id: number,
     created_at: Date,
     cost: number,
-    quantiy: number,
+    quantity: number,
     image: null | string,
     description: string,
     name: string,

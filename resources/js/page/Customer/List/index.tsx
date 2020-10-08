@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { RawCustomer } from '../../../store/types';
 import { useHistory } from "react-router-dom";
 import { SearchTableList } from '../../../components/TableList';
+import CreateCustomerModal from '../../../components/Customer/CreateModal';
 
 
 interface Props {
@@ -44,13 +45,13 @@ const List = React.memo(() => {
         <div className="d-sm-flex align-items-center justify-content-between mb-2 mt-3">
             <h1 className="h3 mb-0 text-gray-800">Khách hàng</h1>
 
-            <a data-toggle="modal" data-target="#createAssetModal" className="d-none d-sm-inline-block btn btn-sm btn-primary bg-gradient-primary shadow-sm">
+            <a data-toggle="modal" data-target="#customer" className="d-none d-sm-inline-block btn btn-sm btn-primary bg-gradient-primary shadow-sm">
                 <i className="fas fa-plus fa-sm text-white-50">
                 </i> <span className="text-white-50">Thêm khách hàng</span></a>
         </div>
         <div className="row">
             <SearchTableList
-                title="Tất cả tài sản"
+                title="Tất cả khách hàng"
                 query={q}
                 searchUrl={'api/customer/search'}
                 mainUrl={'api/customer'}
@@ -60,6 +61,7 @@ const List = React.memo(() => {
                 placeholder={'Tìm kiếm khách hàng ...'}
             />
         </div>
+        <CreateCustomerModal/>
     </>
     )
 });

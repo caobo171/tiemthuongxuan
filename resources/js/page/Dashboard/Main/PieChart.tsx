@@ -46,13 +46,13 @@ const PieChart = React.memo(()=>{
         </div>
         <div className="mt-4 text-center small">
             <span className="mr-2">
-                <i className="fas fa-circle text-primary"></i> Direct
+                <i className="fas fa-circle text-primary"></i> Shopee
             </span>
             <span className="mr-2">
-                <i className="fas fa-circle text-success"></i> Social
+                <i className="fas fa-circle text-success"></i> Facebook
             </span>
             <span className="mr-2">
-                <i className="fas fa-circle text-info"></i> Referral
+                <i className="fas fa-circle text-info"></i> OnShop
             </span>
         </div>
     </div>

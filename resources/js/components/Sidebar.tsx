@@ -59,7 +59,6 @@ const Sidebar = React.memo(() => {
         </a>
         <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
-            <Link className="collapse-item" to="/product/create">Tạo sản phẩm</Link>
             <Link className="collapse-item" to="/products">Danh sách sản phẩm</Link>
             <Link className="collapse-item" to="/importbill/create">Nhập hàng</Link>
             <Link className="collapse-item" to="/importbills">Đơn nhập hàng</Link>

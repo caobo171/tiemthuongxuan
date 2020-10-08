@@ -66,7 +66,7 @@ const CreateCustomerModal = React.memo(()=>{
                                 ref={phoneRef}></input>
                             </div>
                             <div className="form-group col">
-                                <label>Số điện thoại </label>
+                                <label>Nền tảng </label>
                                 <select className="form-control"
                                 ref={platformRef}>
                                     {Object.keys(PLATFORMS).map(e=>(

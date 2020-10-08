@@ -30,14 +30,7 @@ const SelectedList = React.memo(()=>{
         });
     }, [items, setItems]);
 
-    const updateItem = useCallback((item: RawItem)=>{
-        console.log(item);
-        setItems({
-            ...items,
-            [item.id]: item
-        });
 
-    },[items, setItems])
 
     const header = useMemo(()=>(
         <>

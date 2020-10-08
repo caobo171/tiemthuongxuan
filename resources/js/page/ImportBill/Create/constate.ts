@@ -47,7 +47,7 @@ const useCreate = ()=>{
             cost += rItems[i].cost * rItems[i].quantity;
         }
 
-
+        cost += Number(bill.extra_cost);
         const res = await Fetch.post('api/importbill',{
             ...bill,
             items: rItems,
