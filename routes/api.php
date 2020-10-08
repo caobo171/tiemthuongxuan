@@ -40,6 +40,9 @@ Route::post('customer/search', [CustomerController::class, 'search']);
 
 Route::resource('importbill', ImportBillController::class);
 Route::resource('bill', BillController::class);
+Route::post('bill/search', [BillController::class, 'search']);
+
+
 Route::post('bills/status', [BillController::class, 'status']);
 Route::post('importbill/search', [ImportBillController::class, 'search']);
 

@@ -22,15 +22,11 @@ class ReportController extends Controller
         $bills = Bill::whereBetween('created_at', [$start_date, $end_date])->get();
         $import_bills = ImportBill::whereBetween('created_at', [$start_date, $end_date])->get();
         $assets = Asset::all();
-        $bill_items = BillItem::whereBetween('created_at', [$start_date, $end_date])->get();
-        $importbill_items = ImportBillItem::whereBetween('created_at', [$start_date, $end_date])->get();
 
         return array(
             'bills' => $bills,
             'import_bills' => $import_bills,
-            'assets' => $assets,
-            'bill_items' => $bill_items,
-            'importbill_items' => $importbill_items
+            'assets' => $assets
         );
     }
 
@@ -43,9 +39,11 @@ class ReportController extends Controller
         $end_date  = $request->input('end_date');
 
         $bill_items = BillItem::whereBetween('created_at', [$start_date, $end_date])->get();
+        $importbill_items = ImportBillItem::whereBetween('created_at', [$start_date, $end_date])->get();
 
         return array(
-            'bill_items' => $bill_items
+            'bill_items' => $bill_items,
+            'importbill_items' => $importbill_items
         );
     }
 }

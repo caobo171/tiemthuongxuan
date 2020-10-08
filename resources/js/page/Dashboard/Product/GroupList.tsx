@@ -14,6 +14,7 @@ const Item = React.memo(({ item }: Props) => {
     return <>
         <td>{item.id}</td>
         <td>{item.name}</td>
+        <td>{item.expense}</td>
         <td>{item.cost}</td>
     </>
 });

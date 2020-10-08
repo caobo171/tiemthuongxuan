@@ -10,7 +10,8 @@ import _ from 'lodash';
 const useProductReport = ({startDate, endDate})=>{
   const state = useAsync(async ()=>{
 	const res = await Fetch.post<{
-		bill_items: RawItem[]
+        bill_items: RawItem[],
+        importbill_items: RawItem[]
 	}>('api/report.product',{
 		start_date: startDate,
 		end_date: endDate
@@ -24,11 +25,28 @@ const useProductReport = ({startDate, endDate})=>{
                 groups[bill_items[i].product_id] = {
                     id: bill_items[i].product_id,
                     name: bill_items[i].product_name,
-                    cost: 0
+                    cost: 0,
+                    expense: 0
                 }
             }
             groups[bill_items[i].product_id].cost += bill_items[i].cost;
         }
+
+        for(let i = 0 ; i< res.data.importbill_items.length; i++){
+            const bill = res.data.importbill_items[i]
+            if(!groups[bill.product_id]){
+                groups[bill.product_id] = {
+                    id: bill.product_id,
+                    name: bill.product_name,
+                    cost: 0,
+                    expense: 0
+                }
+            }
+            groups[bill.product_id].expense += bill.cost;
+            console.log(Object.values(groups));
+        }
+
+        
 
 
 		return {

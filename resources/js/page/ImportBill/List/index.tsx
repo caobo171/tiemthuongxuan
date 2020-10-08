@@ -17,7 +17,7 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.status} </td>
         <td>{item.cost}</td>
         <td>
-            <Link className="col" to={`importbill/detail/${item.id}`}>View</Link>
+            <Link className="col" to={`/importbill/detail/${item.id}`}>View</Link>
         </td>
     </>
 });

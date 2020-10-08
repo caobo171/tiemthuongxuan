@@ -14,8 +14,6 @@ const useDashboard = ({startDate, endDate})=>{
 	const res = await Fetch.post<{
 		bills: RawBill[],
 		import_bills: RawImportBill[],
-		bill_items: RawItem[],
-		importbill_items: RawItem[],
 		assets: RawAsset[]
 	}>('api/report',{
 		start_date: startDate,

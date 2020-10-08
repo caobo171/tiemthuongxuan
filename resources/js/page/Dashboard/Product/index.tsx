@@ -22,9 +22,6 @@ const ProductsReport = React.memo(() => {
 		if (!startRef.current || !endRef.current) return;
 		const startDate = startRef.current.value;
 		const endDate = endRef.current.value;
-
-		console.log('testing for fun !!');
-		console.log(startDate, endDate);
 		setDateRange({
 			startDate: new Date(startDate),
 			endDate: new Date(endDate)

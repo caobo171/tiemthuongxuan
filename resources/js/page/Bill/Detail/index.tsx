@@ -26,7 +26,7 @@ const Detail = React.memo(() => {
                 onChange = {onChangeStatus}
                 value={state.value.bill.status}>
                     {Object.keys(BILL_STATUS).map(key=>(
-                        <option value={key}>{BILL_STATUS[key]}</option>
+                        <option value={key} key={key}>{BILL_STATUS[key]}</option>
                     ))}
                 </select>
             </div>

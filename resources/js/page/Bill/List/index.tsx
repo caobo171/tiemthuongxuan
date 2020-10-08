@@ -1,5 +1,3 @@
-import Axios from 'axios';
-import { useAsync } from 'react-use';
 import React, { useMemo } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
@@ -18,7 +16,7 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.customer_platform}</td>
         <td>{item.cost}</td>
         <td>
-            <Link to={`bill/detail/${item.id}`}>View</Link>
+            <Link to={`/bill/detail/${item.id}`}>View</Link>
         </td>
     </>
 });

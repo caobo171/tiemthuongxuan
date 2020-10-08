@@ -20,7 +20,7 @@ class ImportBillController extends Controller
     public function index()
     {
         //
-        return ImportBill::orderBy('created_at')->get();
+        return ImportBill::orderBy('created_at', 'desc')->get();
     }
 
     /**
@@ -68,11 +68,13 @@ class ImportBillController extends Controller
                         $bill->created_at = $request->input('created_at');
 
                         $bill_item->save();
+
+                        $product = Product::find($item['product_id']);
+                        $product->quantity = $product->quantity + $item['quantity'];
+                        $product->save();
                     }
 
-                    $product = Product::find($item['product_id']);
-                    $product->quantity = $product->quantity + $item['quantity'];
-                    $product->save();
+
                 }
             }
             return $bill;
@@ -136,7 +138,7 @@ class ImportBillController extends Controller
 
 
     public function search(Request $request){
-        $bills = Customer::query()->where(DB::raw("CONCAT_WS('',name,phone)"), 'like', '%' . $request->input('q') . '%')->get();
+        $bills = ImportBill::query()->where(DB::raw("CONCAT_WS('',provider_name, status)"), 'like', '%' . $request->input('q') . '%')->get();
         return $bills;
     }
 }

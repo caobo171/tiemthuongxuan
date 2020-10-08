@@ -19,7 +19,7 @@ class BillController extends Controller
     public function index()
     {
         //
-        return Bill::orderBy('created_at')->get();
+        return Bill::orderBy('created_at', 'desc')->get();
     }
 
     /**
@@ -147,5 +147,10 @@ class BillController extends Controller
             return $bill;
         }
         return $bill;
+    }
+
+    public function search(Request $request){
+        $bills = Bill::query()->where(DB::raw("CONCAT_WS('',customer_name, status)"), 'like', '%' . $request->input('q') . '%')->get();
+        return $bills;
     }
 }
