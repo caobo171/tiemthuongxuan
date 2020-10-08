@@ -18,6 +18,7 @@ import ProductReports from './page/Dashboard/Product';
 
 import AssetList from './page/Asset/List';
 import ProductList from './page/Product/List';
+import ProductDetail  from './page/Product/Detail';
 
 const Routes = React.memo(()=>{
     return (
@@ -36,6 +37,7 @@ const Routes = React.memo(()=>{
         <Route path="/assets" component={AssetList} />
         <Route path="/report/products" component={ProductReports} />
         <Route path="/products" component={ProductList} />
+        <Route path="/product/detail/:id" component={ProductDetail} />
         {/*<Route path="/asset/detail/:id" component={ProviderDetail} />*/}
         <Route path="/" component={Dashboard} />
       </Switch>

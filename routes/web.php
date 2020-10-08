@@ -78,6 +78,9 @@ Route::get('/report/products', function (){
 Route::get('/products', function(){
     return view('index');
 });
+Route::get('/product/detail/{id}', function(){
+    return view('index');
+});
 // Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

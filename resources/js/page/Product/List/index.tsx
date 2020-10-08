@@ -16,6 +16,9 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.name}</td>
         <td>{item.quantity}</td>
         <td>{item.cost}</td>
+        <td>
+            <Link  to={`/product/detail/${item.id}`}>View</Link>
+        </td>
     </>
 });
 
@@ -30,6 +33,7 @@ const List = React.memo(() => {
             <td scope="col">Mặt hàng</td>
             <td scope="col">Số lượng còn lại</td>
             <td scope="col">Giá</td>
+            <td></td>
         </>)
     }, []);
 

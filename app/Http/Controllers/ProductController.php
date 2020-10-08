@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BillItem;
+use App\Models\ImportBillItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,6 +60,14 @@ class ProductController extends Controller
     public function show($id)
     {
         //
+        $product = Product::find($id);
+        $bill_items = BillItem::where('product_id', $product->id)->get();
+        $importbill_items = ImportBillItem::where('product_id', $product->id)->get();
+        return array(
+            "product" => $product,
+            "bill_items" => $bill_items,
+            "importbill_items" => $importbill_items
+        );
     }
 
     /**
