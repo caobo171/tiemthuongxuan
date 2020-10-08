@@ -56,6 +56,8 @@ const SelectedList = React.memo(()=>{
                     searchUrl = {'api/product/search'}
                     modal = {CreateProductModal}
                     modalId = {'product'}
+                    extraField = {'quantity'}
+                    extraString  = {'- Số lượng còn:'}
                 />
             </div>
         </div>

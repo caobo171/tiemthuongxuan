@@ -5,7 +5,7 @@ import { SelectProductContext } from '../../../components/Product/SelectContext'
 import ProviderInfo from '../ProviderInfo';
 import ListPopUp from '../../../components/ListPopUp';
 import CreateModal from '../../../components/Provider/CreateModal';
-
+import moment from 'moment';
 
 const Create = React.memo(() => {
 
@@ -85,6 +85,14 @@ const Create = React.memo(() => {
                                     <div className="col-auto">
                                         <i className="fas fa-calendar fa-2x text-gray-300"></i>
                                     </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>Ngày giao dịch</label>
+                                    <input className="form-control"
+                                        value={moment(bill.created_at).format('YYYY-MM-DD')}
+                                        onChange={onChangeHandle}
+                                        type="date" name="created_at"
+                                    ></input>
                                 </div>
                                 <div className="form-group">
                                     <label>Ghi chú</label>

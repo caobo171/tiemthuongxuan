@@ -42,7 +42,7 @@ const SelectItem = React.memo(({item}: Props)=>{
                     value={item.status}
                     className="form-control">
                     {Object.keys(ITEM_STATUS).map(key=>(
-                        <option value={key}>{ITEM_STATUS[key]}</option>
+                        <option key={key} value={key}>{ITEM_STATUS[key]}</option>
                     ))}
                 </select>
             </td>

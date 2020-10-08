@@ -15,7 +15,7 @@ const Item = React.memo(({ item }: Props) => {
     return <>
         <td>{item.id}</td>
         <td>{moment(item.created_at).format('DD/MM/YYYY')}</td>
-        <td>{item.customer_id}</td>
+        <td>{item.customer_name}</td>
         <td>{item.status} </td>
         <td>{item.cost}</td>
         <td>
@@ -50,9 +50,15 @@ const Detail = React.memo(() => {
                         <h6 className="m-0 font-weight-bold text-primary">Thông tin khách hàng</h6>
                     </div>
                     <div className="card-body">
-                        <div className="col">
-                            <div className="h6">{state.value.customer.name}</div>
-                            <div className="text-xs">{state.value.customer.phone}</div>
+                        <div className="row">
+                            <div className="col-xl-3">
+                                <h4 className="h4">{state.value.customer.name}</h4>
+                            </div>
+                            <div className="cocol-xl-9">
+                                <div className="text-xs"><b>Số điện thoại: </b>{state.value.customer.phone}</div>
+                                <div className="text-xs"><b>Email: </b>{state.value.customer.email}</div>
+                                <div className="text-xs"><b>Nền tảng</b>{state.value.customer.platform}</div>
+                            </div>
                         </div>
                     </div>
                 </div>

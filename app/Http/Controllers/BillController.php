@@ -51,6 +51,7 @@ class BillController extends Controller
             $bill->customer_id = $request->input('customer_id');
             $bill->customer_name = $request->input('customer_name');
             $bill->customer_platform = $request->input('customer_platform');
+            $bill->created_at = $request->input('created_at');
 
             if($bill->save()){
                 $items = $request->input('items');
@@ -63,6 +64,7 @@ class BillController extends Controller
                         $bill_item->product_name = $item['name'];
                         $bill_item->cost = $item['cost'];
                         $bill_item->sku = $item['sku'];
+                        $bill_item->created_at = $request->input('created_at');
                         $bill_item->save();
                         $product = Product::find($item['product_id']);
 

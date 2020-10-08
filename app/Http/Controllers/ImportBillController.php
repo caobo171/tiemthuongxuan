@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class ImportBillController extends Controller
 {
@@ -51,6 +50,8 @@ class ImportBillController extends Controller
             $bill->provider_id = $request->input('provider_id');
             $bill->extra_cost = $request->input('extra_cost');
             $bill->provider_name = $request->input('provider_name');
+            $bill->created_at = $request->input('created_at');
+
 
 
             if($bill->save()){
@@ -64,6 +65,8 @@ class ImportBillController extends Controller
                         $bill_item->product_name = $item['name'];
                         $bill_item->cost = $item['cost'];
                         $bill_item->sku = $item['sku'];
+                        $bill->created_at = $request->input('created_at');
+
                         $bill_item->save();
                     }
 

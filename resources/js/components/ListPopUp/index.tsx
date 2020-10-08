@@ -12,10 +12,12 @@ interface Props {
 	mainUrl: string,
 	searchUrl: string,
 	modal: React.ComponentType<any>,
-	modalId: string
+    modalId: string,
+    extraField? : string,
+    extraString? :string
 }
 
-const ListPopUp = React.memo(({ onClickItem, addText, mainUrl, searchUrl , modal , modalId}: Props) => {
+const ListPopUp = React.memo(({ onClickItem, addText, mainUrl, searchUrl , modal , modalId, extraField , extraString}: Props) => {
 
 	const [text, setText] = useState('');
 	const Modal = modal;
@@ -67,7 +69,7 @@ const ListPopUp = React.memo(({ onClickItem, addText, mainUrl, searchUrl , modal
                                 id={item.id}
                                 data-toggle="modal"
                                 data-target="#createUser`Modal">
-                                {item.name} {item.phone}
+                                {item.name} {extraString} {extraField ? item[extraField] : '' }
                             </a>))}</>)}
                 </div>
             </div>

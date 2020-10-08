@@ -13,7 +13,7 @@ const useCreate = ()=>{
     const [bill, setBill ] = useState<RawBill>({
         id: -1,
         description: '',
-        created_at: new Date,
+        created_at: new Date(),
         cost: 0,
         status: 'processing',
         customer_id: -1,
@@ -48,7 +48,6 @@ const useCreate = ()=>{
         }
 
         cost += Number(bill.extra_cost);
-
         const res = await Fetch.post('api/bill',{
             ...bill,
             customer_id: (customer as RawCustomer).id,
@@ -68,7 +67,7 @@ const useCreate = ()=>{
     useEffect(()=>{
         if(state.value){
             //@ts-ignore
-            if(state.value.errror){
+            if(state.value.error){
                 //@ts-ignore
                 alert.show(state.value.message, {type: 'error'});
                 return ;

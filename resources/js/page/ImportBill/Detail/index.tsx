@@ -4,6 +4,7 @@ import {useParams} from 'react-router-dom';
 import ProductList from '../../../components/Product/List';
 import { BILL_STATUS } from '../../../Constants';
 import html from 'html-to-react';
+import moment from 'moment';
 
 const Detail = React.memo(() => {
 
@@ -57,11 +58,18 @@ const Detail = React.memo(() => {
                         <div className="row no-gutters align-items-center">
                             <div className="col mr-2">
                                 <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Thông tin đơn hàng</div>
-                                <div className="h5 mb-4 font-weight-bold text-gray-800">Tổng giá trị: {state.value.bill.cost}</div>
+                                <div className="h5 mb-4 font-weight-bold text-gray-800">Tổng giá trị: {state.value.bill.cost}đ</div>
                             </div>
                             <div className="col-auto">
                                 <i className="fas fa-calendar fa-2x text-gray-300"></i>
                             </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="font-weight-bold text-primary">Ngày tạo</label>
+                            <div>
+                                {moment(state.value.bill.created_at).format('DD-MM-YYYY')}
+                            </div>
+
                         </div>
                         <div className="form-group">
                             <label className="font-weight-bold text-primary">Ghi chú</label>

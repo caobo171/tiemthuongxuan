@@ -2,9 +2,10 @@ import React , {useCallback} from 'react';
 import {  BillDetail } from './constate';
 import {useParams} from 'react-router-dom';
 import ProductList from '../../../components/Product/List';
-import { BILL_STATUS } from '../../../Constants';
+import { BILL_STATUS, PLATFORMS } from '../../../Constants';
 import CustomerInfo from '../CustomerInfo';
 import  html from 'html-to-react';
+import moment from 'moment';
 
 const Detail = React.memo(() => {
 
@@ -62,11 +63,24 @@ const Detail = React.memo(() => {
                             </div>
                         </div>
                         <div className="form-group">
+                            <label className="font-weight-bold text-primary">Sàn</label>
+                            <div>
+                                {PLATFORMS[state.value.bill.customer_platform]}
+                            </div>
+
+                        </div>
+                        <div className="form-group">
+                            <label className="font-weight-bold text-primary">Ngày tạo</label>
+                            <div>
+                                {moment(state.value.bill.created_at).format('DD-MM-YYYY')}
+                            </div>
+
+                        </div>
+                        <div className="form-group">
                             <label className="h6 font-weight-bold text-primary">Ghi chú</label>
                             <div>
                                 {html.Parser().parse(state.value.bill.description)}
                             </div>
-
                         </div>
                         <div className="form-group">
                             <label className="h6 font-weight-bold text-primary">Extra Cost</label>

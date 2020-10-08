@@ -70,7 +70,7 @@ const CreateCustomerModal = React.memo(()=>{
                                 <select className="form-control"
                                 ref={platformRef}>
                                     {Object.keys(PLATFORMS).map(e=>(
-                                        <option value={e}>{PLATFORMS[e]}</option>
+                                        <option key={e} value={e}>{PLATFORMS[e]}</option>
                                     ))}
                                 </select>
                             </div>

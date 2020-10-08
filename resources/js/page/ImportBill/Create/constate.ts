@@ -66,7 +66,7 @@ const useCreate = ()=>{
     useEffect(()=>{
         if(state.value){
             alert.show("Create bill successful", {type: 'success'});
-            history.push('/bills')
+            history.push('/importbills')
             return ;
         }
         if(state.error){

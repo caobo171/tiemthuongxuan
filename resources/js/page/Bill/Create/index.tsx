@@ -5,6 +5,7 @@ import ProductSelectedList from '../../../components/Product/SelectedList';
 import { SelectProductContext } from '../../../components/Product/SelectContext';
 import CustomerInfo from '../CustomerInfo';
 import CreateCustomerModal from '../../../components/Customer/CreateModal';
+import moment from 'moment';
 
 
 const Create = React.memo(() => {
@@ -78,11 +79,18 @@ const Create = React.memo(() => {
                                 <div className="row no-gutters align-items-center">
                                     <div className="col mr-2">
                                         <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Thông tin đơn hàng</div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                                     </div>
                                     <div className="col-auto">
                                         <i className="fas fa-calendar fa-2x text-gray-300"></i>
                                     </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>Ngày giao dịch</label>
+                                    <input className="form-control"
+                                        value={moment(bill.created_at).format('YYYY-MM-DD')}
+                                        onChange={onChangeHandle}
+                                        type="date" name="created_at"
+                                    ></input>
                                 </div>
                                 <div className="form-group">
                                     <label>Ghi chú</label>
@@ -98,6 +106,7 @@ const Create = React.memo(() => {
                                         type="number" name="extra_cost"
                                     ></input>
                                 </div>
+
                                 <div className="row no-gutters align-items-center">
                                     <button type="button"
                                         onClick={createBill}
