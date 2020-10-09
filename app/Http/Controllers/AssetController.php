@@ -43,6 +43,9 @@ class AssetController extends Controller
         $asset->description = $request->input('description');
         $asset->cost = $request->input('cost');
 
+        if ($request->input('created_at')){
+            $asset->created_at = $request->input('created_at');
+        }
         if($asset->save()){
             return $asset;
         }
@@ -92,6 +95,12 @@ class AssetController extends Controller
     public function destroy($id)
     {
         //
+        $asset = Asset::find($id);
+        if($asset->delete()){
+            return true;
+        }
+
+        return false;
     }
 
 

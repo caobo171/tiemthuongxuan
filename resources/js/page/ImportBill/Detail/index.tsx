@@ -5,6 +5,7 @@ import ProductList from '../../../components/Product/List';
 import { BILL_STATUS } from '../../../Constants';
 import html from 'html-to-react';
 import moment from 'moment';
+import { money } from '../../../service/utils';
 
 const Detail = React.memo(() => {
 
@@ -58,7 +59,7 @@ const Detail = React.memo(() => {
                         <div className="row no-gutters align-items-center">
                             <div className="col mr-2">
                                 <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Thông tin đơn hàng</div>
-                                <div className="h5 mb-4 font-weight-bold text-gray-800">Tổng giá trị: {state.value.bill.cost}đ</div>
+                                <div className="h5 mb-4 font-weight-bold text-gray-800">Tổng giá trị: {money(state.value.bill.cost)}</div>
                             </div>
                             <div className="col-auto">
                                 <i className="fas fa-calendar fa-2x text-gray-300"></i>

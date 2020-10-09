@@ -43,7 +43,7 @@ const List = React.memo(() => {
 
             <a data-toggle="modal" data-target="#provider" className="d-none d-sm-inline-block btn btn-sm btn-primary bg-gradient-primary shadow-sm">
                 <i className="fas fa-plus fa-sm text-white-50">
-                </i> <span className="text-white-50">Thêm nhà cung cấp</span></a>
+                </i> <span className="text-white">Thêm nhà cung cấp</span></a>
         </div>
         <div className="row">
             <SearchTableList

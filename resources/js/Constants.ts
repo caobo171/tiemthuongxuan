@@ -11,7 +11,8 @@ export const BILL_STATUS = {
 export const ITEM_STATUS = {
     'normal': 'normal',
     'gifted': 'gifted',
-    'repay': 'repay'
+    'repay': 'repay',
+    'sale': 'sale'
 };
 
 export const PLATFORMS = {

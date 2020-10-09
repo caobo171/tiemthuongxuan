@@ -19,7 +19,7 @@ class CreateProducts extends Migration
             $table->integer('cost');
             $table->integer('quantity');
             $table->string('image')->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->char('name', 100);
             $table->char('sku', 100);
             $table->string('history_price')->nullable();

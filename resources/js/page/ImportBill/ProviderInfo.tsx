@@ -8,9 +8,14 @@ interface Props {
 const ProviderInfo = React.memo(({provider}: Props)=>{
 	return(
 		<div className="card-body">
-			<div className="col">
-				<div className="h6">{provider.name}</div>
-				<div className="text-xs">{provider.phone}</div>
+			<div className="row">
+				<div className="col-xl-3">
+					<h4 className="h4">{provider.name}</h4>
+				</div>
+				<div className="col-xl-9">
+					<div className="text-xs"><b>Số điện thoại: </b>{provider.phone}</div>
+					<div className="text-xs"><b>Email: </b>{provider.email}</div>
+				</div>
 			</div>
 		</div>
 	);

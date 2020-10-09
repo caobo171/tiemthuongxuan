@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { ProductReportConstate } from './constate';
 import TableList from '../../../components/TableList';
+import { money } from '../../../service/utils';
 
 
 interface Props {
@@ -15,7 +16,7 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.id}</td>
         <td>{item.name}</td>
         <td>{item.expense}</td>
-        <td>{item.cost}</td>
+        <td>{money(item.cost)}</td>
         <td>
             <Link  to={`/product/detail/${item.id}`}>View</Link>
         </td>

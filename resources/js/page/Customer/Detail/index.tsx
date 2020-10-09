@@ -7,6 +7,7 @@ import { RawBill } from '../../../store/types';
 import {Link } from 'react-router-dom';
 import moment from 'moment';
 import TableList from '../../../components/TableList';
+import { money } from '../../../service/utils';
 
 interface Props {
     item: RawBill
@@ -17,7 +18,7 @@ const Item = React.memo(({ item }: Props) => {
         <td>{moment(item.created_at).format('DD/MM/YYYY')}</td>
         <td>{item.customer_name}</td>
         <td>{item.status} </td>
-        <td>{item.cost}</td>
+        <td>{money(item.cost)}</td>
         <td>
             <Link to={`/bill/detail/${item.id}`}>View</Link>
         </td>
@@ -54,7 +55,7 @@ const Detail = React.memo(() => {
                             <div className="col-xl-3">
                                 <h4 className="h4">{state.value.customer.name}</h4>
                             </div>
-                            <div className="cocol-xl-9">
+                            <div className="col-xl-9">
                                 <div className="text-xs"><b>Số điện thoại: </b>{state.value.customer.phone}</div>
                                 <div className="text-xs"><b>Email: </b>{state.value.customer.email}</div>
                                 <div className="text-xs"><b>Nền tảng</b>{state.value.customer.platform}</div>

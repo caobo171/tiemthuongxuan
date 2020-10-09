@@ -43,8 +43,9 @@ interface SearchTableProps {
     placeholder: string;
     query: string|null;
     title: string;
+    reload?: number;
 }
-export const SearchTableList = React.memo(({title, query, rowItem, header, searchUrl, mainUrl, redirectUrl, placeholder }: SearchTableProps) => {
+export const SearchTableList = React.memo(({reload, title, query, rowItem, header, searchUrl, mainUrl, redirectUrl, placeholder }: SearchTableProps) => {
     const history = useHistory();
     const searchRef = useRef<HTMLInputElement>(null);
 
@@ -66,7 +67,7 @@ export const SearchTableList = React.memo(({title, query, rowItem, header, searc
         }
         const res = await Fetch.get(mainUrl);
         return res.data as any[];
-    }, [query]);
+    }, [query, reload]);
 
     return (
         <div className={"col"}>

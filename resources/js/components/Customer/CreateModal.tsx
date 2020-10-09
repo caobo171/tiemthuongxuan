@@ -45,7 +45,7 @@ const CreateCustomerModal = React.memo(()=>{
         <>
         <div className="modal fade" id="customer" tabIndex={-1} role="dialog"
         aria-labelledby="create-user-modal" aria-hidden="true">
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog modal-dialog-centered" role="document">
                 <form className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="create-user-modal">Thêm khách hàng</h5>

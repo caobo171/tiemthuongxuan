@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { RawItem, RawProduct } from '../../store/types';
 import { ITEM_STATUS } from '../../Constants';
 import { SelectProductContext } from './SelectContext';
+import { money } from '../../service/utils';
 
 interface Props {
     item: RawItem
@@ -12,8 +13,6 @@ const SelectItem = React.memo(({item}: Props)=>{
     const { items, setItems } = React.useContext(SelectProductContext);
 
     const updateItem = useCallback((e)=>{
-
-        console.log(items)
         setItems({
             ...items,
             [item.id]: {
@@ -53,7 +52,7 @@ const SelectItem = React.memo(({item}: Props)=>{
                     name= "cost"
                     className="form-control"/>
             </td>
-            <td>{item.cost * item.quantity}</td>
+            <td>{money(item.cost * item.quantity)}</td>
         </>
 
     );

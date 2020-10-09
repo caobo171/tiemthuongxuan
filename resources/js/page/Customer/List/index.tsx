@@ -20,7 +20,7 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.email}</td>
         <td>{item.platform}</td>
         <td>
-            <Link className="col" to={`/customer/detail/${item.id}`}>View</Link>
+            <Link to={`/customer/detail/${item.id}`}>View</Link>
         </td>
     </>
 });
@@ -47,7 +47,7 @@ const List = React.memo(() => {
 
             <a data-toggle="modal" data-target="#customer" className="d-none d-sm-inline-block btn btn-sm btn-primary bg-gradient-primary shadow-sm">
                 <i className="fas fa-plus fa-sm text-white-50">
-                </i> <span className="text-white-50">Thêm khách hàng</span></a>
+                </i> <span className="text-white">Thêm khách hàng</span></a>
         </div>
         <div className="row">
             <SearchTableList

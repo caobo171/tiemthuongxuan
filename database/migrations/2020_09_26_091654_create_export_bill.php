@@ -15,7 +15,7 @@ class CreateExportBill extends Migration
     {
         Schema::create('ExportBills', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->integer('cost');
             $table->char('status', 100);
@@ -26,6 +26,7 @@ class CreateExportBill extends Migration
             $table->string('customer_platform');
 
             $table->index('status');
+            $table->index('created_at');
         });
     }
 

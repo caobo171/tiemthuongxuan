@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { SearchTableList } from '../../../components/TableList';
 import { RawImportBill, RawProduct } from '../../../store/types';
 import CreateProductModal from '../../../components/Product/CreateModal';
+import { money } from '../../../service/utils';
 
 interface Props {
     item: RawProduct
@@ -15,7 +16,7 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.id}</td>
         <td>{item.name}</td>
         <td>{item.quantity}</td>
-        <td>{item.cost}</td>
+        <td>{money(item.cost)}</td>
         <td>
             <Link  to={`/product/detail/${item.id}`}>View</Link>
         </td>
@@ -32,7 +33,7 @@ const List = React.memo(() => {
             <td scope="col">ID</td>
             <td scope="col">Mặt hàng</td>
             <td scope="col">Số lượng còn lại</td>
-            <td scope="col">Giá</td>
+            <td scope="col">Giá bán</td>
             <td></td>
         </>)
     }, []);
@@ -43,7 +44,7 @@ const List = React.memo(() => {
 
             <a data-toggle="modal" data-target="#product" className="d-none d-sm-inline-block btn btn-sm btn-primary bg-gradient-primary shadow-sm">
                 <i className="fas fa-plus fa-sm text-white-50">
-                </i> <span className="text-white-50">Thêm mới</span></a>
+                </i> <span className="text-white">Thêm mới</span></a>
         </div>
         <div className="row">
             <SearchTableList

@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { RawItem } from '../../store/types';
+import { money } from '../../service/utils';
 
 interface Props {
     item: RawItem
@@ -18,9 +19,9 @@ const Item = React.memo(({item}: Props)=>{
                 {item.status}
             </td>
             <td>
-                {item.cost}
+                {money(item.cost)}
             </td>
-            <td>{item.cost * item.quantity}</td>
+            <td>{money(item.cost * item.quantity)}</td>
         </>
 
     );

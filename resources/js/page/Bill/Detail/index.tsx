@@ -6,6 +6,7 @@ import { BILL_STATUS, PLATFORMS } from '../../../Constants';
 import CustomerInfo from '../CustomerInfo';
 import  html from 'html-to-react';
 import moment from 'moment';
+import { money } from '../../../service/utils';
 
 const Detail = React.memo(() => {
 
@@ -55,7 +56,7 @@ const Detail = React.memo(() => {
                             <div className="col mr-2">
                                 <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Thông tin đơn hàng</div>
                                 <div className="h5 mb-3 font-weight-bold text-gray-800">Tổng giá: {
-                                    state.value.bill.cost
+                                    money(state.value.bill.cost)
                                 }</div>
                             </div>
                             <div className="col-auto">
@@ -84,7 +85,7 @@ const Detail = React.memo(() => {
                         </div>
                         <div className="form-group">
                             <label className="h6 font-weight-bold text-primary">Extra Cost</label>
-                            <div>{state.value.bill.extra_cost}</div>
+                            <div>{money(state.value.bill.extra_cost)}</div>
                         </div>
                     </div>
                 </div>

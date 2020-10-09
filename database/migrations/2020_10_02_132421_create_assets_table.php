@@ -18,7 +18,7 @@ class CreateAssetsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->integer('cycle');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('cost');
         });
     }

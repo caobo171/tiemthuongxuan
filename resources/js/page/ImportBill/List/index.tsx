@@ -44,7 +44,7 @@ const List = React.memo(() => {
 
             <Link to={'/importbill/create'} className="d-none d-sm-inline-block btn btn-sm btn-primary bg-gradient-primary shadow-sm">
                 <i className="fas fa-plus fa-sm text-white-50">
-                </i> <span className="text-white-50">Nhập hàng</span></Link>
+                </i> <span className="text-white">Nhập hàng</span></Link>
         </div>
         <div className="row">
             <SearchTableList

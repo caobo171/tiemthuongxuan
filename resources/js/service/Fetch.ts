@@ -10,6 +10,10 @@ class Fetch {
     post<ResponseType>(url:string, params: Object ): Promise<AxiosPromise<ResponseType>>{
         return axios.post(`${this.__baseUrl}${url}`,params);
     }
+
+    delete<ResponseType>(url:string ): Promise<AxiosPromise<ResponseType>>{
+        return axios.delete(`${this.__baseUrl}${url}`);
+    }
 }
 
 export default new Fetch()

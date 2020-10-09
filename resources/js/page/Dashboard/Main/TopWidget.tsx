@@ -1,12 +1,11 @@
 import React from 'react';
 import { DashboardConstate } from './constate';
 import Widget from './Widget';
+import { money } from '../../../service/utils';
 
 const TopWidget = React.memo(() => {
 
 	const state = DashboardConstate.useReport();
-
-	console.log(state)
 	return (<>
 		{
 			state.value && (
@@ -29,32 +28,32 @@ const TopWidget = React.memo(() => {
 						<Widget
 							color={'success'}
                             title={'Doanh thu'}
-                            mainVal = {state.value.revenue.toString()}
+                            mainVal = {money(state.value.revenue)}
 
                             sub1 = {'Lợi nhuận gộp'}
-                            val1 = {state.value.totalProfit.toString()}
+                            val1 = {money(state.value.totalProfit)}
 
                             sub2 = {'Lợi nhuận'}
-                            val2 = {state.value.profit.toString()}
+                            val2 = {money(state.value.profit)}
 						/>
 						<Widget
 							color={'info'}
                             title={'Vốn'}
 
-                            mainVal = {state.value.fund.toString()}
+                            mainVal = {money(state.value.fund)}
                             sub1 = {'Tài sản cố định'}
-                            val1 = {state.value.fixed_asset.toString()}
+                            val1 = {money(state.value.fixed_asset)}
 
                             sub2 = {'Tiền nhập hàng'}
-                            val2 = {state.value.import_fund.toString()}
+                            val2 = {money(state.value.import_fund)}
 
-                            val3 = {state.value.repay.toString()}
+                            val3 = {money(state.value.repay)}
                             sub3 = {'Tiền đền hàng'}
 						/>
 						<Widget
 							color= {'warning'}
                             title={ 'Tiền chưa về'}
-                            mainVal = {state.value.pending_money.toString()}
+                            mainVal = {money(state.value.pending_money)}
 						/>
 					</div>
 				</>

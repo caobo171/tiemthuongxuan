@@ -3,7 +3,11 @@ import { useAlert } from 'react-alert';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
 
-const CreateProductModal = React.memo(()=>{
+interface Props {
+    reload?:()=>void
+}
+
+const CreateProductModal = React.memo(({reload}: Props)=>{
 
     const nameRef = useRef<HTMLInputElement>(null);
     const skuRef = useRef<HTMLInputElement>(null);
@@ -28,6 +32,7 @@ const CreateProductModal = React.memo(()=>{
 
     const alert = useAlert();
     useEffect(()=>{
+        reload && reload();
         if(state.value){
             alert.show("Create product successful", {type: 'success'});
             return ;
@@ -41,7 +46,7 @@ const CreateProductModal = React.memo(()=>{
         <>
         <div className="modal fade" id="product"
             tabIndex={-1} role="dialog" aria-hidden="true">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered">
                 <form className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Thêm sản phẩm</h5>
@@ -63,7 +68,7 @@ const CreateProductModal = React.memo(()=>{
                         </div>
                         <div className="row">
                             <div className="form-group col">
-                                <label>Cost </label>
+                                <label>Giá bán </label>
                                 <div className="input-group mb-3">
                                     <div className="input-group-prepend">
                                         <span className="input-group-text">đ</span>

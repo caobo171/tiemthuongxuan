@@ -54,7 +54,7 @@ const Detail = React.memo(() => {
                             <div className="col-xl-3">
                                 <h4 className="h4">{state.value.provider.name}</h4>
                             </div>
-                            <div className="cocol-xl-9">
+                            <div className="col-xl-9">
                                 <div className="text-xs"><b>Số điện thoại: </b>{state.value.provider.phone}</div>
                                 <div className="text-xs"><b>Email: </b>{state.value.provider.email}</div>
                             </div>

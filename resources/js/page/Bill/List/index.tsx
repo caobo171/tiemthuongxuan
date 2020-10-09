@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { RawBill } from '../../../store/types';
 import { SearchTableList } from '../../../components/TableList';
+import { money } from '../../../service/utils';
 
 interface Props {
     item: RawBill
@@ -14,7 +15,7 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.customer_name}</td>
         <td>{item.status} </td>
         <td>{item.customer_platform}</td>
-        <td>{item.cost}</td>
+        <td>{money(item.cost)}</td>
         <td>
             <Link to={`/bill/detail/${item.id}`}>View</Link>
         </td>
@@ -43,7 +44,7 @@ const List = React.memo(() => {
 
             <Link to={'/bill/create'} className="d-none d-sm-inline-block btn btn-sm btn-primary bg-gradient-primary shadow-sm">
                 <i className="fas fa-plus fa-sm text-white-50">
-                </i> <span className="text-white-50">Thêm đơn hàng</span></Link>
+                </i> <span className="text-white">Thêm đơn hàng</span></Link>
         </div>
         <div className="row">
             <SearchTableList

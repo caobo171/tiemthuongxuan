@@ -25,6 +25,7 @@ class CreateImportBillItems extends Migration
             $table->integer('quantity');
 
             $table->index(['product_id', 'bill_id']);
+            $table->index('created_at');
         });
     }
 

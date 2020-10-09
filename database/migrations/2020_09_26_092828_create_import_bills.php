@@ -15,7 +15,7 @@ class CreateImportBills extends Migration
     {
         Schema::create('ImportBills', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->integer('cost');
             $table->char('status', 100);
@@ -23,7 +23,9 @@ class CreateImportBills extends Migration
             $table->string('provider_name');
             $table->string('data');
             $table->integer('extra_cost');
+
             $table->index('status');
+            $table->index('created_at');
         });
     }
 

@@ -1,14 +1,20 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
+import { useAlert } from 'react-alert';
 import { PLATFORMS } from '../../Constants';
 
-const CreateAssetModal = React.memo(()=>{
+interface Props {
+    reload?: ()=>void
+}
+
+const CreateAssetModal = React.memo(({reload}: Props)=>{
 
     const nameRef = useRef<HTMLInputElement>(null);
     const cycleRef = useRef<HTMLInputElement>(null);
-    const descriptionRef = useRef<HTMLInputElement>(null);
+    const descriptionRef = useRef<HTMLTextAreaElement>(null);
     const costRef = useRef<HTMLInputElement>(null);
+    const dateRef = useRef<HTMLInputElement>(null);
 
     const [state, createAsset] = useAsyncFn(async()=>{
         //@ts-ignore
@@ -20,21 +26,35 @@ const CreateAssetModal = React.memo(()=>{
         //@ts-ignore
         const cost = costRef.current.value;
         //@ts-ignore
+        const created_at = dateRef.current.value;
+        //@ts-ignore
         const res = await Fetch.post('api/asset',{
-            name, cycle, cost, description
+            name, cycle, cost, description, created_at
         });
 
         return res.data
     },[]);
 
+    const alert = useAlert();
+    useEffect(()=>{
+        reload && reload();
+        if(state.value){
+            alert.show("Create asset successful", {type: 'success'});
+            return ;
+        }
+        if(state.error){
+            alert.show(state.error.message, {type: 'error'});
+        }
+    },[state])
+
     return(
         <>
         <div className="modal fade" id="createAssetModal" tabIndex={-1} role="dialog"
         aria-labelledby="create-user-modal" aria-hidden="true">
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog modal-dialog-centered" role="document">
                 <form className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="create-user-modal">Thêm khách hàng</h5>
+                        <h5 className="modal-title" id="create-user-modal">Thêm sản phẩm</h5>
                         <button className="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -46,7 +66,7 @@ const CreateAssetModal = React.memo(()=>{
                                 <input className="form-control" ref={nameRef}></input>
                             </div>
                             <div className="form-group col">
-                                <label>Cycle </label>
+                                <label>Vòng đời (ngày) </label>
                                 <input className="form-control"
                                 type="number"
                                 ref={cycleRef}></input>
@@ -55,12 +75,18 @@ const CreateAssetModal = React.memo(()=>{
                         </div>
                         <div className="row">
                             <div className="form-group col">
-                                <label>Cost </label>
+                                <label>Giá </label>
                                 <input className="form-control" ref={costRef}></input>
                             </div>
                             <div className="form-group col">
+                                <label>Create Date </label>
+                                <input className="form-control" type={'date'} ref={dateRef}></input>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="form-group col">
                                 <label>Description </label>
-                                <input className="form-control" ref={descriptionRef}></input>
+                                <textarea className="form-control" ref={descriptionRef}></textarea>
                             </div>
                         </div>
                     </div>
