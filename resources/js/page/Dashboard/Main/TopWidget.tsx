@@ -35,6 +35,9 @@ const TopWidget = React.memo(() => {
 
                             sub2 = {'Lợi nhuận'}
                             val2 = {money(state.value.profit)}
+
+                            sub3 = {'Tiền chưa về'}
+                            val3 = {money(state.value.pending_money)}
 						/>
 						<Widget
 							color={'info'}
@@ -49,11 +52,6 @@ const TopWidget = React.memo(() => {
 
                             val3 = {money(state.value.repay)}
                             sub3 = {'Tiền đền hàng'}
-						/>
-						<Widget
-							color= {'warning'}
-                            title={ 'Tiền chưa về'}
-                            mainVal = {money(state.value.pending_money)}
 						/>
 					</div>
 				</>

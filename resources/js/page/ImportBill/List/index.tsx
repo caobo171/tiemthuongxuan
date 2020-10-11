@@ -17,6 +17,11 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.status} </td>
         <td>{item.cost}</td>
         <td>
+            <Link
+            to={`/importbill/update/${item.id}`}
+            className={"fas fa-pen"}></Link>
+        </td>
+        <td>
             <Link className="col" to={`/importbill/detail/${item.id}`}>View</Link>
         </td>
     </>
@@ -34,6 +39,7 @@ const List = React.memo(() => {
             <td scope="col">Nhà cung cấp</td>
             <td scope="col">Trạng thái</td>
             <td scope="col">Giá trị</td>
+            <td scope="col">Hành động</td>
             <td scope="col"></td>
         </>)
     }, []);

@@ -15,7 +15,7 @@ interface Props {
 const Widget = React.memo(({title, sub1, sub2, sub3, icon, color, val1, val2, val3 , mainVal}: Props)=>{
 	return(
 
-		<div className="col-xl-3 col-md-6 mb-4">
+		<div className="col-xl-4 col-md-6 mb-4">
 		<div className={`card border-left-${color} shadow h-400 py-2`}>
 			<div className="card-body">
 				<div className="row no-gutters align-items-center">
@@ -34,7 +34,7 @@ const Widget = React.memo(({title, sub1, sub2, sub3, icon, color, val1, val2, va
 					<i className="fas fa-circle text-danger ml-3 mr-1"></i>{sub2}: {val2}
 				</div>}
 				{ sub3 && <div className="row align-items-center mt-2">
-					<i className="fas fa-circle text-primary ml-3 mr-1"></i>{sub3}: {val3}
+					<i className="fas fa-circle text-warning ml-3 mr-1"></i>{sub3}: {val3}
 				</div> }
 			</div>
 		</div>

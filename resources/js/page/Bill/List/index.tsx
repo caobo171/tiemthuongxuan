@@ -17,6 +17,11 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.customer_platform}</td>
         <td>{money(item.cost)}</td>
         <td>
+            <Link
+            to={`/bill/update/${item.id}`}
+            className={"fas fa-pen"}></Link>
+        </td>
+        <td>
             <Link to={`/bill/detail/${item.id}`}>View</Link>
         </td>
     </>

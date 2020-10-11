@@ -13,6 +13,7 @@ const SelectItem = React.memo(({item}: Props)=>{
     const { items, setItems } = React.useContext(SelectProductContext);
 
     const updateItem = useCallback((e)=>{
+        console.log(items, item , e.target.name, e.target.value);
         setItems({
             ...items,
             [item.id]: {

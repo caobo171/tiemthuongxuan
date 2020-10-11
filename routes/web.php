@@ -45,7 +45,13 @@ Route::get('/bills', function () {
 Route::get('/bill/detail/{id}', function () {
     return view('index');
 });
+Route::get('/bill/update/{id}', function () {
+    return view('index');
+});
 Route::get('/importbill/detail/{id}', function () {
+    return view('index');
+});
+Route::get('/importbill/update/{id}', function () {
     return view('index');
 });
 Route::get('/customers', function () {

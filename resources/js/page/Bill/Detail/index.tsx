@@ -7,6 +7,7 @@ import CustomerInfo from '../CustomerInfo';
 import  html from 'html-to-react';
 import moment from 'moment';
 import { money } from '../../../service/utils';
+import {Link } from 'react-router-dom';
 
 const Detail = React.memo(() => {
 
@@ -22,14 +23,15 @@ const Detail = React.memo(() => {
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
             <h1 className="h3 mb-0 text-gray-800">Khách hàng</h1>
 
-            <div className="form-group mr-2">
-                <select className="form-control"
+            <div className="form-group mr-2 row align-items-center">
+                <select className="form-control col"
                 onChange = {onChangeStatus}
                 value={state.value.bill.status}>
                     {Object.keys(BILL_STATUS).map(key=>(
-                        <option value={key} key={key}>{BILL_STATUS[key]}</option>
+                        <option value={key}>{BILL_STATUS[key]}</option>
                     ))}
                 </select>
+                <Link className="col" to={`/bill/update/${state.value.bill.id}`}>Edit</Link>
             </div>
         </div>
         <div className="row">
