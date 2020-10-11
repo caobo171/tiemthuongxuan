@@ -40,51 +40,45 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $is_editing = $request->isMethod('put');
-        if(!$is_editing){
-            DB::beginTransaction();
-            $bill = new Bill();
-            $bill->description = $request->input('description');
-            $bill->cost = $request->input('cost');
-            $bill->extra_cost = $request->input('extra_cost');
-            $bill->customer_id = $request->input('customer_id');
-            $bill->customer_name = $request->input('customer_name');
-            $bill->customer_platform = $request->input('customer_platform');
-            $bill->created_at = $request->input('created_at');
+        DB::beginTransaction();
+        $bill = new Bill();
+        $bill->description = $request->input('description');
+        $bill->cost = $request->input('cost');
+        $bill->extra_cost = $request->input('extra_cost');
+        $bill->customer_id = $request->input('customer_id');
+        $bill->customer_name = $request->input('customer_name');
+        $bill->customer_platform = $request->input('customer_platform');
+        $bill->created_at = $request->input('created_at');
 
-            if($bill->save()){
-                $items = $request->input('items');
-                if(is_array($items)){
-                    foreach($items as $item){
-                        $bill_item = new BillItem();
-                        $bill_item->quantity = $item['quantity'];
-                        $bill_item->product_id = $item['product_id'];
-                        $bill_item->bill_id = $bill->id;
-                        $bill_item->product_name = $item['name'];
-                        $bill_item->cost = $item['cost'];
-                        $bill_item->sku = $item['sku'];
-                        $bill_item->created_at = $request->input('created_at');
-                        $bill_item->save();
-                        $product = Product::find($item['product_id']);
+        if($bill->save()){
+            $items = $request->input('items');
+            if(is_array($items)){
+                foreach($items as $item){
+                    $bill_item = new BillItem();
+                    $bill_item->quantity = $item['quantity'];
+                    $bill_item->product_id = $item['product_id'];
+                    $bill_item->bill_id = $bill->id;
+                    $bill_item->product_name = $item['name'];
+                    $bill_item->cost = $item['cost'];
+                    $bill_item->sku = $item['sku'];
+                    $bill_item->created_at = $request->input('created_at');
+                    $bill_item->save();
+                    $product = Product::find($item['product_id']);
 
-                        if($product->quantity < $item['quantity']){
-                            DB::rollBack();
-                            return array(
-                                'message'=>'Out of stock',
-                                'error' => true
-                            );
-                        }
-                        $product->quantity = $product->quantity - $item['quantity'];
-                        $product->save();
+                    if($product->quantity < $item['quantity']){
+                        DB::rollBack();
+                        return array(
+                            'message'=>'Out of stock',
+                            'error' => true
+                        );
                     }
+                    $product->quantity = $product->quantity - $item['quantity'];
+                    $product->save();
                 }
             }
-            DB::commit();
-            return $bill;
         }
-
-        return null;
+        DB::commit();
+        return $bill;
     }
 
     /**
@@ -126,7 +120,7 @@ class BillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -137,7 +131,7 @@ class BillController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 
     public function status(Request $request){

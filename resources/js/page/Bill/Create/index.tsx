@@ -44,6 +44,7 @@ const Create = React.memo(() => {
                         <div className="card shadow">
                             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 className="m-0 font-weight-bold text-primary">Thông tin khách hàng</h6>
+                                { customer && <div style={{cursor:'pointer'}}onClick={()=>setCustomer(null)}>x</div>}
                             </div>
                             {customer ? <CustomerInfo customer={customer} /> : (
                                 <div className="card-body">

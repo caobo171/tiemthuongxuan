@@ -43,7 +43,6 @@ class ProductController extends Controller
         $product->name = $request->input('name');
         $product->sku = $request->input('sku');
         $product->cost = $request->input('cost');
-        $product->initial_cost = $request->input('initial_cost');
         $product->description = $request->input('description');
 
         if($product->save()){
@@ -91,7 +90,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->name = $request->input('name');
+        $product->sku = $request->input('sku');
+        $product->cost = $request->input('cost');
+        $product->description = $request->input('description');
+
+        if($product->save()){
+            return $product;
+        }
+        return null;
     }
 
     /**

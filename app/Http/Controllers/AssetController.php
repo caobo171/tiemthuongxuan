@@ -37,7 +37,7 @@ class AssetController extends Controller
     public function store(Request $request)
     {
         //
-        $asset = $request->isMethod('put') ? Asset::findOrFail($request->input('id')) : new Asset();
+        $asset = new Asset();
         $asset->name = $request->input('name');
         $asset->cycle = $request->input('cycle');
         $asset->description = $request->input('description');
@@ -83,7 +83,19 @@ class AssetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $asset = Asset::findOrFail($id);
+        $asset->name = $request->input('name');
+        $asset->cycle = $request->input('cycle');
+        $asset->description = $request->input('description');
+        $asset->cost = $request->input('cost');
+
+        if ($request->input('created_at')){
+            $asset->created_at = $request->input('created_at');
+        }
+        if($asset->save()){
+            return $asset;
+        }
+        return null;
     }
 
     /**

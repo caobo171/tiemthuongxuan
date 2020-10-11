@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { useAsync } from 'react-use';
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useContext } from 'react';
 import { RawAsset } from '../../../store/types';
 import CreateModal from '../../../components/Asset/CreateModal';
 import { SearchTableList } from '../../../components/TableList';
@@ -8,6 +8,8 @@ import moment from 'moment';
 import Fetch from '../../../service/Fetch';
 import { useAlert } from 'react-alert';
 import { money } from '../../../service/utils';
+import { AssetContext } from '../../../components/Asset/EditModal';
+import EditModal from '../../../components/Asset/EditModal';
 
 interface Props {
     item: RawAsset
@@ -22,6 +24,9 @@ const RowItem = React.memo(({ item }: Props) => {
             }
         }
     },[item])
+
+    const {setAsset} = useContext(AssetContext);
+    const onClick = useCallback(()=> setAsset(item), [item]);
     return <>
         <td>{item.id}</td>
         <td>{item.name}</td>
@@ -30,9 +35,9 @@ const RowItem = React.memo(({ item }: Props) => {
         <td>{item.description}</td>
         <td>{money(item.cost)}</td>
         <td>
-            <i 
-            onClick={onRemove} className={"fas fa-trash"}></i>
-            <i data-toggle="modal" data-target="#createAssetModal" 
+            <i onClick={onRemove} className={"fas fa-trash"}></i>
+            <i data-toggle="modal" data-target="#editAsset" 
+            onClick = {onClick}
             className={"fas fa-pen"}></i>
         </td>
     </>
@@ -61,7 +66,10 @@ const List = React.memo(() => {
         setVal(Math.random());
     },[val])
 
-    return (<>
+    const [asset, setAsset ] = useState(null);
+    const changeAsset = useCallback((value)=>setAsset(value), [asset])
+
+    return (<AssetContext.Provider value={{asset, setAsset: changeAsset}}>
         <div className="d-sm-flex align-items-center justify-content-between mb-2 mt-3">
             <h1 className="h3 mb-0 text-gray-800">Tài sản</h1>
 
@@ -83,7 +91,8 @@ const List = React.memo(() => {
             />
         </div>
         <CreateModal reload={reload}/>
-    </>
+        <EditModal reload={reload}/>
+    </AssetContext.Provider>
     )
 });
 

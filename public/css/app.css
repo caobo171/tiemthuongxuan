@@ -11012,17 +11012,26 @@ select.form-control {
   padding-left: 0.75rem;
 }
 
+tr {
+  position: relative;
+}
+
+tr .actions {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
 tr:hover {
   background-color: #e2e2e2;
 }
 
-tr i {
+tr .actions {
   margin-right: 12px;
   display: none !important;
 }
 
-tr:hover i {
-  display: inline !important;
-  cursor: pointer;
+td i {
+  margin-right: 8px;
 }
 

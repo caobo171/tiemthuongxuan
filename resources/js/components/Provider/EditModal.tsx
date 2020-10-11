@@ -1,17 +1,35 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useContext } from 'react';
 import { useAsyncFn } from 'react-use';
 import { useAlert } from 'react-alert';
 import Fetch from '../../service/Fetch';
+import { RawProvider } from '../../store/types';
 
-const CreateProviderModal = React.memo(()=>{
+const EditProviderModal = React.memo(()=>{
 
+    const {provider} = useContext(ProviderContext);
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const noteRef = useRef<HTMLInputElement>(null);
 
+    useEffect(()=>{
+        if(!nameRef.current || !phoneRef.current || !emailRef.current || !noteRef.current||!provider){
+            return;
+        }
+        //@ts-ignore
+        nameRef.current?.value = provider.name;
+        //@ts-ignore
+        phoneRef.current?.value = provider.phone;
+        //@ts-ignore
+        emailRef.current?.value = provider.email;
+        //@ts-ignore
+        noteRef.current?.value = provider.description;
+
+    },[nameRef, nameRef, phoneRef, emailRef, noteRef, provider])
 
     const [state, createProvider] = useAsyncFn(async()=>{
+        console.log(provider);
+        if(!provider) return;
         //@ts-ignore
         const name = nameRef.current.value;
         //@ts-ignore
@@ -21,17 +39,13 @@ const CreateProviderModal = React.memo(()=>{
         //@ts-ignore
         const description = noteRef.current.value;
 
-        const res = await Fetch.post('api/provider',{
+        const res = await Fetch.put(`api/provider/${provider.id}`,{
             name, phone, email, description
         });
 
         return res.data
-    },[]);
+    },[provider]);
 
-    const onCreateHandle = useCallback((e)=>{
-        e.preventDefault();
-        createProvider();
-    },[])
 
     const alert = useAlert();
     useEffect(()=>{
@@ -46,11 +60,11 @@ const CreateProviderModal = React.memo(()=>{
 
     return(
         <>
-        <div className="modal fade" id="provider" tabIndex={-1} role="dialog"aria-hidden="true">
+        <div className="modal fade" id="editProvider" tabIndex={-1} role="dialog"aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered" role="document">
                 <form className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Thêm nhà cung cấp</h5>
+                        <h5 className="modal-title">Edit nhà cung cấp</h5>
                         <button className="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -81,7 +95,7 @@ const CreateProviderModal = React.memo(()=>{
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <input title={"Tạo"} type="submit" data-dismiss="modal" className="btn btn-primary" onClick={onCreateHandle}></input>
+                        <input title={"Tạo"} type="submit" data-dismiss="modal" className="btn btn-primary" onClick={createProvider}></input>
                     </div>
                 </form>
             </div>
@@ -91,4 +105,11 @@ const CreateProviderModal = React.memo(()=>{
 });
 
 
-export default CreateProviderModal;
+export default EditProviderModal;
+export const ProviderContext = React.createContext<{
+    provider: RawProvider|null,
+    setProvider:(value: RawProvider)=>void
+}>({
+    provider: null,
+    setProvider: ()=>{}
+});

@@ -40,7 +40,7 @@ class ProviderController extends Controller
     public function store(Request $request)
     {
         //
-        $provider = $request->isMethod('put') ? Provider::findOrFail($request->input('id')) : new Provider;
+        $provider = new Provider;
         $provider->name = $request->input('name');
         $provider->phone = $request->input('phone');
         $provider->email = $request->input('email');
@@ -78,6 +78,7 @@ class ProviderController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -90,6 +91,16 @@ class ProviderController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $provider = Provider::findOrFail($id) ;
+        $provider->name = $request->input('name');
+        $provider->phone = $request->input('phone');
+        $provider->email = $request->input('email');
+        $provider->description = $request->input('description');
+
+        if($provider->save()){
+            return $provider;
+        }
+        return null;
     }
 
     /**

@@ -39,7 +39,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = $request->isMethod('put') ? Customer::findOrFail($request->input('id')) : new Customer;
+        $customer =  new Customer;
         $customer->name = $request->input('name');
         $customer->phone = $request->input('phone');
         $customer->email = $request->input('email');
@@ -89,7 +89,18 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $customer =  Customer::findOrfail($id);
+        $customer->name = $request->input('name');
+        $customer->phone = $request->input('phone');
+        $customer->email = $request->input('email');
+        $customer->platform = $request->input('platform');
+        $customer->description = $request->input('description');
+
+
+        if($customer->save()){
+            return $customer;
+        }
+        return null;
     }
 
     /**

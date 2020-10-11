@@ -1,4 +1,4 @@
-import React , {useCallback, useMemo} from 'react';
+import React , {useCallback, useMemo, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import ProductList from '../../../components/Product/List';
 import { BILL_STATUS } from '../../../Constants';
@@ -7,6 +7,7 @@ import { RawItem } from '../../../store/types';
 import {Link } from 'react-router-dom';
 import moment from 'moment';
 import TableList from '../../../components/TableList';
+import { ProductContext } from '../../../components/Product/EditModal';
 
 interface Props {
     item: RawItem
@@ -38,7 +39,13 @@ const Detail = React.memo(() => {
 			<td></td>
         </>
     ),[])
+
+    const [product, setProduct] = useState(null);
+    const changeProduct = useCallback((value)=>{
+        setProduct(value);
+    },[product])
     return (
+        <ProductContext.Provider value={{product, setProduct: changeProduct}}>
         <>{state.value && (<>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
             <h1 className="h3 mb-0 text-gray-800">Sản phẩm</h1>
@@ -92,7 +99,9 @@ const Detail = React.memo(() => {
                 </div>
             </div>
         </div>
-    </>)}</>);
+    </>)}</>
+    </ProductContext.Provider>
+    );
 });
 
 

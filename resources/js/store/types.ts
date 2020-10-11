@@ -20,8 +20,7 @@ export type RawProduct = {
     description: string,
     name: string,
     sku: string,
-    history_price: null,
-    initial_cost: number
+    history_price: null
 }
 
 export type RawItem = {

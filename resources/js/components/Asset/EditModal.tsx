@@ -1,8 +1,10 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect, useContext } from 'react';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
 import { useAlert } from 'react-alert';
 import { PLATFORMS } from '../../Constants';
+import { RawAsset } from '../../store/types';
+import moment from 'moment';
 
 interface Props {
     reload?: ()=>void
@@ -10,13 +12,30 @@ interface Props {
 
 const CreateAssetModal = React.memo(({reload}: Props)=>{
 
+    const {asset} = useContext(AssetContext);
     const nameRef = useRef<HTMLInputElement>(null);
     const cycleRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLTextAreaElement>(null);
     const costRef = useRef<HTMLInputElement>(null);
     const dateRef = useRef<HTMLInputElement>(null);
 
+    useEffect(()=>{
+        if(!nameRef.current || !cycleRef.current || !descriptionRef.current || !dateRef.current  || !costRef.current ||!asset){
+            return;
+        }
+        //@ts-ignore
+        nameRef.current?.value = asset.name;
+        //@ts-ignore
+        cycleRef.current?.value = asset.cycle;
+        //@ts-ignore
+        costRef.current?.value = asset.cost;
+        //@ts-ignore
+        descriptionRef.current?.value = asset.description;
+        //@ts-ignore
+        dateRef.current?.value = moment(asset.created_at).format('YYYY-MM-DD');
+    },[nameRef, dateRef, costRef, descriptionRef, cycleRef, asset])
     const [state, createAsset] = useAsyncFn(async()=>{
+        if (!asset) return;
         //@ts-ignore
         const name = nameRef.current.value;
         //@ts-ignore
@@ -28,18 +47,18 @@ const CreateAssetModal = React.memo(({reload}: Props)=>{
         //@ts-ignore
         const created_at = dateRef.current.value;
         //@ts-ignore
-        const res = await Fetch.post('api/asset',{
+        const res = await Fetch.put(`api/asset/${asset.id}`,{
             name, cycle, cost, description, created_at
         });
 
         return res.data
-    },[]);
+    },[asset]);
 
     const alert = useAlert();
     useEffect(()=>{
         reload && reload();
         if(state.value){
-            alert.show("Create asset successful", {type: 'success'});
+            alert.show("Edit asset successful", {type: 'success'});
             return ;
         }
         if(state.error){
@@ -49,12 +68,12 @@ const CreateAssetModal = React.memo(({reload}: Props)=>{
 
     return(
         <>
-        <div className="modal fade" id="createAssetModal" tabIndex={-1} role="dialog"
+        <div className="modal fade" id="editAsset" tabIndex={-1} role="dialog"
         aria-labelledby="create-user-modal" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered" role="document">
                 <form className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="create-user-modal">Thêm tài sản</h5>
+                        <h5 className="modal-title" id="create-user-modal">Edit sản phẩm</h5>
                         <button className="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -103,3 +122,11 @@ const CreateAssetModal = React.memo(({reload}: Props)=>{
 
 
 export default CreateAssetModal;
+
+export const AssetContext = React.createContext<{
+    asset: RawAsset|null,
+    setAsset:(value: RawAsset)=>void
+}>({
+    asset: null,
+    setAsset: ()=>{}
+});
