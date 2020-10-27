@@ -112,6 +112,10 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         //
+        $customer = Customer::find($id);
+        if ($customer) {
+            return $customer->delete();
+        }
     }
 
 
