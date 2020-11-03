@@ -52,7 +52,7 @@ const useDashboard = ({startDate, endDate})=>{
         for(let i = 0 ; i < bills.length; i++){
             const bill  = res.data.bills[i];
 
-            result.platforms[bill.customer_platform] += bill.cost;
+            result.platforms[bill.customer_platform] += Number(bill.cost);
             if(!result.customers[res.data.bills[i].customer_id]){
                 result.customers[res.data.bills[i].customer_id] = {
                     id: res.data.bills[i].customer_id,
@@ -65,25 +65,25 @@ const useDashboard = ({startDate, endDate})=>{
             }
             result.customers[res.data.bills[i].customer_id].bills += 1;
             if(bill.status === 'success'){
-                result.revenue += bill.cost;
+                result.revenue += Number(bill.cost);
                 result.success_bills += 1;
                 console.log('test', bill)
-                result.customers[res.data.bills[i].customer_id].cost += bill.cost;
+                result.customers[res.data.bills[i].customer_id].cost += Number(bill.cost);
             }
             else if(bill.status === 'broken'){
                 result.failed_bills += 1;
-                result.repay += bill.cost;
+                result.repay += Number(bill.cost);
             }
             else {
                 result.other_bills +=1;
-                result.pending_money += bill.cost;
-                result.customers[res.data.bills[i].customer_id].pending += bill.cost;
+                result.pending_money += Number(bill.cost);
+                result.customers[res.data.bills[i].customer_id].pending += Number(bill.cost);
                 result.customers[res.data.bills[i].customer_id].pending_bills += 1;
             }
         }
 
         for (let i = 0 ; i < import_bills.length; i++){
-            result.import_fund += import_bills[i].cost;
+            result.import_fund += Number(import_bills[i].cost);
         }
 
         for (let i=0 ; i< res.data.assets.length; i++){
@@ -97,7 +97,7 @@ const useDashboard = ({startDate, endDate})=>{
             const difference = Math.floor((end - start)/ (1000 * 3600 * 24));
 
             if(difference > 0 ){
-                result.fixed_asset += (asset.cost / asset.cycle) * difference;
+                result.fixed_asset += (Number(asset.cost) / Number(asset.cycle)) * difference;
             }
         }
 

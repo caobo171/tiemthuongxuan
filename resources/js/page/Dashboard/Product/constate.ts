@@ -29,7 +29,7 @@ const useProductReport = ({startDate, endDate})=>{
                     expense: 0
                 }
             }
-            groups[bill_items[i].product_id].cost += bill_items[i].cost;
+            groups[bill_items[i].product_id].cost += Number(bill_items[i].cost);
         }
 
         for(let i = 0 ; i< res.data.importbill_items.length; i++){
@@ -42,7 +42,7 @@ const useProductReport = ({startDate, endDate})=>{
                     expense: 0
                 }
             }
-            groups[bill.product_id].expense += bill.cost;
+            groups[bill.product_id].expense += Number(bill.cost);
             console.log(Object.values(groups));
         }
 

@@ -5,7 +5,9 @@ import { money } from '../../../service/utils';
 
 const TopWidget = React.memo(() => {
 
-	const state = DashboardConstate.useReport();
+    const state = DashboardConstate.useReport();
+    
+    
 	return (<>
 		{
 			state.value && (

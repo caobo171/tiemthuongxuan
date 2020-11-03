@@ -41,7 +41,15 @@ const Detail = React.memo(() => {
                         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 className="m-0 font-weight-bold text-primary">Thông tin khách hàng</h6>
                         </div>
-                        <CustomerInfo customer={state.value.customer}/>
+                        <CustomerInfo customer={state.value.customer ? state.value.customer : {
+                                id: state.value.bill.customer_id,
+                                created_at: new Date(0),
+                                name: state.value.bill.customer_name + '(Không load được user)',
+                                phone: 'Không xác định',
+                                email: '',
+                                description: 'Tài khoản này không load được',
+                                platform: state.value.bill.customer_platform
+                        }} />
                     </div>
                 </div>
 
