@@ -7,6 +7,7 @@ import CustomerInfo from '../CustomerInfo';
 import CreateCustomerModal from '../../../components/Customer/CreateModal';
 import moment from 'moment';
 import {useParams} from 'react-router-dom';
+import { money } from '../../../service/utils';
 
 
 const Update = React.memo(() => {
@@ -54,7 +55,7 @@ const Update = React.memo(() => {
                                             onClickItem={setCustomer}
                                             addText={'Thêm khách hàng mới'}
                                             mainUrl={'api/customer'}
-                                            searchUrl={'api/customer/search'}
+                                            searchUrl={'api/customer'}
                                             modalId={'customer'}
                                             modal={CreateCustomerModal}
                                         />
@@ -81,6 +82,9 @@ const Update = React.memo(() => {
                                 <div className="row no-gutters align-items-center">
                                     <div className="col mr-2">
                                         <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Thông tin đơn hàng</div>
+                                        <div className="h5 mb-3 font-weight-bold text-gray-800">Tổng giá: {
+                                                money(Number(bill.extra_cost) + (!items ? 0 : Object.values(items).map(e=>(Number(e.cost) * Number(e.quantity))).reduce((a,b)=>a+b, 0)))
+                                            }</div>
                                     </div>
                                     <div className="col-auto">
                                         <i className="fas fa-calendar fa-2x text-gray-300"></i>
@@ -125,7 +129,7 @@ const Update = React.memo(() => {
 
 
 const _Update = React.memo(() => {
-    const {id} = useParams();
+    const {id} = useParams<{id:string}>();
     return <BillUpdate.Provider billId={id}>
         <Update />
     </BillUpdate.Provider>

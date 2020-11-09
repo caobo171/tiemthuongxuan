@@ -12,10 +12,16 @@ class AssetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return Asset::orderBy('created_at')->get();
+        $q = $request->input('q');
+
+        if ($q) {
+            $assets = Asset::query()->where('name', 'like', '%' .$q. '%');
+            return $assets->orderBy('created_at','desc')->paginate(10);
+        }
+        return Asset::orderBy('created_at','desc')->paginate(10);
     }
 
     /**

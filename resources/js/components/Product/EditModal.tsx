@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useContext } from 'react';
-import { useAlert } from 'react-alert';
+import { toast } from 'react-toastify';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
 import { RawProduct } from '../../store/types';
@@ -9,7 +9,6 @@ interface Props {
 }
 
 const EditProductModal = React.memo(({reload}: Props)=>{
-
     const {product} = useContext(ProductContext);
     const nameRef = useRef<HTMLInputElement>(null);
     const skuRef = useRef<HTMLInputElement>(null);
@@ -47,15 +46,15 @@ const EditProductModal = React.memo(({reload}: Props)=>{
         return res.data;
     },[product]);
 
-    const alert = useAlert();
+
     useEffect(()=>{
         reload && reload();
         if(state.value){
-            alert.show("Edit product successful", {type: 'success'});
+            toast.success("Edit product successful");
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.success(state.error.message);
         }
     },[state])
 
@@ -115,7 +114,8 @@ export default EditProductModal;
 
 export const ProductContext = React.createContext<{
     product: RawProduct|null,
-    setProduct:(value: RawProduct)=>void
+    setProduct:(value: RawProduct)=>void,
+    reload?:()=>void
 }>({
     product: null,
     setProduct: ()=>{}

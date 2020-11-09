@@ -16,10 +16,16 @@ class BillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return Bill::orderBy('created_at', 'desc')->get();
+        $q = $request->input('q');
+        if ($q) {
+            $bills = Bill::query()->where(DB::raw("CONCAT_WS('',customer_name, status)"), 'like', '%' . $q . '%');
+            return $bills->orderBy('created_at', 'desc')->paginate(10);
+        } else {
+            return Bill::orderBy('created_at', 'desc')->paginate(10);
+        }
+       
     }
 
     /**

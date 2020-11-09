@@ -7,40 +7,51 @@ import { RawCustomer, RawProvider } from '../../../store/types';
 import { SearchTableList } from '../../../components/TableList';
 import CreateProviderModal from '../../../components/Provider/CreateModal';
 import { ProviderContext } from '../../../components/Provider/EditModal';
-import {useAlert} from 'react-alert';
+
 import Fetch from '../../../service/Fetch';
 import EditModal from '../../../components/Provider/EditModal';
+import { toast } from 'react-toastify';
+import { Dropdown } from 'react-bootstrap';
 
 interface Props {
     item: RawProvider
 }
 const Item = React.memo(({ item }: Props) => {
-    const {setProvider} = useContext(ProviderContext);
-    const alert = useAlert();
-    const onRemove = useCallback(async ()=>{
-        if (window.confirm("Are you sure to remove?")){
+    const { setProvider,reload } = useContext(ProviderContext);
+    const onRemove = useCallback(async () => {
+        reload && reload();
+        if (window.confirm("Are you sure to remove?")) {
             const res = await Fetch.delete(`api/provider/${item.id}`);
-            if(res.data){
-                alert.show("Delete successful", {type: 'success'});
+            if (res.data) {
+                toast.success("Delete successful", { type: 'success' });
             }
         }
-    },[item])
-    const onClick = useCallback(()=>{
+    }, [item])
+    const onClick = useCallback(() => {
         setProvider(item)
-    },[])
+    }, [])
     return <>
         <td>{item.id}</td>
         <td>{item.name}</td>
         <td>{item.phone}</td>
         <td>{item.email}</td>
         <td>
-            <i onClick={onRemove} className={"fas fa-trash"}></i>
-            <i data-toggle="modal" data-target="#editProvider" 
-            onClick = {onClick}
-            className={"fas fa-pen"}></i>
-        </td>
-        <td>
-            <Link to={`/provider/detail/${item.id}`}>View</Link>
+            <Dropdown>
+                <Dropdown.Toggle>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={onRemove}>
+                        Remove
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={onClick} data-toggle="modal" data-target="#editProvider" >
+                        Edit
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        <Link to={`/provider/detail/${item.id}`}>View</Link>
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </td>
     </>
 });
@@ -50,6 +61,10 @@ const List = React.memo(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const q = urlParams.get('q');
 
+    const [state, setState] = useState(0);
+    const reload = useCallback(() => {
+        setState(Math.random());
+    }, [state])
     const header = useMemo(() => {
         return (<>
             <td scope="col">ID</td>
@@ -57,14 +72,13 @@ const List = React.memo(() => {
             <td scope="col">Số điện thoại</td>
             <td scope="col">Email</td>
             <td>Hành động</td>
-            <td scope="col"></td>
         </>)
-    }, []);
+    }, [state,  window.location.search]);
 
     const [provider, setProvider] = useState(null);
-    const changeProvider = useCallback((value)=>setProvider(value),[])
+    const changeProvider = useCallback((value) => setProvider(value), [])
 
-    return (<ProviderContext.Provider value={{provider, setProvider: changeProvider}}>
+    return (<ProviderContext.Provider value={{ provider, setProvider: changeProvider , reload:reload }}>
         <div className="d-sm-flex align-items-center justify-content-between mb-2 mt-3">
             <h1 className="h3 mb-0 text-gray-800">Nhà cung cấp</h1>
 
@@ -75,17 +89,16 @@ const List = React.memo(() => {
         <div className="row">
             <SearchTableList
                 title="Tất cả nhà cung cấp"
-                query={q}
-                searchUrl={'api/provider/search'}
                 mainUrl={'api/provider'}
                 redirectUrl={'providers'}
                 rowItem={Item}
                 header={header}
+                reload={state}
                 placeholder={'Tìm kiếm nhà cung cấp ...'}
             />
         </div>
-        <CreateProviderModal/>
-        <EditModal/>
+        <CreateProviderModal reload={reload} />
+        <EditModal reload={reload} />
     </ProviderContext.Provider>
     )
 });

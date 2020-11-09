@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { useAlert } from 'react-alert';
+import { toast } from 'react-toastify';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
 import { RawProduct } from '../../store/types';
@@ -31,15 +31,14 @@ const CreateProductModal = React.memo(({reload}: Props)=>{
         return res.data;
     },[]);
 
-    const alert = useAlert();
     useEffect(()=>{
         reload && reload();
         if(state.value){
-            alert.show("Create product successful", {type: 'success'});
+            toast.success("Create product successful");
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.error(state.error.message);
         }
     },[state])
 

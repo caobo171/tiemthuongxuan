@@ -2,6 +2,9 @@ import React, { ReactElement, useEffect, useReducer, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import Fetch from '../../service/Fetch';
 import { useAsync } from 'react-use';
+import {Pagination } from 'react-bootstrap';
+import _ from 'lodash';
+import {Link} from 'react-router-dom';
 
 interface Props {
     data: Array<any>;
@@ -37,37 +40,34 @@ interface SearchTableProps {
     rowItem: React.ComponentType<{ item }>;
     header: ReactElement;
     loading?: boolean;
-    searchUrl: string;
     mainUrl: string;
     redirectUrl: string;
     placeholder: string;
-    query: string|null;
     title: string;
     reload?: number;
 }
-export const SearchTableList = React.memo(({reload, title, query, rowItem, header, searchUrl, mainUrl, redirectUrl, placeholder }: SearchTableProps) => {
+export const SearchTableList = React.memo(({reload, title, rowItem, header, mainUrl, redirectUrl, placeholder }: SearchTableProps) => {
     const history = useHistory();
     const searchRef = useRef<HTMLInputElement>(null);
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = urlParams.get('page');
     useEffect(() => {
         if (searchRef.current) {
             searchRef.current.addEventListener('keypress', (e) => {
                 if (e.code === 'Enter') {
                     //@ts-ignore
-                    history.push(`/${redirectUrl}/?q=${e.target.value}`);
+                    history.push(`/${redirectUrl}?q=${e.target.value}`);
                 }
             });
         }
     }, [history, searchRef]);
 
     const data = useAsync(async () => {
-        if (query && query !== '') {
-            const res = await Fetch.post(searchUrl, { q:query });
-            return res.data
-        }
-        const res = await Fetch.get(mainUrl);
-        return res.data as any[];
-    }, [query, reload]);
+        const res = await Fetch.get(`${mainUrl}?${urlParams.toString()}`);
+        //@ts-ignore
+        return res.data as any;
+    }, [reload, window.location.search]);
 
     return (
         <div className={"col"}>
@@ -92,9 +92,24 @@ export const SearchTableList = React.memo(({reload, title, query, rowItem, heade
                 <TableList
                     header={header}
                     //@ts-ignore
-                    data={data.value ? data.value : []}
+                    data={data.value ? data.value.data : []}
                     rowItem={rowItem}
                 />
+                <Pagination size="sm" className = {"ml-4"}>
+                {
+                _.range(data.value ? data.value.last_page : 0).map(
+                   e => {
+                    const active = page ? Number(page) == e+1 : (e==0);
+                    const params = new URLSearchParams(window.location.search);
+                    params.set('page', (e+1).toString());
+                    const onClick = ()=>{
+                        history.push(`${window.location.pathname}?${params.toString()}`)
+                    }
+                    return <Pagination.Item key={e} active = { active} onClick={onClick}>
+                    {e+1}
+                    </Pagination.Item>}
+                )}
+                </Pagination>
             </div>
         </div>
     );

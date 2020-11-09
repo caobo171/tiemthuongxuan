@@ -1,9 +1,12 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import { useAsyncFn } from 'react-use';
-import { useAlert } from 'react-alert';
 import Fetch from '../../service/Fetch';
+import { toast } from 'react-toastify';
 
-const CreateProviderModal = React.memo(()=>{
+interface Props {
+    reload?:()=>void
+}
+const CreateProviderModal = React.memo(({reload}:Props)=>{
 
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
@@ -33,14 +36,14 @@ const CreateProviderModal = React.memo(()=>{
         createProvider();
     },[])
 
-    const alert = useAlert();
     useEffect(()=>{
+        reload && reload();
         if(state.value){
-            alert.show("Create provider successful", {type: 'success'});
+            toast.success("Create provider successful");
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.error(state.error.message);
         }
     },[state])
 

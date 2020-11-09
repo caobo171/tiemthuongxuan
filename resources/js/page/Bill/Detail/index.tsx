@@ -44,7 +44,7 @@ const Detail = React.memo(() => {
                         <CustomerInfo customer={state.value.customer ? state.value.customer : {
                                 id: state.value.bill.customer_id,
                                 created_at: new Date(0),
-                                name: state.value.bill.customer_name + '(Không load được user)',
+                                name: state.value.bill.customer_name + ' (Không load được user)',
                                 phone: 'Không xác định',
                                 email: '',
                                 description: 'Tài khoản này không load được',
@@ -106,7 +106,7 @@ const Detail = React.memo(() => {
 
 
 const __Detail = React.memo(() => {
-    const {id} = useParams();
+    const {id} = useParams<{id:string}>();
     return <BillDetail.Provider billId={id}>
         <Detail />
     </BillDetail.Provider>

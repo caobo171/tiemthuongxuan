@@ -9,26 +9,26 @@ import { SearchTableList } from '../../../components/TableList';
 import CreateCustomerModal from '../../../components/Customer/CreateModal';
 import { CustomerContext } from '../../../components/Customer/EditModal';
 import Fetch from '../../../service/Fetch';
-import {useAlert} from 'react-alert';
+import { Dropdown } from 'react-bootstrap';
 import EditModal from '../../../components/Customer/EditModal';
+import { toast } from 'react-toastify';
 
 interface Props {
     item: RawCustomer
 }
 const Item = React.memo(({ item }: Props) => {
-    const alert = useAlert();
-    const {setCustomer} = useContext(CustomerContext);
+    const {setCustomer, reload} = useContext(CustomerContext);
     const onRemove = useCallback(async ()=>{
+        reload && reload();
         if (window.confirm("Are you sure to remove?")){
             const res = await Fetch.delete(`api/customer/${item.id}`);
             if(res.data){
-                alert.show("Delete successful", {type: 'success'});
+                toast.success("Delete successful !");
             }
         }
     },[item])
     const onClick = useCallback(()=>{
         setCustomer(item)
-        console.log(item);
     },[item])
     return <>
         <td>{item.id}</td>
@@ -37,13 +37,22 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.email}</td>
         <td>{item.platform}</td>
         <td>
-            <i onClick={onRemove} className={"fas fa-trash"}></i>
-            <i data-toggle="modal" data-target="#editCustomer" 
-            onClick = {onClick}
-            className={"fas fa-pen"}></i>
-        </td>
-        <td>
-            <Link to={`/customer/detail/${item.id}`}>View</Link>
+        <Dropdown>
+                <Dropdown.Toggle>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={onRemove}>
+                        Remove
+                </Dropdown.Item>
+                    <Dropdown.Item onClick={onClick} data-toggle="modal" data-target="#editCustomer" >
+                        Edit
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                    <Link to={`/customer/detail/${item.id}`}>View</Link>
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </td>
     </>
 });
@@ -53,6 +62,10 @@ const List = React.memo(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const q = urlParams.get('q');
 
+    const [state,setState] = useState(0);
+    const reload = useCallback(()=>{
+        setState(Math.random());
+    },[state])
     const header = useMemo(() => {
         return (<>
             <td scope="col">ID</td>
@@ -63,11 +76,11 @@ const List = React.memo(() => {
             <td scope="col">Hành động</td>
             <td scope="col"></td>
         </>)
-    }, []);
+    }, [state,  window.location.search]);
 
     const [customer, setCustomer]= useState(null);
     const changeCustomer = useCallback((value)=>setCustomer(value),[customer])
-    return (<CustomerContext.Provider value={{customer,setCustomer:changeCustomer}}>
+    return (<CustomerContext.Provider value={{customer,setCustomer:changeCustomer, reload:reload}}>
         <div className="d-sm-flex align-items-center justify-content-between mb-2 mt-3">
             <h1 className="h3 mb-0 text-gray-800">Khách hàng</h1>
 
@@ -78,17 +91,16 @@ const List = React.memo(() => {
         <div className="row">
             <SearchTableList
                 title="Tất cả khách hàng"
-                query={q}
-                searchUrl={'api/customer/search'}
                 mainUrl={'api/customer'}
                 redirectUrl={'customers'}
                 rowItem={Item}
                 header={header}
+                reload={state}
                 placeholder={'Tìm kiếm khách hàng ...'}
             />
         </div>
-        <CreateCustomerModal/>
-        <EditModal/>
+        <CreateCustomerModal reload={reload}/>
+        <EditModal reload={reload}/>
     </CustomerContext.Provider>
     )
 });

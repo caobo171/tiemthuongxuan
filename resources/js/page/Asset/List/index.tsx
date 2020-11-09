@@ -6,26 +6,28 @@ import CreateModal from '../../../components/Asset/CreateModal';
 import { SearchTableList } from '../../../components/TableList';
 import moment from 'moment';
 import Fetch from '../../../service/Fetch';
-import { useAlert } from 'react-alert';
 import { money } from '../../../service/utils';
 import { AssetContext } from '../../../components/Asset/EditModal';
 import EditModal from '../../../components/Asset/EditModal';
-
+import { toast } from 'react-toastify';
+import {Dropdown } from 'react-bootstrap';
 interface Props {
     item: RawAsset
 }
 const RowItem = React.memo(({ item }: Props) => {
-    const alert = useAlert();
+    const {setAsset, reload} = useContext(AssetContext);
     const onRemove = useCallback(async ()=>{
+        reload && reload();
         if (window.confirm("Are you sure to remove?")){
             const res = await Fetch.delete(`api/asset/${item.id}`);
             if(res.data){
-                alert.show("Delete successful", {type: 'success'});
+                toast.success("Delete successful");
             }
         }
     },[item])
 
-    const {setAsset} = useContext(AssetContext);
+    
+    
     const onClick = useCallback(()=> setAsset(item), [item]);
     return <>
         <td>{item.id}</td>
@@ -35,10 +37,19 @@ const RowItem = React.memo(({ item }: Props) => {
         <td>{item.description}</td>
         <td>{money(item.cost)}</td>
         <td>
-            <i onClick={onRemove} className={"fas fa-trash"}></i>
-            <i data-toggle="modal" data-target="#editAsset" 
-            onClick = {onClick}
-            className={"fas fa-pen"}></i>
+        <Dropdown>
+                <Dropdown.Toggle>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={onRemove} >
+                        Remove
+                    </Dropdown.Item>
+                    <Dropdown.Item data-toggle="modal" data-target="#editAsset" onClick={onClick}>
+                        Edit
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </td>
     </>
 });
@@ -46,8 +57,7 @@ const RowItem = React.memo(({ item }: Props) => {
 
 
 const List = React.memo(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const q = urlParams.get('q');
+
     const header = useMemo(() => {
         return (<>
             <td scope="col">ID</td>
@@ -59,7 +69,7 @@ const List = React.memo(() => {
             <td>
             </td>
         </>)
-    }, []);
+    }, [ window.location.search]);
 
     const [val, setVal] = useState(0);
     const reload = useCallback(()=>{
@@ -69,7 +79,7 @@ const List = React.memo(() => {
     const [asset, setAsset ] = useState(null);
     const changeAsset = useCallback((value)=>setAsset(value), [asset])
 
-    return (<AssetContext.Provider value={{asset, setAsset: changeAsset}}>
+    return (<AssetContext.Provider value={{asset, setAsset: changeAsset, reload:reload}}>
         <div className="d-sm-flex align-items-center justify-content-between mb-2 mt-3">
             <h1 className="h3 mb-0 text-gray-800">Tài sản</h1>
 
@@ -81,8 +91,6 @@ const List = React.memo(() => {
             <SearchTableList
                 reload={val}
                 title="Tất cả tài sản"
-                query={q}
-                searchUrl={'api/asset/search'}
                 mainUrl={'api/asset'}
                 redirectUrl={'assets'}
                 rowItem={RowItem}

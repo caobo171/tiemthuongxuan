@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { SearchTableList } from '../../../components/TableList';
 import { RawImportBill } from '../../../store/types';
-
+import { Dropdown } from 'react-bootstrap';
 interface Props {
     item: RawImportBill
 }
@@ -17,20 +17,27 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.status} </td>
         <td>{item.cost}</td>
         <td>
-            <Link
-            to={`/importbill/update/${item.id}`}
-            className={"fas fa-pen"}></Link>
+
+            <Dropdown>
+                <Dropdown.Toggle>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item>
+                        <Link to={`/importbill/update/${item.id}`}
+                        >Edit</Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        <Link to={`/importbill/detail/${item.id}`}>View</Link>
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </td>
-        <td>
-            <Link className="col" to={`/importbill/detail/${item.id}`}>View</Link>
-        </td>
+
     </>
 });
 
 const List = React.memo(() => {
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const q = urlParams.get('q');
 
     const header = useMemo(() => {
         return (<>
@@ -42,7 +49,7 @@ const List = React.memo(() => {
             <td scope="col">Hành động</td>
             <td scope="col"></td>
         </>)
-    }, []);
+    }, [ window.location.search]);
 
     return (<>
         <div className="d-sm-flex align-items-center justify-content-between mb-2 mt-3">
@@ -55,8 +62,6 @@ const List = React.memo(() => {
         <div className="row">
             <SearchTableList
                 title="Tất cả đơn nhập hàng"
-                query={q}
-                searchUrl={'api/importbill/search'}
                 mainUrl={'api/importbill'}
                 redirectUrl={'importbills'}
                 rowItem={Item}

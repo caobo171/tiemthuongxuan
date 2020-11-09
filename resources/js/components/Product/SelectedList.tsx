@@ -53,7 +53,7 @@ const SelectedList = React.memo(()=>{
                     onClickItem = {selectItemHanlde}
                     addText = {'Thêm sản phẩm mới'}
                     mainUrl = {'api/product'}
-                    searchUrl = {'api/product/search'}
+                    searchUrl = {'api/product'}
                     modal = {CreateProductModal}
                     modalId = {'product'}
                     extraField = {'quantity'}

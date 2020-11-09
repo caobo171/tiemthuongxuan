@@ -4,8 +4,8 @@ import { useAsyncFn } from 'react-use';
 import Axios from 'axios';
 import { RawProvider, SelectItemsType, RawImportBill } from '../../../store/types';
 import Fetch from '../../../service/Fetch';
-import { useAlert } from 'react-alert';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 const useCreate = ()=>{
@@ -61,16 +61,15 @@ const useCreate = ()=>{
         return res.data
     },[items, bill, provider]);
 
-    const alert = useAlert();
     const history = useHistory();
     useEffect(()=>{
         if(state.value){
-            alert.show("Create bill successful", {type: 'success'});
+            toast.success("Create bill successful", {type: 'success'});
             history.push('/importbills')
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.error(state.error.message, {type: 'error'});
         }
     },[state])
 

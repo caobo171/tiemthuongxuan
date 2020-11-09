@@ -15,10 +15,16 @@ class ProviderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return Provider::orderBy('created_at')->get();
+        $q = $request->input('q');
+
+        if ($q) {
+            $customers = Provider::query()->where(DB::raw("CONCAT_WS('',name,phone)"), 'like', '%' .$q. '%');
+            return $customers->orderBy('created_at','desc')->paginate(10);
+        }
+        return Provider::orderBy('created_at','desc')->paginate(10);
     }
 
     /**
@@ -111,11 +117,14 @@ class ProviderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $provider = Provider::find($id);
+        if ($provider) {
+            return $provider->delete();
+        }
     }
     
     /**
-     * Full text search for customer
+     * Full text search for provider
      */
     public function search(Request $request)
     {

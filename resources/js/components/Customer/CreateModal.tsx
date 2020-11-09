@@ -2,9 +2,12 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
 import { PLATFORMS } from '../../Constants';
-import { useAlert } from 'react-alert';
+import { toast } from 'react-toastify';
 
-const CreateCustomerModal = React.memo(()=>{
+interface Props {
+    reload?:()=>void
+}
+const CreateCustomerModal = React.memo(({reload}: Props)=>{
 
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
@@ -30,14 +33,14 @@ const CreateCustomerModal = React.memo(()=>{
         return res.data
     },[]);
 
-    const alert = useAlert();
     useEffect(()=>{
+        reload && reload();
         if(state.value){
-            alert.show("Create customer successful", {type: 'success'});
+            toast.success("Create customer successful");
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.error(state.error.message);
         }
     },[state])
 

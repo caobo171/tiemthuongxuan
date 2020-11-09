@@ -3,26 +3,19 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import store from './store/store';
 import Sidebar from './components/Sidebar';
-import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import { Provider } from 'react-redux';
 import Routes from './routes';
 
-const options = {
-  position: positions.TOP_CENTER,
-  timeout: 4000,
-  offset: '30px',
-  transition: transitions.SCALE
-}
 
 class Index extends Component {
   render() {
     return (
 
       <Provider store={store}>
-        <AlertProvider template={AlertTemplate} {...options}>
-
         <div id="wrapper">
           <BrowserRouter>
             <Sidebar/>
@@ -35,8 +28,17 @@ class Index extends Component {
             </div>
           </BrowserRouter>
         </div>
-
-        </AlertProvider>
+        <ToastContainer 
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </Provider>
 
     );

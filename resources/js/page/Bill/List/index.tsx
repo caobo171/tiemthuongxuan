@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { RawBill } from '../../../store/types';
 import { SearchTableList } from '../../../components/TableList';
 import { money } from '../../../service/utils';
+import { Dropdown } from 'react-bootstrap';
 
 interface Props {
     item: RawBill
@@ -17,20 +18,26 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.customer_platform}</td>
         <td>{money(item.cost)}</td>
         <td>
-            <Link
-            to={`/bill/update/${item.id}`}
-            className={"fas fa-pen"}></Link>
-        </td>
-        <td>
-            <Link to={`/bill/detail/${item.id}`}>View</Link>
+            <Dropdown>
+                <Dropdown.Toggle>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item >
+                        <Link
+                            to={`/bill/update/${item.id}`}
+                            >Edit</Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        <Link to={`/bill/detail/${item.id}`}>View</Link>
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
         </td>
     </>
 });
 
 const List = React.memo(() => {
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const q = urlParams.get('q');
 
     const header = useMemo(() => {
         return (<>
@@ -42,7 +49,7 @@ const List = React.memo(() => {
             <td scope="col">Giá trị</td>
             <td scope="col"></td>
         </>)
-    }, []);
+    }, [window.location.search]);
     return (<>
         <div className="d-sm-flex align-items-center justify-content-between mb-2 mt-3">
             <h1 className="h3 mb-0 text-gray-800">Đơn hàng</h1>
@@ -54,8 +61,6 @@ const List = React.memo(() => {
         <div className="row">
             <SearchTableList
                 title="Tất cả đơn hàng"
-                query={q}
-                searchUrl={'api/bill/search'}
                 mainUrl={'api/bill'}
                 redirectUrl={'bills'}
                 rowItem={Item}

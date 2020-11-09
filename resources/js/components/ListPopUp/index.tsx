@@ -26,13 +26,12 @@ const ListPopUp = React.memo(({ onClickItem, addText, mainUrl, searchUrl , modal
         setText(e.target.value)
     },[text])
     const [state, fetch] = useAsyncFn(async () => {
-        if(text.replace(/\s/g, '') === ''){
-            const res = await Fetch.get<any>(`${mainUrl}`);
-            return res.data;
-        }
-        const res = await Fetch.post(`${searchUrl}`,{q: throttledText});
-        return res.data;
+        const res = await Fetch.get(`${searchUrl}?q=${throttledText}`);
+        //@ts-ignore
+        return res.data.data;
     }, [throttledText]);
+
+    console.log('state', state);
 
     useEffect(()=>{
         fetch();

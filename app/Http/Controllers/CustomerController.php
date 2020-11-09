@@ -14,10 +14,16 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return Customer::orderBy('created_at')->get();
+        $q = $request->input('q');
+        if ($q) {
+            $customers = Customer::query()->where(DB::raw("CONCAT_WS('',name,phone)"), 'like', '%' .$q. '%');
+            return $customers->orderBy('created_at','desc')->paginate(10);
+        }
+        
+        return Customer::orderBy('created_at','desc')->paginate(10);
     }
 
     /**

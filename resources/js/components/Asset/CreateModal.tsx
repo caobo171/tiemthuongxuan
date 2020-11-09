@@ -1,8 +1,8 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
-import { useAlert } from 'react-alert';
 import { PLATFORMS } from '../../Constants';
+import { toast } from 'react-toastify';
 
 interface Props {
     reload?: ()=>void
@@ -34,16 +34,14 @@ const CreateAssetModal = React.memo(({reload}: Props)=>{
 
         return res.data
     },[]);
-
-    const alert = useAlert();
     useEffect(()=>{
         reload && reload();
         if(state.value){
-            alert.show("Create asset successful", {type: 'success'});
+            toast.success("Create asset successful");
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.error(state.error.message);
         }
     },[state])
 

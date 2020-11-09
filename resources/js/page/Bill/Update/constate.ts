@@ -3,9 +3,9 @@ import {useCallback, useState, useEffect} from 'react';
 import { useAsync, useAsyncFn } from 'react-use';
 import { RawCustomer, SelectItemsType, RawBill, RawItem } from '../../../store/types';
 import Fetch from '../../../service/Fetch';
-import { useAlert } from 'react-alert';
 import { useHistory } from 'react-router-dom';
 import { BillDetail } from '../Detail/constate';
+import { toast } from 'react-toastify';
 
 
 const useUpdate = ({billId})=>{
@@ -83,22 +83,21 @@ const useUpdate = ({billId})=>{
         return res.data;
     },[items, bill, customer]);
 
-    const alert = useAlert();
     const history = useHistory();
     useEffect(()=>{
         if(state.value){
             //@ts-ignore
             if(state.value.error){
                 //@ts-ignore
-                alert.show(state.value.message, {type: 'error'});
+                toast.error(state.value.message);
                 return ;
             }
-            alert.show("Create bill successful", {type: 'success'});
+            toast.success("Create bill successful");
             history.push('/bills')
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.error(state.error.message);
         }
     },[state])
 

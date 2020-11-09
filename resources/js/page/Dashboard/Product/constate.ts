@@ -45,10 +45,6 @@ const useProductReport = ({startDate, endDate})=>{
             groups[bill.product_id].expense += Number(bill.cost);
             console.log(Object.values(groups));
         }
-
-        
-
-
 		return {
 			groups: Object.values(groups)
 		};

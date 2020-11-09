@@ -2,10 +2,13 @@ import React, { useRef, useCallback, useEffect, useContext } from 'react';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
 import { PLATFORMS } from '../../Constants';
-import { useAlert } from 'react-alert';
 import { RawCustomer } from '../../store/types';
+import { toast } from 'react-toastify';
 
-const EditCustomerModal = React.memo(()=>{
+interface Props {
+    reload?:()=>void
+}
+const EditCustomerModal = React.memo(({reload}:Props)=>{
 
     const {customer} = useContext(CustomerContext);
 
@@ -52,14 +55,14 @@ const EditCustomerModal = React.memo(()=>{
         return res.data
     },[customer]);
 
-    const alert = useAlert();
     useEffect(()=>{
+        reload && reload();
         if(state.value){
-            alert.show("Edit customer successful", {type: 'success'});
+            toast.success("Edit customer successful");
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.error(state.error.message);
         }
     },[state])
 
@@ -124,7 +127,8 @@ export default EditCustomerModal;
 
 export const CustomerContext = React.createContext<{
     customer: RawCustomer|null,
-    setCustomer:(value: RawCustomer)=>void
+    setCustomer:(value: RawCustomer)=>void,
+    reload?:()=>void
 }>({
     customer: null,
     setCustomer: ()=>{}

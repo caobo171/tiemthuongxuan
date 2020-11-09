@@ -94,7 +94,7 @@ const Detail = React.memo(() => {
 
 
 const __Detail = React.memo(() => {
-    const {id} = useParams();
+    const {id} = useParams<{id:string}>();
     return <BillDetail.Provider billId={id}>
         <Detail />
     </BillDetail.Provider>

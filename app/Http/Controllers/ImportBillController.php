@@ -17,10 +17,16 @@ class ImportBillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return ImportBill::orderBy('created_at', 'desc')->get();
+        $q = $request->input('q');
+        if ($q) {
+            $bills = ImportBill::query()->where(DB::raw("CONCAT_WS('',provider_name, status)"), 'like', '%' . $q . '%');
+            return $bills->orderBy('created_at', 'desc')->paginate(10);
+        }
+
+        return ImportBill::orderBy('created_at', 'desc')->paginate(10);
     }
 
     /**

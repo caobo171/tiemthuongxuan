@@ -1,10 +1,10 @@
 import React, { useRef, useCallback, useEffect, useContext } from 'react';
 import { useAsyncFn } from 'react-use';
 import Fetch from '../../service/Fetch';
-import { useAlert } from 'react-alert';
 import { PLATFORMS } from '../../Constants';
 import { RawAsset } from '../../store/types';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 interface Props {
     reload?: ()=>void
@@ -54,15 +54,14 @@ const CreateAssetModal = React.memo(({reload}: Props)=>{
         return res.data
     },[asset]);
 
-    const alert = useAlert();
     useEffect(()=>{
         reload && reload();
         if(state.value){
-            alert.show("Edit asset successful", {type: 'success'});
+            toast.success("Edit asset successful");
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.error(state.error.message);
         }
     },[state])
 
@@ -125,7 +124,8 @@ export default CreateAssetModal;
 
 export const AssetContext = React.createContext<{
     asset: RawAsset|null,
-    setAsset:(value: RawAsset)=>void
+    setAsset:(value: RawAsset)=>void,
+    reload?:()=>void
 }>({
     asset: null,
     setAsset: ()=>{}

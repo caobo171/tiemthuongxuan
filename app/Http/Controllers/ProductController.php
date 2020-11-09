@@ -15,9 +15,18 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Product::orderBy('created_at')->get();
+        $q = $request->input('q');
+        // print_r($q);
+        // die;
+        if ($q) {
+            $products = Product::query()->where(DB::raw("CONCAT_WS('',name,sku)"), 'like', '%' .$q. '%');
+            return $products->orderBy('created_at','desc')->paginate(10);
+        } else {
+            return Product::orderBy('created_at','desc')->paginate(10);
+        }
+
     }
 
     /**

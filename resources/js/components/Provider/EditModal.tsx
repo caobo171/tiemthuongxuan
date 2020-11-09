@@ -1,10 +1,14 @@
 import React, { useCallback, useRef, useEffect, useContext } from 'react';
+import { toast } from 'react-toastify';
 import { useAsyncFn } from 'react-use';
-import { useAlert } from 'react-alert';
+
 import Fetch from '../../service/Fetch';
 import { RawProvider } from '../../store/types';
 
-const EditProviderModal = React.memo(()=>{
+interface Props {
+    reload?:()=>void
+}
+const EditProducerModal = React.memo(({reload}:Props)=>{
 
     const {provider} = useContext(ProviderContext);
     const nameRef = useRef<HTMLInputElement>(null);
@@ -47,14 +51,16 @@ const EditProviderModal = React.memo(()=>{
     },[provider]);
 
 
-    const alert = useAlert();
+
     useEffect(()=>{
+        console.log('reload', reload);
+        reload && reload();
         if(state.value){
-            alert.show("Create provider successful", {type: 'success'});
+            toast.success("Create provider successful");
             return ;
         }
         if(state.error){
-            alert.show(state.error.message, {type: 'error'});
+            toast.error(state.error.message);
         }
     },[state])
 
@@ -105,10 +111,11 @@ const EditProviderModal = React.memo(()=>{
 });
 
 
-export default EditProviderModal;
+export default EditProducerModal;
 export const ProviderContext = React.createContext<{
     provider: RawProvider|null,
-    setProvider:(value: RawProvider)=>void
+    setProvider:(value: RawProvider)=>void,
+    reload?:()=>void
 }>({
     provider: null,
     setProvider: ()=>{}
