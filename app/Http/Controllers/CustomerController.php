@@ -52,6 +52,11 @@ class CustomerController extends Controller
         $customer->platform = $request->input('platform');
         $customer->description = $request->input('description');
 
+        $old_customers = Customer::where('phone', $customer->phone)->get();
+
+        if (count($old_customers)>0) {
+            return 'Customer phone number already exist!';
+        }
 
         if($customer->save()){
             return $customer;

@@ -36,7 +36,11 @@ const CreateCustomerModal = React.memo(({reload}: Props)=>{
     useEffect(()=>{
         reload && reload();
         if(state.value){
-            toast.success("Create customer successful");
+            if (typeof(state.value) == 'string') {
+                window.alert(state.value);
+            } else {
+                toast.success("Create customer successful");
+            }
             return ;
         }
         if(state.error){
