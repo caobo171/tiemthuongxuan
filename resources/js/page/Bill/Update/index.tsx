@@ -37,7 +37,7 @@ const Update = React.memo(() => {
 
     return (<SelectProductContext.Provider value={{ setItems, items }}>
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
-            <h1 className="h3 mb-0 text-gray-800">Create New Order</h1>
+            <h1 className="h3 mb-0 text-gray-800">Đơn hàng #{bill.id}</h1>
         </div>
         <div className="row">
             <div className="col-xl-8 col-md-8 mb-8">
@@ -116,7 +116,7 @@ const Update = React.memo(() => {
                                 <div className="row no-gutters align-items-center">
                                     <button type="button"
                                         onClick={updateBill}
-                                        className="btn btn-primary bg-gradient-primary btn-lg btn-block">Tạo đơn </button>
+                                        className="btn btn-primary bg-gradient-primary btn-lg btn-block">Lưu thay đổi</button>
                                 </div>
                             </div>
                         </div>

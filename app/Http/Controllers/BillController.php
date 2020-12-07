@@ -20,7 +20,7 @@ class BillController extends Controller
     {
         $q = $request->input('q');
         if ($q) {
-            $bills = Bill::query()->where(DB::raw("CONCAT_WS('',customer_name, status)"), 'like', '%' . $q . '%');
+            $bills = Bill::query()->where(DB::raw("CONCAT_WS('',customer_name, status, customer_platform)"), 'like', '%' . $q . '%');
             return $bills->orderBy('created_at', 'desc')->paginate(10);
         } else {
             return Bill::orderBy('created_at', 'desc')->paginate(10);

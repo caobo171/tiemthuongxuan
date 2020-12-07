@@ -8,7 +8,6 @@ import { money } from '../../../service/utils';
 import { ProductContext } from '../../../components/Product/EditModal';
 import Fetch from '../../../service/Fetch';
 import { toast } from 'react-toastify';
-import { Dropdown } from 'react-bootstrap';
 
 interface Props {
     item: RawProduct
@@ -35,22 +34,14 @@ export default React.memo(({ item }: Props) => {
         <td>{item.quantity}</td>
         <td>{money(item.cost)}</td>
         <td>
-            <Dropdown>
-                <Dropdown.Toggle>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item onClick={onRemove}>
-                        Remove
-                </Dropdown.Item>
-                    <Dropdown.Item onClick={onClickHandle} data-toggle="modal" data-target="#editProduct" >
-                        Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        <Link to={`/product/detail/${item.id}`}>View</Link>
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <div className="dropdown">
+                <i className="fas fa-ellipsis-h"></i>
+                <div className="dropdown-menu">
+                    <div className= "dropdown-item" onClick={onRemove}>Xoá</div>
+                    <div className= "dropdown-item" onClick={onClickHandle}>Sửa</div>
+                    <Link className= "dropdown-item" to={`/product/detail/${item.id}`}>View</Link>
+                </div>
+            </div>
         </td>
     </>
 });

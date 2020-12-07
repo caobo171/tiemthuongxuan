@@ -3,8 +3,7 @@ import {useCallback, useState} from 'react';
 import { useAsyncFn, useAsync } from 'react-use';
 import Axios from 'axios';
 import Fetch from '../../../service/Fetch';
-import { RawBill, RawImportBill, RawItem, RawAsset } from '../../../store/types';
-import { PLATFORMS, BILL_STATUS } from '../../../Constants';
+import { RawBill, RawImportBill, RawAsset } from '../../../store/types';
 
 
 

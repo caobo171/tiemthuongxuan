@@ -37,22 +37,14 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.email}</td>
         <td>{item.platform}</td>
         <td>
-        <Dropdown>
-                <Dropdown.Toggle>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item onClick={onRemove}>
-                        Remove
-                </Dropdown.Item>
-                    <Dropdown.Item onClick={onClick} data-toggle="modal" data-target="#editCustomer" >
-                        Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                    <Link to={`/customer/detail/${item.id}`}>View</Link>
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <div className="dropdown">
+                <i className="fas fa-ellipsis-h"></i>
+                <div className="dropdown-menu">
+                    <div className= "dropdown-item" onClick={onRemove}>Xoá</div>
+                    <div className= "dropdown-item" onClick={onClick}>Sửa</div>
+                    <Link className= "dropdown-item" to={`/customer/detail/${item.id}`}>View</Link>
+                </div>
+            </div>
         </td>
     </>
 });
@@ -73,8 +65,7 @@ const List = React.memo(() => {
             <td scope="col">Số điện thoại</td>
             <td scope="col">Email</td>
             <td scope="col">Nền tảng</td>
-            <td scope="col">Hành động</td>
-            <td scope="col"></td>
+            <td scope="col" style={{width: 100}}></td>
         </>)
     }, [state,  window.location.search]);
 

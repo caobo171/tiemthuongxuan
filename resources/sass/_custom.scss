@@ -7,7 +7,8 @@
 }
 
 .form-control {
-    font-size: 0.75rem;
+    font-size: 14px;
+    padding: 0px 4px 0px 10px;
 }
 
 
@@ -20,6 +21,10 @@
     flex-wrap: wrap;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.shadow {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
 input.form-control {
@@ -40,8 +45,22 @@ select.form-control {
     padding-left: 0.75rem;
 }
 
+
 tr {
     position: relative;
+}
+
+.table td {
+    padding: 10px 0px 10px 8px;
+}
+
+.table thead {
+    background: rgba(0,0,0,0.2);
+    font-weight: 600;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.1px rgba(52, 144, 220, 0.25);
 }
 
 tr .actions {
@@ -62,4 +81,28 @@ tr .actions {
 td i {
     margin-right: 8px;
     cursor: pointer;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    top: 70%;
+    left: -50px;
+}
+
+.dropdown .dropdown-menu .dropdown-item {
+    cursor: pointer;
+}
+
+.accordion .nav-link:hover {
+    background-color: rgba($color: #4e73df, $alpha: 0.8);
+    cursor: pointer;
+}
+
+.status {
+    display: inline-block;
+    padding: 2px 18px;
+    color: white;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
 }

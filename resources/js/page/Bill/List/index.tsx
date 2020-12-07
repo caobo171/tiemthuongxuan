@@ -5,6 +5,7 @@ import { RawBill } from '../../../store/types';
 import { SearchTableList } from '../../../components/TableList';
 import { money } from '../../../service/utils';
 import { Dropdown } from 'react-bootstrap';
+import { BILL_STATUS } from '../../../Constants';
 
 interface Props {
     item: RawBill
@@ -12,27 +13,23 @@ interface Props {
 const Item = React.memo(({ item }: Props) => {
     return <>
         <td>{item.id}</td>
-        <td>{moment(item.created_at).format('DD/MM/YYYY')}</td>
         <td>{item.customer_name}</td>
-        <td>{item.status} </td>
+        <td> 
+            <div className='status' style={{backgroundColor: BILL_STATUS[item.status].color}}>
+                {BILL_STATUS[item.status].label} 
+            </div>
+        </td>
         <td>{item.customer_platform}</td>
         <td>{money(item.cost)}</td>
+        <td>{moment(item.created_at).format('DD/MM/YYYY')}</td>
         <td>
-            <Dropdown>
-                <Dropdown.Toggle>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item >
-                        <Link
-                            to={`/bill/update/${item.id}`}
-                            >Edit</Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        <Link to={`/bill/detail/${item.id}`}>View</Link>
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-
+            <div className="dropdown">
+                <i className="fas fa-ellipsis-h"></i>
+                <div className="dropdown-menu">
+                    <Link className= "dropdown-item" to={`/bill/update/${item.id}`}>Sửa</Link>
+                    <Link className= "dropdown-item" to={`/bill/detail/${item.id}`}>View</Link>
+                </div>
+            </div>
         </td>
     </>
 });
@@ -42,12 +39,12 @@ const List = React.memo(() => {
     const header = useMemo(() => {
         return (<>
             <td scope="col">ID</td>
-            <td scope="col">Ngày tạo</td>
             <td scope="col">Khách hàng</td>
             <td scope="col">Trạng thái</td>
             <td scope="col">Nền tảng</td>
             <td scope="col">Giá trị</td>
-            <td scope="col"></td>
+            <td scope="col">Ngày tạo</td>
+            <td scope="col" style={{width:100}}></td>
         </>)
     }, [window.location.search]);
     return (<>

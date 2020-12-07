@@ -36,9 +36,9 @@ const SelectedList = React.memo(()=>{
         <>
             <td>Mã SP</td>
             <td>Tên Sản phẩm</td>
-            <td>Số lượng</td>
+            <td style={{width: 50}}>Số lượng</td>
             <td>Trạng thái</td>
-            <td>Đơn giá</td>
+            <td style={{width: 120}}>Đơn giá</td>
             <td>Tổng giá</td>
         </>
     ),[])

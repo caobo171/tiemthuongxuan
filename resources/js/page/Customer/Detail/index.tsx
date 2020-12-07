@@ -1,7 +1,5 @@
 import React , {useCallback, useMemo} from 'react';
 import {useParams} from 'react-router-dom';
-import ProductList from '../../../components/Product/List';
-import { BILL_STATUS } from '../../../Constants';
 import { CustomerDetail } from './constate';
 import { RawBill } from '../../../store/types';
 import {Link } from 'react-router-dom';

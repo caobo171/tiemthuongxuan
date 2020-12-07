@@ -22,15 +22,20 @@ const Detail = React.memo(() => {
         <div className="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
             <h1 className="h3 mb-0 text-gray-800">Đơn nhập hàng</h1>
 
-            <div className="form-group mr-2 row align-items-center">
+            <div className="form-group mr-2 row align-items-center" style={{width: 350}}>
+                <div className="col">
+                    <div className='status' style={{backgroundColor: BILL_STATUS[state.value.bill.status].color}}>
+                        {BILL_STATUS[state.value.bill.status].label} 
+                    </div>
+                </div>
                 <select className="form-control col"
-                onChange = {onChangeStatus}
-                value={state.value.bill.status}>
-                    {Object.keys(BILL_STATUS).map(key=>(
-                        <option value={key}>{BILL_STATUS[key]}</option>
-                    ))}
+                    onChange = {onChangeStatus}
+                    value={state.value.bill.status}>
+                        {Object.keys(BILL_STATUS).map((key:any)=>(
+                            <option value={BILL_STATUS[key].value}>{BILL_STATUS[key].label}</option>
+                        ))}
                 </select>
-                <Link className="col" to={`/importbill/update/${state.value.bill.id}`}>Edit</Link>
+                <Link className="col" style={{textAlign:'end'}} to={`/importbill/update/${state.value.bill.id}`}>Edit</Link>
             </div>
         </div>
         <div className="row">

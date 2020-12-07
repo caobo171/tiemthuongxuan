@@ -6,32 +6,30 @@ import { Link } from 'react-router-dom';
 import { SearchTableList } from '../../../components/TableList';
 import { RawImportBill } from '../../../store/types';
 import { Dropdown } from 'react-bootstrap';
+import { BILL_STATUS } from '../../../Constants';
 interface Props {
     item: RawImportBill
 }
 const Item = React.memo(({ item }: Props) => {
     return <>
         <td>{item.id}</td>
-        <td>{moment(item.created_at).format('DD/MM/YYYY')}</td>
+       
         <td>{item.provider_name}</td>
-        <td>{item.status} </td>
-        <td>{item.cost}</td>
         <td>
-
-            <Dropdown>
-                <Dropdown.Toggle>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item>
-                        <Link to={`/importbill/update/${item.id}`}
-                        >Edit</Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        <Link to={`/importbill/detail/${item.id}`}>View</Link>
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+         <div className='status' style={{backgroundColor: BILL_STATUS[item.status].color}}>
+                {BILL_STATUS[item.status].label} 
+            </div>
+        </td>
+        <td>{item.cost}</td>
+        <td>{moment(item.created_at).format('DD/MM/YYYY')}</td>
+        <td>
+            <div className="dropdown">
+                <i className="fas fa-ellipsis-h"></i>
+                <div className="dropdown-menu">
+                    <Link className= "dropdown-item" to={`/importbill/update/${item.id}`}>Sửa</Link>
+                    <Link className= "dropdown-item" to={`/importbill/detail/${item.id}`}>View</Link>
+                </div>
+            </div>
         </td>
 
     </>
@@ -42,12 +40,11 @@ const List = React.memo(() => {
     const header = useMemo(() => {
         return (<>
             <td scope="col">ID</td>
-            <td scope="col">Ngày tạo</td>
             <td scope="col">Nhà cung cấp</td>
             <td scope="col">Trạng thái</td>
             <td scope="col">Giá trị</td>
-            <td scope="col">Hành động</td>
-            <td scope="col"></td>
+            <td scope="col">Ngày tạo</td>
+            <td scope="col" style={{width: 100}}></td>
         </>)
     }, [ window.location.search]);
 
