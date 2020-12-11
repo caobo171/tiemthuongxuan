@@ -38,7 +38,7 @@ export default React.memo(({ item }: Props) => {
                 <i className="fas fa-ellipsis-h"></i>
                 <div className="dropdown-menu">
                     <div className= "dropdown-item" onClick={onRemove}>Xoá</div>
-                    <div className= "dropdown-item" onClick={onClickHandle}>Sửa</div>
+                    <div className= "dropdown-item" data-toggle="modal" data-target="#editProduct"  onClick={onClickHandle}>Sửa</div>
                     <Link className= "dropdown-item" to={`/product/detail/${item.id}`}>View</Link>
                 </div>
             </div>

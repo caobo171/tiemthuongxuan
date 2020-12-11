@@ -11,6 +11,7 @@ import { AssetContext } from '../../../components/Asset/EditModal';
 import EditModal from '../../../components/Asset/EditModal';
 import { toast } from 'react-toastify';
 import {Dropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 interface Props {
     item: RawAsset
 }
@@ -26,8 +27,6 @@ const RowItem = React.memo(({ item }: Props) => {
         }
     },[item])
 
-    
-    
     const onClick = useCallback(()=> setAsset(item), [item]);
     return <>
         <td>{item.id}</td>
@@ -37,19 +36,13 @@ const RowItem = React.memo(({ item }: Props) => {
         <td>{item.description}</td>
         <td>{money(item.cost)}</td>
         <td>
-        <Dropdown>
-                <Dropdown.Toggle>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item onClick={onRemove} >
-                        Remove
-                    </Dropdown.Item>
-                    <Dropdown.Item data-toggle="modal" data-target="#editAsset" onClick={onClick}>
-                        Edit
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <div className="dropdown">
+                <i className="fas fa-ellipsis-h"></i>
+                <div className="dropdown-menu">
+                    <div className= "dropdown-item" onClick={onRemove}>Xoá</div>
+                    <div className= "dropdown-item" data-toggle="modal" data-target="#editAsset"  onClick={onClick}>Sửa</div>
+                </div>
+            </div>
         </td>
     </>
 });
@@ -66,7 +59,7 @@ const List = React.memo(() => {
             <td>Ngày tạo</td>
             <td scope="col">Mô tả </td>
             <td scope="col">Giá</td>
-            <td>
+            <td style={{width: 120}}>
             </td>
         </>)
     }, [ window.location.search]);

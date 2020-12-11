@@ -36,22 +36,15 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.phone}</td>
         <td>{item.email}</td>
         <td>
-            <Dropdown>
-                <Dropdown.Toggle>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item onClick={onRemove}>
-                        Remove
-                    </Dropdown.Item>
-                    <Dropdown.Item onClick={onClick} data-toggle="modal" data-target="#editProvider" >
-                        Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        <Link to={`/provider/detail/${item.id}`}>View</Link>
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <div className="dropdown">
+                <i className="fas fa-ellipsis-h"></i>
+                <div className="dropdown-menu">
+                    <div className= "dropdown-item" onClick={onRemove}>Xoá</div>
+                    <div className= "dropdown-item" data-toggle="modal" data-target="#editProvider"  onClick={onClick}>Sửa</div>
+                    <Link className= "dropdown-item" to={`/provider/detail/${item.id}`}>Chi tiết</Link>
+                    
+                </div>
+            </div>
         </td>
     </>
 });

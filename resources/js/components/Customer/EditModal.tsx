@@ -15,7 +15,7 @@ const EditCustomerModal = React.memo(({reload}:Props)=>{
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
-    const noteRef = useRef<HTMLInputElement>(null);
+    const noteRef = useRef<HTMLTextAreaElement>(null);
     const platformRef = useRef<HTMLSelectElement>(null);
 
     useEffect(()=>{
@@ -84,12 +84,16 @@ const EditCustomerModal = React.memo(({reload}:Props)=>{
                                 <label>Tên khách hàng</label>
                                 <input className="form-control" ref={nameRef}></input>
                             </div>
+                        </div>
+                        <div className="row">
                             <div className="form-group col">
                                 <label>Số điện thoại </label>
                                 <input className="form-control"
                                 type="tel" pattern="^\d{4}-\d{3}-\d{4}$"
                                 ref={phoneRef}></input>
                             </div>
+                        </div>
+                        <div className="row">
                             <div className="form-group col">
                                 <label>Nền tảng </label>
                                 <select className="form-control"
@@ -105,9 +109,11 @@ const EditCustomerModal = React.memo(({reload}:Props)=>{
                                 <label>Email </label>
                                 <input className="form-control" ref={emailRef}></input>
                             </div>
+                        </div>
+                        <div>
                             <div className="form-group col">
                                 <label>Ghi chú</label>
-                                <input className="form-control" ref={noteRef}></input>
+                                <textarea className="form-control" ref={noteRef}></textarea>
                             </div>
                         </div>
                     </div>
