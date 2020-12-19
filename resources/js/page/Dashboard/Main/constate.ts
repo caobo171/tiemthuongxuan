@@ -59,7 +59,7 @@ const useDashboard = ({startDate, endDate})=>{
         const import_bills = res.data.import_bills;
         const importbill_items = res.data.importbill_items;
 
-        for(let i = 0; i < importbill_items.length; i++) {
+        for(let i = importbill_items.length -1 ; i >= 0; i--) {
             const item = importbill_items[i];
             if (products[item.product_id]) {
                 var remain_item = Number(products[item.product_id].remain_quantity);
