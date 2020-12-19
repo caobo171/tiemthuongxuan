@@ -23,10 +23,14 @@ class ImportBillController extends Controller
         $q = $request->input('q');
         if ($q) {
             $bills = ImportBill::query()->where(DB::raw("CONCAT_WS('',provider_name, status)"), 'like', '%' . $q . '%');
-            return $bills->orderBy('created_at', 'desc')->paginate(10);
+            return [
+                "data"=>$bills->orderBy('created_at', 'desc')->paginate(10)
+            ];
         }
 
-        return ImportBill::orderBy('created_at', 'desc')->paginate(10);
+        return [
+            "data" => ImportBill::orderBy('created_at', 'desc')->paginate(10)
+        ];
     }
 
     /**

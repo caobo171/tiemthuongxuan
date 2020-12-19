@@ -7,23 +7,21 @@ import { money } from '../../../service/utils';
 const Item = React.memo(({ item }: { item: any }) => {
     return <>
         <td>{item.name}</td>
-        <td>{money(item.cost)}</td>
-        <td>{item.bills}</td>
-        <td>{money(item.pending)}</td>
+        <td>{item.quantity}</td>
+        <td>{money(item.remain_stock)}</td>
         <td>
-            <Link to={`/customer/detail/${item.id}`}>View</Link>
+            <Link to={`/product/detail/${item.id}`}>View</Link>
         </td>
     </>
 });
 
-const CustomerBillboard = React.memo(() => {
+const InstockBillboard = React.memo(() => {
     const state = DashboardConstate.useReport();
     const header = useMemo(()=>(
         <>
-            <td>Khách hàng</td>
-            <td>Tổng giá trị</td>
-            <td>Số đơn hàng</td>
-            <td>Tiền pending</td>
+            <td>Sản phẩm</td>
+            <td>SL tồn kho</td>
+            <td>Tiền tồn kho</td>
             <td></td>
         </>
     ),[]);
@@ -31,7 +29,7 @@ const CustomerBillboard = React.memo(() => {
         <>
             <TableList
                 header = {header}
-                data={state.value ? state.value.customers.sort((a,b)=>(b.cost-a.cost)) : []}
+                data={state.value ? state.value.products.sort((a,b)=>(b.remain_stock - a.remain_stock)) : []}
                 rowItem={Item}
             />
         </>
@@ -39,4 +37,4 @@ const CustomerBillboard = React.memo(() => {
 });
 
 
-export default CustomerBillboard;
+export default InstockBillboard;

@@ -66,7 +66,7 @@ export const SearchTableList = React.memo(({reload, title, rowItem, header, main
     const data = useAsync(async () => {
         const res = await Fetch.get(`${mainUrl}?${urlParams.toString()}`);
         //@ts-ignore
-        return res.data as any;
+        return res.data.data as any;
     }, [reload, window.location.search]);
 
     return (

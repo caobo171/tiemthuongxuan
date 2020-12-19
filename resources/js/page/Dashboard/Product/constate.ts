@@ -26,10 +26,14 @@ const useProductReport = ({startDate, endDate})=>{
                     id: bill_items[i].product_id,
                     name: bill_items[i].product_name,
                     cost: 0,
+                    quantity: 0,
+                    remain_quantity: 0,
                     expense: 0
                 }
             }
-            groups[bill_items[i].product_id].cost += Number(bill_items[i].cost);
+            groups[bill_items[i].product_id].cost += Number(bill_items[i].cost) * Number(bill_items[i].quantity);
+            groups[bill_items[i].product_id].quantity += Number(bill_items[i].quantity);
+            groups[bill_items[i].product_id].remain_quantity += Number(bill_items[i].quantity);
         }
 
         for(let i = 0 ; i< res.data.importbill_items.length; i++){
@@ -39,11 +43,19 @@ const useProductReport = ({startDate, endDate})=>{
                     id: bill.product_id,
                     name: bill.product_name,
                     cost: 0,
+                    quantity:0,
+                    remain_quantity:0,
                     expense: 0
                 }
             }
-            groups[bill.product_id].expense += Number(bill.cost);
-            console.log(Object.values(groups));
+
+            let subtract_quantity = 0;
+            if (Number(groups[bill.product_id].remain_quantity) > 0) {
+                subtract_quantity = Math.min(Number(groups[bill.product_id].remain_quantity), Number(bill.quantity))
+            }
+            groups[bill.product_id].remain_quantity -= subtract_quantity;
+            groups[bill.product_id].expense += subtract_quantity* Number(bill.cost);
+            
         }
 		return {
 			groups: Object.values(groups)

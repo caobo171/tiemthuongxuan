@@ -2,11 +2,11 @@ import React from 'react';
 import { DashboardConstate } from './constate';
 import Widget from './Widget';
 import { money } from '../../../service/utils';
+import PieChart from './PieChart';
 
 const TopWidget = React.memo(() => {
 
     const state = DashboardConstate.useReport();
-    
     
 	return (<>
 		{
@@ -40,6 +40,10 @@ const TopWidget = React.memo(() => {
 
                             sub3 = {'Tiền chưa về'}
                             val3 = {money(state.value.pending_money)}
+
+
+                            sub4 = {'Tiền tồn kho'}
+                            val4 = {money(state.value.remain_stock)}
 						/>
 						<Widget
 							color={'info'}
@@ -55,6 +59,14 @@ const TopWidget = React.memo(() => {
                             val3 = {money(state.value.repay)}
                             sub3 = {'Tiền đền hàng'}
 						/>
+                        <div className="col-xl-3 col-md-3 col-sm-6 mb-4">
+                            <div className="card shadow mb-4">
+                                <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 className="m-0 font-weight-bold text-primary">Tỉ lệ trên platform</h6>
+                                </div>
+                                <PieChart/>
+                            </div>
+                        </div>
 					</div>
 				</>
 			)

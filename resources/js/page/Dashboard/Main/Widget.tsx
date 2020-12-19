@@ -4,18 +4,20 @@ interface Props {
 	title: string,
 	sub1?: string,
 	sub2?: string,
-    sub3?: string,
+	sub3?: string,
+	sub4?:string,
     val1?: string,
 	val2?: string,
 	val3?: string,
+	val4?:string,
 	icon? :string,
     color: string,
     mainVal: string
 }
-const Widget = React.memo(({title, sub1, sub2, sub3, icon, color, val1, val2, val3 , mainVal}: Props)=>{
+const Widget = React.memo(({title, sub1, sub2, sub3, icon, color, val1, val2, val3 ,sub4, val4,  mainVal}: Props)=>{
 	return(
 
-		<div className="col-xl-4 col-md-6 mb-4">
+		<div className="col-xl-3 col-md-3 col-sm-6 mb-4">
 		<div className={`card border-left-${color} shadow h-400 py-2`}>
 			<div className="card-body">
 				<div className="row no-gutters align-items-center">
@@ -35,6 +37,9 @@ const Widget = React.memo(({title, sub1, sub2, sub3, icon, color, val1, val2, va
 				</div>}
 				{ sub3 && <div className="row align-items-center mt-2">
 					<i className="fas fa-circle text-warning ml-3 mr-1"></i>{sub3}: {val3}
+				</div> }
+				{ sub4 && <div className="row align-items-center mt-2">
+					<i className="fas fa-circle text-warning ml-3 mr-1"></i>{sub4}: {val4}
 				</div> }
 			</div>
 		</div>

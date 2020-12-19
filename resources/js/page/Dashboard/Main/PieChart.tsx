@@ -40,9 +40,9 @@ const PieChart = React.memo(()=>{
     },[pieRef, state]);
     return(
         <div className="card-body">
-        <div className="chart-pie pt-4 pb-2"><div className="chartjs-size-monitor"><div className="chartjs-size-monitor-expand">
+        <div className="chart-pie" style={{height: '100px !important'}}><div className="chartjs-size-monitor"><div className="chartjs-size-monitor-expand">
             <div className=""></div></div><div className="chartjs-size-monitor-shrink"><div className=""></div></div></div>
-            <canvas ref={pieRef} width="486" height="245" className="chartjs-render-monitor" style={{ display: 'block', width: 486, height: 245 }}></canvas>
+            <canvas ref={pieRef} width="486" height="120" className="chartjs-render-monitor" style={{ display: 'block', width: 486, height: 245 }}></canvas>
         </div>
         <div className="mt-4 text-center small">
             <span className="mr-2">

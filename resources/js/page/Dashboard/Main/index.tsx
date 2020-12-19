@@ -4,6 +4,7 @@ import moment from 'moment';
 import { DashboardConstate } from './constate';
 import PieChart from './PieChart';
 import CustomerBillboard from './CustomerBillboard';
+import InstockBillboard from './InstockBillboard';
 
 
 const Dashboard = React.memo(() => {
@@ -52,20 +53,20 @@ const Dashboard = React.memo(() => {
 			<DashboardConstate.Provider startDate={dateRange.startDate} endDate={dateRange.endDate}>
                 <TopWidget />
                 <div className="row">
-                    <div className="col-xl-8 col-lg-7">
+                    <div className="col-xl-12 col-lg-12">
                         <div className="card shadow mb-4">
                             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 className="m-0 font-weight-bold text-primary">Khách hàng nổi bật</h6>
+                                <h6 className="m-0 font-weight-bold text-primary">Khách hàng và Tồn kho</h6>
                             </div>
-                            <CustomerBillboard/>
-                        </div>
-                    </div>
-                    <div className="col-xl-4 col-lg-5">
-                        <div className="card shadow mb-4">
-                            <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 className="m-0 font-weight-bold text-primary">Tỉ lệ trên platform</h6>
-                            </div>
-                            <PieChart/>
+							<div className="row">
+								<div className = "col">
+									<CustomerBillboard/>
+								</div>
+								<div className = "col">
+									<InstockBillboard/>
+								</div>
+							</div>
+                            
                         </div>
                     </div>
                 </div>

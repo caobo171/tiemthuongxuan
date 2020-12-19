@@ -20,10 +20,14 @@ class CustomerController extends Controller
         $q = $request->input('q');
         if ($q) {
             $customers = Customer::query()->where(DB::raw("CONCAT_WS('',name,phone)"), 'like', '%' .$q. '%');
-            return $customers->orderBy('created_at','desc')->paginate(10);
+            return [
+                "data" => $customers->orderBy('created_at','desc')->paginate(10)
+            ];
         }
         
-        return Customer::orderBy('created_at','desc')->paginate(10);
+        return [
+            "data" => Customer::orderBy('created_at','desc')->paginate(10)
+        ];
     }
 
     /**

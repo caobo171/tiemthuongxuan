@@ -7,6 +7,7 @@ use App\Models\Bill;
 use App\Models\BillItem;
 use App\Models\ImportBill;
 use App\Models\ImportBillItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -21,12 +22,21 @@ class ReportController extends Controller
 
         $bills = Bill::whereBetween('created_at', [$start_date, $end_date])->get();
         $import_bills = ImportBill::whereBetween('created_at', [$start_date, $end_date])->get();
+        $importbill_items = ImportBillItem::whereBetween('created_at', [$start_date, $end_date])->get();
+        $product_ids = $importbill_items->map(function ($e) {
+            return $e->product_id;
+        });
+        // $bill_items = BillItem::whereIn('product_id', $product_ids)->get();
+        $products = Product::whereIn('id', $product_ids)->get();
         $assets = Asset::all();
 
         return array(
             'bills' => $bills,
             'import_bills' => $import_bills,
-            'assets' => $assets
+            'assets' => $assets,
+            'importbill_items' => $importbill_items,
+            // 'bill_items' => $bill_items,
+            'products' => $products
         );
     }
 
@@ -39,7 +49,10 @@ class ReportController extends Controller
         $end_date  = $request->input('end_date');
 
         $bill_items = BillItem::whereBetween('created_at', [$start_date, $end_date])->get();
-        $importbill_items = ImportBillItem::whereBetween('created_at', [$start_date, $end_date])->get();
+        $product_ids = $bill_items->map(function ($e) {
+            return $e->product_id;
+        });
+        $importbill_items = ImportBillItem::whereIn('product_id', $product_ids)->get();
 
         return array(
             'bill_items' => $bill_items,

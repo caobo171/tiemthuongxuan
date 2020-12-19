@@ -28,7 +28,7 @@ const ListPopUp = React.memo(({ onClickItem, addText, mainUrl, searchUrl , modal
     const [state, fetch] = useAsyncFn(async () => {
         const res = await Fetch.get(`${searchUrl}?q=${throttledText}`);
         //@ts-ignore
-        return res.data.data;
+        return res.data.data.data;
     }, [throttledText]);
 
     console.log('state', state);

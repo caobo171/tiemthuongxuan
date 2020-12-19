@@ -22,9 +22,13 @@ class ProviderController extends Controller
 
         if ($q) {
             $customers = Provider::query()->where(DB::raw("CONCAT_WS('',name,phone)"), 'like', '%' .$q. '%');
-            return $customers->orderBy('created_at','desc')->paginate(10);
+            return [
+                "data" => $customers->orderBy('created_at','desc')->paginate(10)
+            ];
         }
-        return Provider::orderBy('created_at','desc')->paginate(10);
+        return [
+            "data" => Provider::orderBy('created_at','desc')->paginate(10)
+        ];
     }
 
     /**

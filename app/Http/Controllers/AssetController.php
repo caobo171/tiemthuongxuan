@@ -19,9 +19,13 @@ class AssetController extends Controller
 
         if ($q) {
             $assets = Asset::query()->where('name', 'like', '%' .$q. '%');
-            return $assets->orderBy('created_at','desc')->paginate(10);
+            return [
+                "data" => $assets->orderBy('created_at','desc')->paginate(10)
+            ];
         }
-        return Asset::orderBy('created_at','desc')->paginate(10);
+        return [
+            "data" => Asset::orderBy('created_at','desc')->paginate(10)
+        ];
     }
 
     /**

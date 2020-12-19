@@ -3,8 +3,8 @@ import {useCallback, useState} from 'react';
 import { useAsyncFn, useAsync } from 'react-use';
 import Axios from 'axios';
 import Fetch from '../../../service/Fetch';
-import { RawBill, RawImportBill, RawAsset } from '../../../store/types';
-
+import { RawBill, RawImportBill, RawAsset, RawItem, RawProduct } from '../../../store/types';
+import * as _ from 'lodash'
 
 
 
@@ -13,14 +13,21 @@ const useDashboard = ({startDate, endDate})=>{
 	const res = await Fetch.post<{
 		bills: RawBill[],
 		import_bills: RawImportBill[],
-		assets: RawAsset[]
+        assets: RawAsset[],
+        importbill_items: RawItem[],
+        bill_items: RawItem[],
+        products: RawProduct[]
 	}>('api/report',{
 		start_date: startDate,
 		end_date: endDate
 	});
 
 	if(res.data){
-        const result = {
+        let products = _.fromPairs(res.data.products.map(e=>[
+            e.id, 
+            {...e,remain_quantity: Number(e.quantity), quantity: 0, remain_stock: 0}
+        ]));
+        let result:any = {
             bills: res.data.bills.length,
             success_bills: 0,
             failed_bills: 0,
@@ -29,6 +36,7 @@ const useDashboard = ({startDate, endDate})=>{
             revenue : 0,
             totalProfit: 0,
             profit: 0,
+            remain_stock :0,
 
             fund: 0,
             fixed_asset: 0,
@@ -39,6 +47,7 @@ const useDashboard = ({startDate, endDate})=>{
 
 
             customers: {},
+            products: [],
             platforms : {
                 'shopee': 0,
                 'facebook': 0,
@@ -48,6 +57,26 @@ const useDashboard = ({startDate, endDate})=>{
 
         const bills = res.data.bills;
         const import_bills = res.data.import_bills;
+        const importbill_items = res.data.importbill_items;
+
+        for(let i = 0; i < importbill_items.length; i++) {
+            const item = importbill_items[i];
+            if (products[item.product_id]) {
+                var remain_item = Number(products[item.product_id].remain_quantity);
+                var substract = Math.min(remain_item, Number(item.quantity));
+                if (substract > 0) {
+                    products[item.product_id].remain_quantity -= substract;
+                    products[item.product_id].quantity += substract;
+                    products[item.product_id].remain_stock += substract * Number(item.cost);
+                    result.remain_stock += substract * Number(item.cost);
+                }
+            } else {
+                console.log('FALSE FALSE',item);
+            }
+        }
+
+        result.products = Object.values(products).filter(e => e.quantity > 0);
+
         for(let i = 0 ; i < bills.length; i++){
             const bill  = res.data.bills[i];
 
@@ -66,7 +95,6 @@ const useDashboard = ({startDate, endDate})=>{
             if(bill.status === 'success'){
                 result.revenue += Number(bill.cost);
                 result.success_bills += 1;
-                console.log('test', bill)
                 result.customers[res.data.bills[i].customer_id].cost += Number(bill.cost);
             }
             else if(bill.status === 'broken'){
@@ -101,10 +129,8 @@ const useDashboard = ({startDate, endDate})=>{
         }
 
         result.fund = result.fixed_asset + result.import_fund + result.repay;
-        result.totalProfit = result.revenue - result.import_fund;
-        result.profit = result.revenue - result.fund;
-
-
+        result.totalProfit = result.revenue - result.import_fund + result.remain_stock;
+        result.profit = result.revenue - result.fund + result.remain_stock;
         return {
             ...result,
             customers: Object.values(result.customers)

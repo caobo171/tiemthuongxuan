@@ -22,11 +22,13 @@ class ProductController extends Controller
         // die;
         if ($q) {
             $products = Product::query()->where(DB::raw("CONCAT_WS('',name,sku)"), 'like', '%' .$q. '%');
-            return $products->orderBy('created_at','desc')->paginate(10);
+            $products_array = $products->orderBy('created_at','desc')->paginate(10);
         } else {
-            return Product::orderBy('created_at','desc')->paginate(10);
+            $products_array = Product::orderBy('created_at','desc')->paginate(10);
         }
-
+        return [
+            "data" =>$products_array
+        ];
     }
 
     /**

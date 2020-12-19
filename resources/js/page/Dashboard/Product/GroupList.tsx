@@ -15,8 +15,9 @@ const Item = React.memo(({ item }: Props) => {
     return <>
         <td>{item.id}</td>
         <td>{item.name}</td>
-        <td>{item.expense}</td>
+        <td>{money(item.expense)}</td>
         <td>{money(item.cost)}</td>
+        <td>{item.quantity}</td>
         <td>
             <Link  to={`/product/detail/${item.id}`}>View</Link>
         </td>
@@ -33,6 +34,7 @@ const List = React.memo(() => {
             <td>Mặt hàng</td>
             <td>Tổng vốn</td>
             <td>Tổng lợi nhuận</td>
+            <td>Số lượng</td>
             <td></td>
         </>
     ),[])
@@ -45,7 +47,7 @@ const List = React.memo(() => {
                 </div>
                 <TableList
                     header = {header}
-                    data = {state.value ? state.value.groups : []}
+                    data = {state.value ? state.value.groups.sort((a:any,b:any)=>(b.cost- a.cost)) : []}
                     rowItem = {Item}
                 />
             </div>
