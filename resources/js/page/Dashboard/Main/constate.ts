@@ -16,6 +16,7 @@ const useDashboard = ({startDate, endDate})=>{
         assets: RawAsset[],
         importbill_items: RawItem[],
         bill_items: RawItem[],
+        revenue_importbill_items: RawItem[],
         products: RawProduct[]
 	}>('api/report',{
 		start_date: startDate,
@@ -44,10 +45,9 @@ const useDashboard = ({startDate, endDate})=>{
             repay: 0,
 
             pending_money: 0,
-
-
             customers: {},
             products: [],
+            assets: [],
             platforms : {
                 'shopee': 0,
                 'facebook': 0,
@@ -109,28 +109,89 @@ const useDashboard = ({startDate, endDate})=>{
             }
         }
 
-        for (let i = 0 ; i < import_bills.length; i++){
-            result.import_fund += Number(import_bills[i].cost);
+        // for (let i = 0 ; i < import_bills.length; i++){
+        //     result.import_fund += Number(import_bills[i].cost);
+        // }
+
+        /**
+         * Calculate import cost 
+         */
+        const groups = {};
+        if (res.data){
+            const bill_items = res.data.bill_items;
+            for(let i = 0 ; i< res.data.bill_items.length; i++){
+                if(!groups[bill_items[i].product_id]){
+                    groups[bill_items[i].product_id] = {
+                        id: bill_items[i].product_id,
+                        name: bill_items[i].product_name,
+                        cost: 0,
+                        quantity: 0,
+                        remain_quantity: 0,
+                        expense: 0
+                    }
+                }
+                groups[bill_items[i].product_id].cost += Number(bill_items[i].cost) * Number(bill_items[i].quantity);
+                groups[bill_items[i].product_id].quantity += Number(bill_items[i].quantity);
+                groups[bill_items[i].product_id].remain_quantity += Number(bill_items[i].quantity);
+            }
+    
+            for(let i = 0 ; i< res.data.revenue_importbill_items.length; i++){
+                const bill = res.data.revenue_importbill_items[i]
+                if(!groups[bill.product_id]){
+                    groups[bill.product_id] = {
+                        id: bill.product_id,
+                        name: bill.product_name,
+                        cost: 0,
+                        quantity:0,
+                        remain_quantity:0,
+                        expense: 0
+                    }
+                }
+    
+                let subtract_quantity = 0;
+                if (Number(groups[bill.product_id].remain_quantity) > 0) {
+                    subtract_quantity = Math.min(Number(groups[bill.product_id].remain_quantity), Number(bill.quantity))
+                }
+                groups[bill.product_id].remain_quantity -= subtract_quantity;
+                groups[bill.product_id].expense += subtract_quantity* Number(bill.cost);
+            }
         }
+
+        var revenue_products:any[] = Object.values(groups);
+        for(let i =0 ; i < revenue_products.length; i++) {
+            result.import_fund += revenue_products[i].expense;
+        }
+        //@ts-ignore
+        window.revenue_products = revenue_products
+
+        /** End  */
 
         for (let i=0 ; i< res.data.assets.length; i++){
             const asset = res.data.assets[i];
             const start = Math.max(new Date(startDate).getTime(), new Date(asset.created_at).getTime());
 
+
             const expired_date = new Date(asset.created_at);
-            expired_date.setDate(expired_date.getDate() + asset.cycle);
+            expired_date.setDate(expired_date.getDate() + Number(asset.cycle));
             const end = Math.min(new Date(endDate).getTime(), expired_date.getTime());
 
             const difference = Math.floor((end - start)/ (1000 * 3600 * 24));
 
             if(difference > 0 ){
                 result.fixed_asset += (Number(asset.cost) / Number(asset.cycle)) * difference;
+                result.assets.push({
+                    name: asset.name,
+                    expense: (Number(asset.cost) / Number(asset.cycle)) * difference,
+                    cost: asset.cost
+                })
             }
         }
 
         result.fund = result.fixed_asset + result.import_fund + result.repay;
-        result.totalProfit = result.revenue - result.import_fund + result.remain_stock;
+        result.totalProfit = result.revenue - result.import_fund ;
         result.profit = result.revenue - result.fund + result.remain_stock;
+        //@ts-ignore
+        window.result = result
         return {
             ...result,
             customers: Object.values(result.customers)
@@ -138,8 +199,6 @@ const useDashboard = ({startDate, endDate})=>{
 	}
 	return null;
   },[startDate, endDate])
-
-
 
   return {state};
 }

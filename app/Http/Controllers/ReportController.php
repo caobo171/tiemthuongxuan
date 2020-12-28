@@ -26,8 +26,16 @@ class ReportController extends Controller
         $product_ids = $importbill_items->map(function ($e) {
             return $e->product_id;
         });
+
+        // Calculate revenue
+        $bill_items = BillItem::whereBetween('created_at', [$start_date, $end_date])->get();
+        $revenue_product_ids = $bill_items->map(function ($e) {
+            return $e->product_id;
+        });
+        $revenue_importbill_items = ImportBillItem::whereIn('product_id', $revenue_product_ids)->get();
+
         // $bill_items = BillItem::whereIn('product_id', $product_ids)->get();
-        $products = Product::whereIn('id', $product_ids)->get();
+        $import_products = Product::whereIn('id', $product_ids)->get();
         $assets = Asset::all();
 
         return array(
@@ -35,8 +43,9 @@ class ReportController extends Controller
             'import_bills' => $import_bills,
             'assets' => $assets,
             'importbill_items' => $importbill_items,
-            // 'bill_items' => $bill_items,
-            'products' => $products
+            'bill_items' => $bill_items,
+            'revenue_importbill_items' => $revenue_importbill_items,
+            'products' => $import_products
         );
     }
 

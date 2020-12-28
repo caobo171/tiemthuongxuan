@@ -16,6 +16,7 @@ const Item = React.memo(({ item }: Props) => {
         <td>{item.id}</td>
         <td>{item.name}</td>
         <td>{money(item.expense)}</td>
+        <td>{money(item.cost - item.expense)}</td>
         <td>{money(item.cost)}</td>
         <td>{item.quantity}</td>
         <td>
@@ -33,7 +34,8 @@ const List = React.memo(() => {
             <td>ID</td>
             <td>Mặt hàng</td>
             <td>Tổng vốn</td>
-            <td>Tổng lợi nhuận</td>
+            <td>Lợi nhuận</td>
+            <td>Doanh thu</td>
             <td>Số lượng</td>
             <td></td>
         </>

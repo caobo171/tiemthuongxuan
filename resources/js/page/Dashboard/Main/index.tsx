@@ -5,6 +5,7 @@ import { DashboardConstate } from './constate';
 import PieChart from './PieChart';
 import CustomerBillboard from './CustomerBillboard';
 import InstockBillboard from './InstockBillboard';
+import AssetBillboard from './AssetBillboard';
 
 
 const Dashboard = React.memo(() => {
@@ -64,6 +65,7 @@ const Dashboard = React.memo(() => {
 								</div>
 								<div className = "col">
 									<InstockBillboard/>
+									<AssetBillboard/>
 								</div>
 							</div>
                             
