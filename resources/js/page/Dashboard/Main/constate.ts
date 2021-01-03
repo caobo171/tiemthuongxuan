@@ -43,6 +43,7 @@ const useDashboard = ({startDate, endDate})=>{
             fixed_asset: 0,
             import_fund: 0,
             repay: 0,
+            product_revenue: 0,
 
             pending_money: 0,
             customers: {},
@@ -160,6 +161,7 @@ const useDashboard = ({startDate, endDate})=>{
         var revenue_products:any[] = Object.values(groups);
         for(let i =0 ; i < revenue_products.length; i++) {
             result.import_fund += revenue_products[i].expense;
+            result.product_revenue += revenue_products[i].cost;
         }
         //@ts-ignore
         window.revenue_products = revenue_products
@@ -188,8 +190,8 @@ const useDashboard = ({startDate, endDate})=>{
         }
 
         result.fund = result.fixed_asset + result.import_fund + result.repay;
-        result.totalProfit = result.revenue - result.import_fund ;
-        result.profit = result.revenue - result.fund + result.remain_stock;
+        result.totalProfit = result.product_revenue - result.import_fund ;
+        result.profit = result.revenue - result.fund;
         //@ts-ignore
         window.result = result
         return {
