@@ -26,6 +26,19 @@ const Item = React.memo(({ item }: Props) => {
     </>
 });
 
+const ImportItem = React.memo(({ item }: Props) => {
+    return <>
+        <td>{item.bill_id}</td>
+        <td>{moment(item.created_at).format('DD/MM/YYYY')}</td>
+        <td>{item.quantity}</td>
+        <td>{item.status} </td>
+        <td>{item.cost}</td>
+        <td>
+            <Link to={`/importbill/detail/${item.bill_id}`}>View</Link>
+        </td>
+    </>
+});
+
 
 const Detail = React.memo(() => {
     const { id } = useParams<{ id: string }>();
@@ -101,7 +114,7 @@ const Detail = React.memo(() => {
                             <TableList
                                 data={value.import_bill_items || []}
                                 header={header}
-                                rowItem={Item}
+                                rowItem={ImportItem}
                             />
                         </div>
                     </div>

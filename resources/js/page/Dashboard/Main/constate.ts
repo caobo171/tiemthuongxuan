@@ -1,5 +1,4 @@
 import constate from 'constate';
-import {useCallback, useState} from 'react';
 import { useAsyncFn, useAsync } from 'react-use';
 import Axios from 'axios';
 import Fetch from '../../../service/Fetch';
@@ -42,6 +41,7 @@ const useDashboard = ({startDate, endDate})=>{
             fund: 0,
             fixed_asset: 0,
             import_fund: 0,
+            import_fund_in_month: 0,
             repay: 0,
             product_revenue: 0,
 
@@ -110,9 +110,9 @@ const useDashboard = ({startDate, endDate})=>{
             }
         }
 
-        // for (let i = 0 ; i < import_bills.length; i++){
-        //     result.import_fund += Number(import_bills[i].cost);
-        // }
+        for (let i = 0 ; i < import_bills.length; i++){
+            result.import_fund_in_month += Number(import_bills[i].cost);
+        }
 
         /**
          * Calculate import cost 
@@ -190,7 +190,7 @@ const useDashboard = ({startDate, endDate})=>{
         }
 
         result.fund = result.fixed_asset + result.import_fund + result.repay;
-        result.totalProfit = result.product_revenue - result.import_fund ;
+        result.totalProfit = result.revenue - result.import_fund ;
         result.profit = result.revenue - result.fund;
         //@ts-ignore
         window.result = result

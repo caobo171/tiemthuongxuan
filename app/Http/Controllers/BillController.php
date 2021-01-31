@@ -29,7 +29,7 @@ class BillController extends Controller
                 "data" => Bill::orderBy('created_at', 'desc')->paginate(50)
             ];
         }
-       
+
     }
 
     /**
@@ -75,13 +75,13 @@ class BillController extends Controller
                     $bill_item->save();
                     $product = Product::find($item['product_id']);
 
-                    if($product->quantity < $item['quantity']){
-                        DB::rollBack();
-                        return array(
-                            'message'=>'Out of stock',
-                            'error' => true
-                        );
-                    }
+                    // if($product->quantity < $item['quantity']){
+                    //     DB::rollBack();
+                    //     return array(
+                    //         'message'=>'Out of stock',
+                    //         'error' => true
+                    //     );
+                    // }
                     $product->quantity = $product->quantity - $item['quantity'];
                     $product->save();
                 }
@@ -162,20 +162,20 @@ class BillController extends Controller
                     $bill_item->save();
                     $product = Product::find($item['product_id']);
 
-                    if($product->quantity < $added_quantity){
-                        DB::rollBack();
-                        return array(
-                            'message'=>'Out of stock',
-                            'error' => true
-                        );
-                    }
+                    // if($product->quantity < $added_quantity){
+                    //     DB::rollBack();
+                    //     return array(
+                    //         'message'=>'Out of stock',
+                    //         'error' => true
+                    //     );
+                    // }
                     $product->quantity = $product->quantity - $added_quantity;
                     $product->save();
                 }
             }
         }
         DB::commit();
-        return $bill; 
+        return $bill;
     }
 
     /**
@@ -186,7 +186,7 @@ class BillController extends Controller
      */
     public function destroy($id)
     {
-        
+
     }
 
     public function status(Request $request){

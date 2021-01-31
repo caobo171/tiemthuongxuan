@@ -42,7 +42,7 @@ const TopWidget = React.memo(() => {
                             val3 = {money(state.value.pending_money)}
 
 
-                            sub4 = {'Tiền tồn kho'}
+                            sub4 = {'Tiền tồn kho (tính trên sp đã xuất)'}
                             val4 = {money(state.value.remain_stock)}
 						/>
 						<Widget
@@ -53,11 +53,14 @@ const TopWidget = React.memo(() => {
                             sub1 = {'Tài sản cố định'}
                             val1 = {money(state.value.fixed_asset)}
 
-                            sub2 = {'Tiền nhập hàng'}
-                            val2 = {money(state.value.import_fund)}
+                            sub2 = {'Tiền nhập hàng trong tháng'}
+                            val2 = {money(state.value.import_fund_in_month)}
 
                             val3 = {money(state.value.repay)}
                             sub3 = {'Tiền đền hàng'}
+
+                            val4 = {money(state.value.import_fund)}
+                            sub4 = {'Vốn hàng xuất kho'}
 						/>
                         <div className="col-xl-3 col-md-3 col-sm-6 mb-4">
                             <div className="card shadow mb-4">
